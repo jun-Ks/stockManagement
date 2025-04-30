@@ -1,0 +1,60 @@
+@charset "UTF-8";
+
+/* 전체 header 영역 스타일 */
+header {
+    font-family: 'Pretendard', sans-serif;
+    background-color: #3b74f2;
+    color: white;
+    padding: 10px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 로그인 정보 영역 스타일 */
+.loginInfo {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    padding-right: 20px;
+}
+
+.loginInfo span {
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.loginInfo #logout {
+    background-color: transparent; /* 배경을 투명하게 설정 */
+    cursor: pointer;  /* 마우스 커서 변경 */
+    font-weight: bold;
+    color: #ffdd57;
+    cursor: pointer;
+}
+#logoutForm, .loginInfo button{
+	display: none;
+}
+/* 메뉴 네비게이션 스타일 */
+.menu-navi {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding-top: 10px;
+}
+
+.menu-navi a {
+    text-decoration: none;
+    font-size: 16px;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 메뉴 항목 hover 효과 */
+.menu-navi a:hover, .header-menu.active {
+    background-color: #2a5bb3;
+    color: #fff;
+}
+
+#stock-management{
+	display:none;
+}

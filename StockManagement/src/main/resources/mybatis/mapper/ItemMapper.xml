@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.stock.management.item.mapper.IItemMapper">
+
+	<!-- serch option에 따라 검색하기 -->
+	<select id="getItemByOption">
+		SELECT no, drawingNo, detailDrawingNo, type, itemName, calculatedQuantity, location
+		FROM stockInfo 
+		WHERE ${searchOption} LIKE CONCAT('%', #{searchKeyword}, '%');
+	</select>
+	
+	<!-- 출고 시 calculatedQuantity 수량 감소 -->
+	<update id="deliveryById">
+		UPDATE stockInfo 
+		SET calculatedQuantity = calculatedQuantity - #{cartQty} 
+		WHERE NO = #{id};
+	</update>
+	
+	<!-- 출고 시 로그남기기 -->
+	<insert id="insertDeliveryLog">
+		INSERT INTO deliveryLog (userId, userName, userDept, itemId, cartQty) 
+		VALUES(#{userId}, #{userName}, #{userDept}, #{itemId}, #{cartQty});
+	</insert>
+	
+	<!-- today 출고 로그 가져오기 -->
+	<select id="getDeliveryLogByToday">
+		SELECT * 
+		FROM deliveryLog 
+		WHERE DATE(deliveryDate) = CURRENT_DATE AND userId = #{userId};
+	</select>
+	
+	<!-- 제품아이디로 제품정보가져오기 -->
+	<select id="getItemById">
+		SELECT * 
+		FROM stockInfo 
+		WHERE no = #{id};
+	</select>
+	
+	<!-- 기간으로 출고 로그 확인하기 -->
+	<select id="getDeliveryLogByDate">
+		SELECT * 
+		FROM deliveryLog 
+		WHERE DATE(deliveryDate) BETWEEN #{startDate} AND #{endDate}
+		AND userId = #{userId};
+	</select>
+	
+	<!-- 제품정보 등록(입고) -->
+	<insert id="insertItemInfo" parameterType="java.util.List">
+	    INSERT INTO stockInfo (drawingNo, type, itemName, basicQuantity, calculatedQuantity, location, groupId)
+	    VALUES
+	    <foreach collection="list" item="item" separator=",">
+	        (#{item.drawingNo}, #{item.type}, #{item.itemName}, #{item.basicQuantity}, #{item.calculatedQuantity}, #{item.location}, #{item.groupId})
+	    </foreach>
+	</insert>
+	
+	<!--제품위치 수정 -->
+	<update id="modifyLocation">
+		UPDATE stockInfo 
+		SET location = #{modiLocation}
+		WHERE no = #{itemId};
+	</update>
+	
+	<!-- 그룹아이디로 제품 아이디 찾기 -->
+	<select id="getItemIdIdByGroupId">
+		SELECT no
+		FROM stockInfo 
+		WHERE groupId = #{groupId};
+	</select>
+	
+	<!-- 관리자 - 품목 정보등록 -->
+	<insert id="insertInfo" useGeneratedKeys="true" keyProperty="no">
+		INSERT INTO stockInfo (itemCode, drawingNo, detailDrawingNo, type, itemName, basicQuantity, calculatedQuantity, location)
+		VALUES (#{itemCode}, #{drawingNo}, #{detailDrawingNo}, #{type}, #{itemName}, #{basicQuantity}, #{calculatedQuantity}, #{location});
+	</insert>
+	
+	<!-- 관리자 - 품목등록/수정/삭제 로그 기록하기 -->
+	<insert id="insertManagementLog">
+		INSERT INTO managementLog (userId, userDept, userName, itemId, type)  
+		VALUES (#{userId}, #{userDept}, #{userName}, #{itemId}, #{type});
+	</insert>
+</mapper>

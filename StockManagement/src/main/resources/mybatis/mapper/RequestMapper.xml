@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.stock.management.item.mapper.IRequestMapper">
+
+	<!-- 입고 요청 하기 -->
+	<insert id="insertRequestStockInfo">
+		INSERT INTO stockRequest (type, itemName, basicQuantity, drawingNo, location, requesterId, requesterDept, requesterName, groupId) 
+		VALUES(#{type}, #{itemName}, #{basicQuantity}, #{drawingNo}, #{location}, #{requesterId}, #{requesterDept}, #{requesterName}, #{groupId});
+	</insert>
+	
+	<!-- 위치 변경 요청 하기 -->
+	<insert id="insertRequestModiLocationInfo">
+		INSERT INTO locationModiRequest (itemId, modiLocation, location, requesterId, requesterName, requesterDept, drawingNo, type, itemName, groupId)
+		VALUES(#{itemId}, #{modiLocation}, #{location}, #{requesterId}, #{requesterName}, #{requesterDept}, #{drawingNo}, #{type}, #{itemName}, #{groupId});
+	</insert>
+	
+	<!-- 입고 요청 리스트 by id -->
+	<select id="getRequestStockListById">
+		SELECT * 
+		FROM stockRequest 
+		WHERE requesterId = #{requesterId};
+	</select>
+	
+	<!-- 위치 변경 요청 리스트 by id -->
+	<select id ="getRequestModiLocaListById">
+		SELECT * 
+		FROM locationModiRequest
+		WHERE requesterId = #{requesterId}; 
+	</select>
+	
+	<!-- 입고 요청 리스트 by 승인상태 -->
+	<select id="getRequestStockListByApproval">
+		SELECT * 
+		FROM stockRequest
+		WHERE approval = #{approval};
+	</select>
+	
+	<!-- 위치 변경 요청 리스트 by 승인상태 -->
+	<select id="getRequestModiLocaListByApproval">
+		SELECT * 
+		FROM locationModiRequest 
+		WHERE approval = #{approval};
+	</select>
+	
+	<!-- 입고 요청 리스트 -->
+	<select id="getRequestStockList">
+		SELECT * 
+		FROM stockRequest
+	</select>
+	
+	<!-- 위치 변경 요청 리스트 -->
+	<select id="getRequestModiLocaList">
+		SELECT * 
+		FROM locationModiRequest 
+	</select>
+	
+	<!-- 입고 요청 승인 -->
+	<update id="approvalStockRequest">
+		UPDATE stockRequest 
+		SET approval = 1, approvalUserName = #{approvalUserName}, approvalDate = NOW()
+		WHERE no = #{requestNo};
+	</update>
+	
+	<!-- 위치 변경 요청 승인 -->
+	<update id="approvalLocationRequest">
+		UPDATE locationModiRequest  
+		SET approval = 1, approvalUserName = #{approvalUserName}, approvalDate = NOW()
+		WHERE itemId = #{itemId};
+	</update>
+	
+	<!-- 요청 no 로 groupId가져오기 -->
+	<select id="getGroupIdByRequesterNo">
+		SELECT groupId 
+		FROM ${requestType}
+		WHERE no = #{requesterNo};
+	</select>
+	
+	<!-- 요청 승인 시 그룹아이디로 아이템 아이디 찾아와서 item아이디 등록 -->
+	<update id="updateRequestItemId">
+		UPDATE ${requestType}
+		SET itemId = #{itemId} 
+		WHERE groupId = #{groupId};	
+	</update>
+</mapper>

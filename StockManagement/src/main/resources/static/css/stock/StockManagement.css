@@ -1,0 +1,260 @@
+@charset "UTF-8";
+
+
+body {
+    font-family: 'Pretendard', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f1f5f9;
+}
+
+.optionsBox {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    gap: 10px; /* 버튼 사이의 간격 추가 */
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding-right: 30px; /* 오른쪽에 돋보기 자리 확보 */
+}
+
+.input-wrapper .search {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #9ca3af;
+}
+
+.option, .check-option {
+    background-color: #ffffff;
+    border: 2px solid #d1d9e6;
+    border-radius: 20px; /* 둥근 모서리 */
+    padding: 12px 30px;
+    font-weight: 500;
+    font-size: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.option:hover, .check-option:hover {
+    background-color: #3498db; /* 버튼에 마우스를 올렸을 때 색상 변경 */
+    color: white;
+    border-color: #2980b9;
+}
+
+.option.active {
+    background-color: #3498db; /* 활성화된 탭의 배경색 */
+    color: white;
+    border-color: #2980b9;
+}
+
+.insert-box {
+	background-color: #ffffff;
+	max-width: 600px;
+	margin: 20px auto;
+	padding: 24px;
+	border-radius: 12px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.modify-box{
+	background-color: #ffffff;
+	max-width: 1500px;
+	margin: 20px auto;
+	padding: 24px;
+	border-radius: 12px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+table {
+    border-collapse: collapse;
+    border-bottom: 1px solid #ddd;
+    table-layout: fixed; /* 테이블 레이아웃을 고정으로 설정 */
+}
+.stockList{
+	width: 100%;
+	border-collapse: collapse;
+	background-color: #ffffff;
+	border-radius: 12px;
+	overflow: hidden;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+	background-color: #f9fafb;
+	margin: 0 auto;
+}
+
+
+#th_no{
+	width: 10px;
+}
+#th_quantity, #th_putCart{
+	width: 10px;
+}
+#th_location{
+	width: 25px;
+}
+#th_type{
+	width: 40px;
+}
+.td_type{
+	    white-space: nowrap; /* 한 줄로만 표시되게 설정 */
+    overflow-x: auto; /* 테이블이 길어지면 수평 스크롤이 생기도록 설정 */
+}
+#th_drawingNo{
+	width: 60px;
+}
+#th_detailDrawingNo{
+	width: 150px;
+}
+.td_detailDrwingNo {
+    overflow: hidden; /* 내용이 길 경우 잘리도록 설정 */
+    white-space: nowrap; /* 한 줄로만 표시되게 설정 */
+    overflow-x: auto; /* 테이블이 길어지면 수평 스크롤이 생기도록 설정 */
+}
+#th_itemName{
+	width: 100px;
+}
+.td_itemName{
+	white-space: nowrap; /* 한 줄로만 표시되게 설정 */
+    overflow-x: auto; /* 테이블이 길어지면 수평 스크롤이 생기도록 설정 */
+}
+
+#th_del{
+	width: 5px;
+}
+.stockList th{
+	padding: 12px;
+	font-weight: 600;
+	border-bottom: 1px solid #ddd;
+	text-align: center;
+	font-size: 15px;
+	background-color: #e5e7eb;
+	color: #111827;
+}
+
+.stockList td {
+	padding: 10px;
+	border-bottom: 1px solid #eee;
+	text-align: center;
+}
+.stockListe tr:last-child td{
+	border-bottom: 1px solid #eee;
+}
+
+.insert-box input[type="text"],
+.insert-box input[type="number"],
+.insert-box select {
+	padding: 12px 16px;
+	border: 1px solid #d1d5db;
+	border-radius: 10px;
+	font-size: 15px;
+	font-family: 'Pretendard', sans-serif;
+	width: 100%;
+	box-sizing: border-box;
+	transition: border-color 0.3s, box-shadow 0.3s;
+	background-color: #f9fafb;
+	color: #111827;
+}
+.insert-box input[type="text"]::placeholder,
+.insert-box input[type="number"]::placeholder {
+	color: #9ca3af;
+	opacity: 1;
+	font-style: italic;
+}
+
+.insert-box input[type="text"]:focus,
+.insert-box input[type="number"]:focus,
+.insert-box select:focus {
+	border-color: #6366f1;
+	box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+	outline: none;
+	background-color: #ffffff;
+}
+
+.insert-box select {
+	appearance: none;
+	background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 14 10'%3E%3Cpath fill='gray' d='M7 10L0 0h14z'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 10px center;
+	background-size: 12px;
+	padding-right: 40px;
+}
+.insert-box label {
+	font-weight: 600;
+	color: #374151;
+	margin-bottom: 4px;
+	display: block;
+}
+
+.insert-box button {
+	background-color: #4f46e5;
+	color: white;
+	font-weight: bold;
+	padding: 10px;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.insert-box button:hover {
+	background-color: #4338ca;
+}
+
+.insert-box .form-group {
+	display: flex;
+	flex-direction: column;
+}
+
+.location-selects {
+	display: flex;
+	gap: 8px;
+}
+.searchBox{
+	margin: 0 auto;
+}
+.searchBox select,
+.searchBox input,
+.searchBox button{
+	padding: 8px 12px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	font-size: 14px;
+}
+.rackName, .rackStage, .rackNumber{
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	font-size: 14px;
+	padding: 3px;
+}
+.searchBox button {
+	background-color: #4f46e5;
+	color: white;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.searchBox button:hover {
+	background-color: #4338ca;
+}
+
+#notice{
+	font-size: 13px;
+	color: red;
+}

@@ -1,0 +1,261 @@
+@charset "UTF-8";
+
+.infoBox{
+	display: flex;
+	gap: 20px; /* 두 박스 사이 여백 */
+}
+
+body {
+	font-family: 'Pretendard', sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #f9fafb;
+}
+
+.searchBox {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
+	padding: 20px;
+	background-color: #ffffff;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.searchBox select,
+.searchBox input,
+.searchBox button{
+	padding: 8px 12px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	font-size: 14px;
+}
+.rackName, .rackStage, .rackNumber{
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	font-size: 14px;
+	padding: 3px;
+}
+.searchBox button {
+	background-color: #4f46e5;
+	color: white;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.searchBox button:hover {
+	background-color: #4338ca;
+}
+
+.infoBox {
+	display: flex;
+	gap: 5px;
+	padding: 20px;
+	justify-content: center;
+}
+h3{
+	text-align: center;
+}
+
+.cartBox {
+    position: fixed;
+    top: 0;
+    left: 0; /* 왼쪽으로 */
+    width: 880px;
+    height: 100%;
+    background: white;
+    transform: translateX(-100%); /* 왼쪽 밖으로 숨기기 */
+    transition: transform 0.3s ease;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1); /* 그림자 (선택) */
+}
+
+.cartBox.active {
+    transform: translateX(0); /* 보이게 */
+}
+/* X 버튼 스타일 */
+.closeBtn {
+    text-align: right;
+    padding: 10px;
+    font-size: 24px; /* 버튼 크기 */
+}
+
+.closeBtn button {
+	cursor:pointer;
+	text-align: right;
+	margin: auto 0 auto auto;
+    background-color: #4f46e5; /* 기본 버튼 색 (파란색 계열) */
+    color: white;
+    font-size: 18px; /* 글자 크기 */
+    font-weight: bold;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 50%; /* 원 모양 */
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.closeBtn button:hover {
+    background-color: #4338ca; /* 호버 시 어두운 파란색 */
+    transform: scale(1.1); /* 버튼 크기 키우기 */
+}
+
+/* 닫기 버튼 X 텍스트 스타일 */
+.closeBtn button:focus {
+    outline: none; /* 포커스 시 테두리 제거 */
+}
+/* 장바구니 안쪽 테이블 스타일 조금 수정 추천 */
+.cartTable {
+    width: 100%; /* cartBox 너비를 가득 채우기 위해 width 설정 */
+    border-collapse: collapse;
+    table-layout: auto; /* 셀 레이아웃을 자동으로 설정 */
+}
+
+.cart_itemName {
+    white-space: nowrap;       /* 줄 바꿈 없이 한 줄로 */
+    overflow: hidden;          /* 넘치는 글자는 숨기기 */
+    text-overflow: ellipsis;   /* 넘치면 ... 표시 */
+    max-width: 200px;          /* (필요하면) 최대 너비 지정 */
+}
+
+
+.resultBox{
+	width: 80%;	
+}
+
+table {
+    border-collapse: collapse;
+    border-bottom: 1px solid #ddd;
+    table-layout: fixed; /* 테이블 레이아웃을 고정으로 설정 */
+    
+}
+.infoTable{
+	width: 100%;
+	border-collapse: collapse;
+	background-color: #ffffff;
+	border-radius: 12px;
+	overflow: hidden;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+	background-color: #f9fafb;
+	margin: 0 auto;
+}
+
+#th_no{
+	width: 10px;
+}
+#th_quantity, #th_putCart{
+	width: 10px;
+}
+#th_location{
+	width: 25px;
+}
+#th_type{
+	width: 40px;
+}
+.td_type{
+	    white-space: nowrap; /* 한 줄로만 표시되게 설정 */
+    overflow-x: auto; /* 테이블이 길어지면 수평 스크롤이 생기도록 설정 */
+}
+#th_drawingNo{
+	width: 60px;
+}
+#th_detailDrawingNo{
+	width: 150px;
+}
+.td_detailDrwingNo {
+    overflow: hidden; /* 내용이 길 경우 잘리도록 설정 */
+    white-space: nowrap; /* 한 줄로만 표시되게 설정 */
+    overflow-x: auto; /* 테이블이 길어지면 수평 스크롤이 생기도록 설정 */
+}
+#th_itemName{
+	width: 100px;
+}
+.td_itemName{
+	white-space: nowrap; /* 한 줄로만 표시되게 설정 */
+    overflow-x: auto; /* 테이블이 길어지면 수평 스크롤이 생기도록 설정 */
+}
+
+
+.infoTable th,
+.cartTable th {
+	padding: 12px;
+	font-weight: 600;
+	border-bottom: 1px solid #ddd;
+	text-align: center;
+	font-size: 15px;
+	background-color: #e5e7eb;
+	color: #111827;
+}
+
+.infoTable td,
+.cartTable td {
+	padding: 10px;
+	border-bottom: 1px solid #eee;
+	text-align: center;
+}
+.infoTable tr:last-child td,
+.cartTable tr:last-child td {
+	border-bottom: 1px solid #eee;
+}
+.putCart,
+.cart_del {
+	cursor: pointer;
+	font-weight: bold;
+	color: #10b981;
+	transition: color 0.2s;
+}
+
+.putCart:hover,
+.cart_del:hover {
+	color: #059669;
+}
+
+input.delivery-quantity {
+	width: 80px;
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	text-align: center;
+}
+
+#requestBtn {
+	background-color: #3b82f6;
+	color: white;
+	font-weight: bold;
+	padding: 8px 16px;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	margin-top: 10px;
+}
+
+#requestBtn:hover {
+	background-color: #2563eb;
+}
+
+.openCartBtn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: #4f46e5;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: background-color 0.3s;
+    z-index: 1000;
+}
+
+.openCartBtn:hover {
+    background-color: #4338ca;
+}
