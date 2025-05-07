@@ -1,21 +1,20 @@
 $(document).ready(function(){
 	let params = sessionStorage.getItem("fromModiLocationPage");
-	console.log("params =", params); // 예상: "true"
-	
+		
 	if(params === "true"){
 		console.log("params is true");
 		$(".option").removeClass("active");
 		$("#location").addClass("active");
+		$(".tab-content").removeClass("active");
+		$(".tab-content.location").addClass("active");
 		unApprovalModiLocationRequestList();
 	}else{
 		//페이지 로드 시, 입고요청 페이지 메인으로 들어가기
 		unApprovalStockRequestList();
 	}
-	
-	/*	if($(".option.active").attr("id") === "stock"){
-			//페이지 로드 시, 입고요청 페이지 메인으로 들어가기
-			unApprovalStockRequestList();
-		} */
+	//세션삭제
+	sessionStorage.removeItem("fromModiLocationPage");
+
 	//미승인건만 체크 defalut
 	$("#unApproval").prop("checked", true);
 	
@@ -66,7 +65,7 @@ $(document).on("click", ".option", function(){
 		}
 
     } else if($(this).attr("id") === "location"){
-        $("#location").addClass("active");    // 'location' 탭 클릭 시 위치 변경 요청 테이블을 활성화
+        $(".location").addClass("active");    // 'location' 탭 클릭 시 위치 변경 요청 테이블을 활성화
 		
 		if(isUnApproval){
 			unApprovalModiLocationRequestList();
@@ -163,6 +162,7 @@ function makeStockPartTable(list, userDept) {
 
 // 위치변경 요청 테이블 만들기
 function makeLocationPartTable(list, userDept) {
+	
 	let thead = 
 		"<tr>" + 
 			((userDept === "구매팀" || userDept === "ERP팀") ? "<th class='location-th-check'>선택</th>" : "") + 
@@ -237,7 +237,6 @@ $("#unApproval").on("change", function(){
 
 //미승인 입고요청리스트
 function unApprovalStockRequestList(){
-
 	let approval = 0;
 	//입고요청 테이블
 	$.ajax({
@@ -257,11 +256,11 @@ function unApprovalStockRequestList(){
 
 //미승인 위치변경요청리스트
 function unApprovalModiLocationRequestList(){
-	console.log(">>> inside unApprovalModiLocationRequestList");
 	let approval = 0;
+	let url = "/request/modi-location/list/approval/" + approval + "/" + userDept + "/" + userId;
 	//위치변경 테이블
 	$.ajax({
-		url: "/request/modi-location/list/approval/" + approval + "/" + userDept + "/" + userId,
+		url: url,
 		type: "POST",
 		success: function(response){
 			let list = response;
@@ -278,7 +277,6 @@ function unApprovalModiLocationRequestList(){
 $(document).on("click", "#stock_approval", function() {
 	let stockRequestData =[];
 	let approvalUser = userName;
-	
 	let isApproval = true;
     $(".stockTbl_check").each(function() {
         if ($(this).prop("checked")) {
@@ -352,7 +350,6 @@ $(document).on("click", "#location_approval", function(){
 			});
 		}//if
 	});//each
-	console.log(locationRequestInfo)
 	
 	$.ajax({
 		url: "/request/location/approval/" + approvalUser,

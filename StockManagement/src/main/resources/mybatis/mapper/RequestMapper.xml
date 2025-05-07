@@ -19,7 +19,9 @@
 	<!-- 입고 요청 리스트 by id -->
 	<select id="getRequestStockListById">
 		SELECT * 
-		FROM stockRequest 
+		FROM 
+3
+ 
 		WHERE requesterId = #{requesterId};
 	</select>
 	
