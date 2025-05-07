@@ -101,7 +101,20 @@ public class RequestService implements IRequestService{
 		
 		return requestList;
 	}
-		
+	
+	//입고 요청 리스트 by 승인여부 + id
+	@Override
+	public List<RequestStockDTO> getRequestStockListByApprovalId(int approval, String requesterId) {
+		List<RequestStockDTO> requestList = mapper.getRequestStockListByApprovalId(approval, requesterId);
+		return requestList;
+	}
+	
+	//위치 변경 요청 리스트 by 승인여부 + id
+	@Override
+	public List<RequestModiLocationDTO> getRequestModiLocaListByApprovalId(int approval, String requesterId) {
+		List<RequestModiLocationDTO> requestList = mapper.getRequestModiLocaListByApprovalId(approval, requesterId);
+		return requestList;
+	}
 	//입고 요청 리스트
 	@Override
 	public List<RequestStockDTO> getRequestStockList() {
@@ -161,6 +174,22 @@ public class RequestService implements IRequestService{
 		
 		return result;
 	}
+	
+	//미승인건 개수세기 - 입고요청
+	@Override
+	public int cntUnapprovalStockRequest() {
+		int result = mapper.cntUnapprovalStockRequest();
+		return result;
+	}
+	
+	//미승인건 개수세기 - 위치변경
+	@Override
+	public int cntUnapprovalModiLocationRequest() {
+		int result = mapper.cntUnapprovalModiLocationRequest();
+		return result;
+	}
+
+
 	
 
 

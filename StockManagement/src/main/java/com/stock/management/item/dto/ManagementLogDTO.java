@@ -12,5 +12,6 @@ public class ManagementLogDTO {
 	private String userName;
 	private int itemId;
 	private String type;
+	private String drawingNo;
 	private LocalDateTime loggedDate;
 }

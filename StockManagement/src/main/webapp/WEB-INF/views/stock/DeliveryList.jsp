@@ -29,5 +29,7 @@
 	</div>
 	
 	<script src="/js/stock/DeliveryList.js"></script>
+	
+
 </body>
 </html>

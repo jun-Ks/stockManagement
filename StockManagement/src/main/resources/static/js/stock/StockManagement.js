@@ -1,84 +1,24 @@
-//location select option 추가
 $(document).ready(function(){
-	//품목수정/삭제 파트 hide
-	//$(".modify-box").hide();
-	$(".modify-box").show();
-	$(".insert-box").hide();
-	
-	//location selectbox 추가
-	const rackNames = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n'];
-	const rackNumberMap = {
-		a: 14,
-		b: 12, c: 12, d: 12, e: 12, f: 12,
-		g: 13,
-		h: 12, i: 12, j: 12,
-		k: 4,
-		l: 6, m: 6,
-		n: 2
-	};
-
-	// rackName 초기 옵션 추가
-	$('#rackName').append('<option value="NULL">A~N 선택해주세요.</option>');
-
-	// rackName에 A~N 옵션 추가
-	$.each(rackNames, function(index, name) {
-		$('#rackName').append(`<option value="${name}">${name.toUpperCase()}</option>`);
-	});
-
-	// rackName 선택 시 rackNumber 설정
-	$('#rackName').on('change', function() {
-		const selectedRack = $(this).val();
-		$('#rackNumber').empty().append('<option value="NULL">선택</option>');
-		$('#rackStage').empty().append('<option value="NULL">선택</option>');
-
-		if (selectedRack === 'NULL') return;
-
-		const maxNumber = rackNumberMap[selectedRack] || 0;
-
-		for (let i = 1; i <= maxNumber; i++) {
-			const padded = String(i).padStart(2, '0');
-			$('#rackNumber').append(`<option value="${padded}">${padded}</option>`);
-		}
-	});
-
-	// rackNumber 선택 시 rackStage 설정
-	$('#rackNumber').on('change', function() {
-		const selectedRack = $('#rackName').val();
-		const selectedNumber = $(this).val();
-
-		$('#rackStage').empty().append('<option value="NULL">선택</option>');
-
-		if (selectedRack === 'NULL' || selectedNumber === 'NULL') return;
-
-		let floors = [];
-		if (['a','b','c','d','e','f','g','h','i','j'].includes(selectedRack)) {
-			floors = ['1F', '2F', '3F'];
-		} else if (['k','l','m','n'].includes(selectedRack)) {
-			floors = ['1F', '2F', '3F', '4F', '5F'];
-		}
-
-		$.each(floors, function(index, floor) {
-			$('#rackStage').append(`<option value="${floor}">${floor}</option>`);
-		});
-	});
-});
-
+	$(".modify-box").hide();
+	makeRackSelect();
+})
 //option 선택 시 active 클래스 추가
 $(document).on("click", ".option", function(){
+	
     $(".option").removeClass("active");
     $(this).addClass("active");
 
     if($(this).attr("id") === "stock-insert"){
 		
         $("#stock-insert").addClass("active");     
-		  
+
 		$(".modify-box").hide();
 		$(".insert-box").show();
 		
     } else if($(this).attr("id") === "stock-modify"){
 		
         $("#stock-modify").addClass("active");
-		
+
 		$(".modify-box").show();
 		$(".insert-box").hide();
     }
@@ -121,7 +61,7 @@ function insertStockInfo(){
 		}),
 		success: function(response){
 			alert(response);
-			location.reload();
+			window.location.reload();
 		},
 		error: function(xhr){
 			alert(xhr.responseText);
@@ -174,10 +114,10 @@ function serchItemInfo(){
 			for(let i = 0; i < info.length; i++){
 				
 				tbody +=
-					"<tr>" +
+					"<tr id='itemId-" + info[i].no + "'>" +
 						"<td class='td_no'>" + info[i].no + "</td>" +  
 						"<td class='td_drawingNo'>" + info[i].drawingNo + "</td>" + 
-						"<td class='td_detailDrwingNo'>" + info[i].detailDrawingNo + "</td>" + 
+						"<td class='td_detailDrawingNo'>" + info[i].detailDrawingNo + "</td>" + 
 						"<td class='td_type'>" + info[i].type + "</td>" +  
 						"<td class='td_itemName'>" + info[i].itemName + "</td>" +  
 						"<td class='td_quantity'>" + info[i].calculatedQuantity + "</td>" +  
@@ -208,8 +148,276 @@ $("#searchKeyword").on("keyup", function(e) {
 });
 
 //항목 선택 시 수정/삭제 모달 생성
-$(document).on("click", ".stockList tbody", function(){
-	let td_no = $(this).cloest("tr").find(".td_no").text();
+$(document).on("click", ".stockList tbody tr", function(e){
 	
-	alert(td_no)
+	if ($(e.target).hasClass("td_del")) {
+	    return; // .td_del 클릭 시 모달을 띄우지 않도록 종료
+	}
+	
+    $("#itemModal").fadeIn();
+	
+	//수정 모달에 select 박스 추가 및 위치 정보 select 박스에 추가
+	let td_location = $(this).find(".td_location").text();
+	let location_parts = td_location.split("-");
+	let td_rackName = location_parts[0];
+	let td_rackNumber = location_parts[1];
+	let td_rackStage = location_parts[2];
+	   
+	makeRackSelect_modal(td_rackName, td_rackNumber, td_rackStage);
+	
+	//이외 input text값 추가
+	let td_no = $(this).find(".td_no").text();
+    let td_drawingNo = $(this).find(".td_drawingNo").text();
+    let td_detailDrawingNo = $(this).find(".td_detailDrawingNo").text();
+    let td_type = $(this).find(".td_type").text();
+    let td_itemName = $(this).find(".td_itemName").text();
+    let td_quantity = $(this).find(".td_quantity").text();
+	
+    $("#modalNo").val(td_no);
+    $("#modalDrawingNo").val(td_drawingNo);
+    $("#modalDetailDrawingNo").val(td_detailDrawingNo);
+    $("#modalType").val(td_type);
+    $("#modalItemName").val(td_itemName);
+    $("#modalQuantity").val(td_quantity);
+
+	
+});
+
+//모달에서 x 선택 시 모달 닫히기
+$(".close").on("click", function(){
+	$("#itemModal").fadeOut();
 })
+
+//location 값생성
+function makeRackSelect(){
+	const rackNames = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n'];
+	const rackNumberMap = {
+		a: 14,
+		b: 12, c: 12, d: 12, e: 12, f: 12,
+		g: 13,
+		h: 12, i: 12, j: 12,
+		k: 4,
+		l: 6, m: 6,
+		n: 2
+	};
+
+
+	// rackName 초기 옵션 추가
+	$('#rackName').append(
+		'<option value="NULL">A~N 선택해주세요.</option>'
+	);
+
+	// rackName에 A~N 옵션 추가
+	$.each(rackNames, function(index, name) {
+		$('#rackName').append(
+			`<option value="${name}">${name.toUpperCase()}</option>`);
+		
+	});
+
+	// rackName 선택 시 rackNumber 설정
+	$('#rackName').on('change', function() {
+		const selectedRack = $(this).val();
+		$('#rackNumber').empty().append('<option value="NULL">선택</option>');
+		$('#rackStage').empty().append('<option value="NULL">선택</option>');
+
+		if (selectedRack === 'NULL') return;
+
+		const maxNumber = rackNumberMap[selectedRack] || 0;
+
+		for (let i = 1; i <= maxNumber; i++) {
+			const padded = String(i).padStart(2, '0');
+			$('#rackNumber').append(`<option value="${padded}">${padded}</option>`);
+		}
+	});
+
+	// rackNumber 선택 시 rackStage 설정
+	$('#rackNumber').on('change', function() {
+		const selectedRack = $('#rackName').val();
+		const selectedNumber = $(this).val();
+
+		$('#rackStage').empty().append('<option value="NULL">선택</option>');
+
+		if (selectedRack === 'NULL' || selectedNumber === 'NULL') return;
+
+		let floors = [];
+		if (['a','b','c','d','e','f','g','h','i','j'].includes(selectedRack)) {
+			floors = ['1F', '2F', '3F'];
+		} else if (['k','l','m','n'].includes(selectedRack)) {
+			floors = ['1F', '2F', '3F', '4F', '5F'];
+		}
+
+		$.each(floors, function(index, floor) {
+			$('#rackStage').append(`<option value="${floor}">${floor}</option>`);
+		});
+	});
+}
+function makeRackSelect_modal(td_rackName, td_rackNumber, td_rackStage) {
+	
+	const rackNames = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n'];
+	const rackNumberMap = {
+		a: 14,
+		b: 12, c: 12, d: 12, e: 12, f: 12,
+		g: 13,
+		h: 12, i: 12, j: 12,
+		k: 4,
+		l: 6, m: 6,
+		n: 2
+	};
+
+	
+	// rackName 초기 옵션 추가
+	$('#modalRackName').empty().append(
+		'<option value="' + td_rackName + '">' + td_rackName + "</option>" + 
+		'<option value="NULL">A~N 선택해주세요.</option>'
+	);
+	$('#modalRackNumber').empty().append(
+		'<option value="' + td_rackNumber + '">' + td_rackNumber + "</option>"
+	);
+	$('#modalRackStage').empty().append(
+		'<option value="' + td_rackStage + '">' + td_rackStage + "</option>"
+	);
+	
+	// rackName에 A~N 옵션 추가
+	$.each(rackNames, function(index, name) {
+		$('#modalRackName').append(
+			`<option value="${name}">${name.toUpperCase()}</option>`);
+		
+	});
+
+	// rackName 선택 시 rackNumber 설정
+	$('#modalRackName').on('change', function() {
+		const selectedRack = $(this).val();
+		$('#modalRackNumber').empty().append('<option value="NULL">선택</option>');
+		$('#modalRackStage').empty().append('<option value="NULL">선택</option>');
+
+		if (selectedRack === 'NULL') return;
+
+		const maxNumber = rackNumberMap[selectedRack] || 0;
+
+		for (let i = 1; i <= maxNumber; i++) {
+			const padded = String(i).padStart(2, '0');
+			$('#modalRackNumber').append(`<option value="${padded}">${padded}</option>`);
+		}
+	});
+
+	// rackNumber 선택 시 rackStage 설정
+	$('#modalRackNumber').on('change', function() {
+		const selectedRack = $('#modalRackName').val();
+		const selectedNumber = $(this).val();
+
+		$('#modalRackStage').empty().append('<option value="NULL">선택</option>');
+
+		if (selectedRack === 'NULL' || selectedNumber === 'NULL') return;
+
+		let floors = [];
+		if (['a','b','c','d','e','f','g','h','i','j'].includes(selectedRack)) {
+			floors = ['1F', '2F', '3F'];
+		} else if (['k','l','m','n'].includes(selectedRack)) {
+			floors = ['1F', '2F', '3F', '4F', '5F'];
+		}
+
+		$.each(floors, function(index, floor) {
+			$('#modalRackStage').append(`<option value="${floor}">${floor}</option>`);
+		});
+	});
+}
+
+//수정 버튼 클릭 - 데이터 컨트롤러로 넘기기
+$("#modifyBtn").on("click", function(){
+	if (confirm("수정하시겠습니까?")) {
+		let no = $("#modalNo").val();
+		let drawingNo = $("#modalDrawingNo").val().toUpperCase();
+		let detailDrawingNo = $("#modalDetailDrawingNo").val().toUpperCase();
+		let type = $("#modalType").val().toUpperCase();
+		let itemName = $("#modalItemName").val().toUpperCase();
+		let calculatedQuantity = $("#modalQuantity").val();
+		let modalRackName = $("#modalRackName").val().toUpperCase();
+		let modalRackNumber = $("#modalRackNumber").val().toUpperCase();
+		let modalRackStage = $("#modalRackStage").val().toUpperCase();
+
+		let location = modalRackName + "-" + modalRackNumber + "-" + modalRackStage;
+
+		let info = {
+			no: no,
+			drawingNo: drawingNo,
+			detailDrawingNo: detailDrawingNo,
+			type: type,
+			itemName: itemName,
+			calculatedQuantity: calculatedQuantity,
+			location: location
+		};
+
+		$.ajax({
+			url: "/item/info/modification",
+			type: "PUT",
+			contentType: "application/json",
+			data: JSON.stringify(info),
+			success: function(response){
+				alert(response);
+				$(".modal").hide();
+				//수정성공하면 해당 행 정보 업데이트
+				let itemRow = $("#itemId-" + no);
+				
+				itemRow.find(".td_drawingNo").text(drawingNo);
+				itemRow.find(".td_detailDrawingNo").text(detailDrawingNo);
+				itemRow.find(".td_type").text(type);
+				itemRow.find(".td_itemName").text(itemName);
+				itemRow.find(".td_quantity").text(calculatedQuantity);
+				itemRow.find(".td_location").text(location);
+
+				
+			},
+			error: function(xhr){
+				alert(xhr.responseText);
+			}
+		});
+	}
+	
+});
+
+//삭제버튼 클릭 - 정보제거
+$("#deleteBtn").on("click", function(){
+	if (confirm("해당 품목을 정말로 삭제하시겠습니까?\n삭제 시, 관련 정보(입고/출고 정보, 등록/수정 요청 등)가 모두 삭제 됩니다.")) {
+		//itemId따고 - 삭제 진행
+		let itemId = $("#modalNo").val();
+		deleteInfo(itemId);
+		$.ajax({
+			url: "/item/info/" + itemId,
+			type: "DELETE",
+			success: function(response){
+				alert(response);
+				//성공시 모달 닫고 뒤 품목 수정/삭제 페이지에서도 해당 행 삭제
+				$(".modal").hide();
+				$("#itemId-" + itemId).remove();
+			},
+			error: function(xhr){
+				alert(xhr.responseText);
+			}
+		});
+	}
+});
+
+//조회 화면에서 삭제버튼 클릭 - 정보제거
+$(document).on("click", ".td_del", function(){
+	if (confirm("해당 품목을 정말로 삭제하시겠습니까?\n삭제 시, 관련 정보(입고/출고 정보, 등록/수정 요청 등)가 모두 삭제 됩니다.")) {
+		//itemId따고 - 삭제 진행
+		let itemId = $(this).closest("tr").find(".td_no").text();
+		deleteInfo(itemId);
+	}
+});
+
+function deleteInfo(itemId){
+	$.ajax({
+		url: "/item/info/" + itemId,
+		type: "DELETE",
+		success: function(response){
+			alert(response);
+			//성공시 모달 닫고 뒤 품목 수정/삭제 페이지에서도 해당 행 삭제
+			$(".modal").hide();
+			$("#itemId-" + itemId).remove();
+		},
+		error: function(xhr){
+			alert(xhr.responseText);
+		}
+	});
+}

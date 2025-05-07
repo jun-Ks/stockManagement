@@ -258,7 +258,8 @@ $(document).on("click", "#requestBtn", function(){
 			data: JSON.stringify(cart_info),
 			success: function(response){
 				alert(response)
-				//location.href = "/stock/delivery/list/";
+				sessionStorage.setItem("fromModiLocationPage", "true");
+				window.location.replace("/stock/request/list");
 			},
 			error: function(xhr){
 				alert(xhr.responseText);

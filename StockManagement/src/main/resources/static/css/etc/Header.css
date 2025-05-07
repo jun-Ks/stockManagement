@@ -58,3 +58,28 @@ header {
 #stock-management{
 	display:none;
 }
+
+.new-badge {
+  display: inline-block;
+  background-color: #ff3b30; /* 밝은 빨강 */
+  color: white;
+  font-size: 0.75rem; /* 작고 아담한 글씨 */
+  font-weight: bold;
+  padding: 2px 6px;
+  margin-left: 6px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  animation: popIn 0.3s ease-out;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

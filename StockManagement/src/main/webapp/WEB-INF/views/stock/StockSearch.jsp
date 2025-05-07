@@ -19,6 +19,7 @@
 	<div class="searchBox">
 		<select id="search-option">
 			<option value="itemName">품목명</option>
+			<option value="itemCode">품목코드</option>
 			<option value="drawingNo">도면번호</option>
 			<option value="type">타입</option>
 			<option value="location">위치</option>
@@ -49,6 +50,9 @@
 	<div class="openCartBtn">
     	🛒
 	</div>	
-<script src="/js/stock/StockSearch.js"></script>
+	<script src="/js/stock/StockSearch.js"></script>
+
+
+
 </body>
 </html>

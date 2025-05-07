@@ -19,6 +19,11 @@
 	
 <div class="requestBox">
 	<div class="form-group">
+		<label for="type">품목코드</label>
+		<input type="text" id="itemCode">
+	</div>
+	
+	<div class="form-group">
 		<label for="type">타입</label>
 		<input type="text" id="type">
 	</div>

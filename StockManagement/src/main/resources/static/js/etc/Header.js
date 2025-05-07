@@ -14,8 +14,35 @@ $(document).ready(function(){
 	
 	if(userDept === "구매팀" || userDept === "ERP팀"){
 		$("#stock-management").show();
+
+		$.ajax({
+			url: "/request/unapproval/count",
+			type: "GET",
+			contentType: "application/json",
+			success: function(response){
+				let cnt_stockRequest = response["입고 요청"];
+				let cnt_modiLocaRequest = response["위치 변경"];
+				if(cnt_stockRequest > 0 || cnt_modiLocaRequest > 0){
+					newBadge("requestListPage");
+				}
+			},
+			error: function(xhr){
+				alert(xhr.responseText);
+			}
+		});
 	}
+
 });
+
+//미승인건 있을경우 new 달아주기
+function newBadge(type){
+	let badgeId = "#" + type;
+	if($(badgeId + " .new-badge").length === 0){
+		let newBadge = "<span class='new-badge'>N</span>";
+		$(badgeId).append(newBadge);
+	}
+	
+}
 
 $("#logout").on("click", function(){
 	$("#logoutForm").submit();

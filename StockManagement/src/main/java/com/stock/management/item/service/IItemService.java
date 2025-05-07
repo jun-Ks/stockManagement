@@ -42,6 +42,12 @@ public interface IItemService {
 	//관리자 - 제품정보등록
 	public int insertInfo(ItemInfoDTO info);
 	
+	//관리자 - 제품 정보 수정
+	public int modifyInfo(ItemInfoDTO info);
+	
+	//관리자 - 제품 정보 삭제
+	public int deleteInfo(int itemId);
+	
 	//관리자 - 품목등록/수정/삭제 로그 기록하기
 	public int insertManagementLog(ManagementLogDTO logInfo);
 	

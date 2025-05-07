@@ -6,7 +6,7 @@
 
 	<!-- serch option에 따라 검색하기 -->
 	<select id="getItemByOption">
-		SELECT no, drawingNo, detailDrawingNo, type, itemName, calculatedQuantity, location
+		SELECT no, itemCode, drawingNo, detailDrawingNo, type, itemName, calculatedQuantity, location
 		FROM stockInfo 
 		WHERE ${searchOption} LIKE CONCAT('%', #{searchKeyword}, '%');
 	</select>
@@ -75,9 +75,23 @@
 		VALUES (#{itemCode}, #{drawingNo}, #{detailDrawingNo}, #{type}, #{itemName}, #{basicQuantity}, #{calculatedQuantity}, #{location});
 	</insert>
 	
+	<!-- 관리자 - 정보수정 -->
+	<update id="modifyInfo">
+		UPDATE stockInfo 
+		SET drawingNo = #{drawingNo}, detailDrawingNo = #{detailDrawingNo}, type = #{type}, itemName = #{itemName},
+			calculatedQuantity = #{calculatedQuantity}, location = #{location}, modifyDate = NOW()
+		WHERE no = #{no};
+	</update>
+	
+	<!-- 관리자 - 정보삭제 -->
+	<delete id="deleteInfo">
+		DELETE FROM stockInfo
+		WHERE no = #{itemId};
+	</delete>
+	
 	<!-- 관리자 - 품목등록/수정/삭제 로그 기록하기 -->
 	<insert id="insertManagementLog">
-		INSERT INTO managementLog (userId, userDept, userName, itemId, type)  
-		VALUES (#{userId}, #{userDept}, #{userName}, #{itemId}, #{type});
+		INSERT INTO managementLog (userId, userDept, userName, itemId, type, drawingNo)  
+		VALUES (#{userId}, #{userDept}, #{userName}, #{itemId}, #{type}, #{drawingNo});
 	</insert>
 </mapper>

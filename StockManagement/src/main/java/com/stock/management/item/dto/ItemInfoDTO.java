@@ -17,6 +17,7 @@ public class ItemInfoDTO {
 	private int calculatedQuantity;
 	private String location;
 	private LocalDateTime insertDate;
+	private LocalDateTime modifyDate;
 	
 	private String groupId;
 

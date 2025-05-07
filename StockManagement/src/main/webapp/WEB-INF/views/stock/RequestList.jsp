@@ -25,8 +25,12 @@
 	</div>
 
 	<div class="optionsBox"> 
-	    <div class="option active" id="stock">입고 요청</div>
-	    <div class="option" id="location">위치 변경 요청</div>
+	    <div class="option active" id="stock">
+	    	입고 요청
+	    </div>
+	    <div class="option" id="location">
+	    	위치 변경 요청
+	    </div>
 	</div>
 
 	<div class="requestList">
@@ -46,6 +50,8 @@
 		</div>
 	</div>
 
+
 	<script src="/js/stock/RequestList.js"></script>
+	
 </body>
 </html>

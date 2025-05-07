@@ -121,7 +121,7 @@ table {
 #th_detailDrawingNo{
 	width: 150px;
 }
-.td_detailDrwingNo {
+.td_detailDrawingNo {
     overflow: hidden; /* 내용이 길 경우 잘리도록 설정 */
     white-space: nowrap; /* 한 줄로만 표시되게 설정 */
     overflow-x: auto; /* 테이블이 길어지면 수평 스크롤이 생기도록 설정 */
@@ -152,7 +152,7 @@ table {
 	border-bottom: 1px solid #eee;
 	text-align: center;
 }
-.stockListe tr:last-child td{
+.stockList tr:last-child td{
 	border-bottom: 1px solid #eee;
 }
 
@@ -257,4 +257,104 @@ table {
 #notice{
 	font-size: 13px;
 	color: red;
+}
+
+.modal {
+	position: fixed;
+	z-index: 9999;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+	background-color: #fefefe;
+	margin: 10% auto;
+	padding: 20px;
+	border-radius: 10px;
+	width: 500px;
+	box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+	cursor: pointer;
+}
+.close:hover {
+	color: black;
+}
+
+.modal-content input[type="text"] {
+	width: 100%;
+	padding: 10px;
+	margin-top: 5px;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	font-size: 14px;
+	transition: border-color 0.2s;
+}
+.location-selects select{
+	width: 100%;
+	padding: 10px;
+	margin-top: 5px;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	font-size: 14px;
+	transition: border-color 0.2s;
+}
+.modal-content input[type="text"]:focus {
+	border-color: #4a90e2;
+	outline: none;
+}
+
+.modal-content button {
+	padding: 10px 20px;
+	margin: 0 auto;
+	text-align: center;
+	border: none;
+	border-radius: 6px;
+	font-size: 14px;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+.modal-buttons-box {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 30px;
+}
+#modal-title{
+	text-align: center;
+}
+#modifyBtn {
+	background-color: #4CAF50;
+	color: white;
+}
+
+#modifyBtn:hover {
+	background-color: #45a049;
+}
+
+#deleteBtn {
+	background-color: #f44336;
+	color: white;
+}
+
+#deleteBtn:hover {
+	background-color: #d32f2f;
+}
+
+.stockList tbody tr{
+	cursor: pointer;
+}
+
+#modalNo{
+	background-color: lightgray;
 }

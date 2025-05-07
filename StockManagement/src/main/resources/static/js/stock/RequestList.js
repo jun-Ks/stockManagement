@@ -1,10 +1,49 @@
 $(document).ready(function(){
-	//페이지 로드 시, 입고요청 페이지 메인으로 들어가기
-	if($(".option.active").attr("id") === "stock"){
+	let params = sessionStorage.getItem("fromModiLocationPage");
+	console.log("params =", params); // 예상: "true"
+	
+	if(params === "true"){
+		console.log("params is true");
+		$(".option").removeClass("active");
+		$("#location").addClass("active");
+		unApprovalModiLocationRequestList();
+	}else{
+		//페이지 로드 시, 입고요청 페이지 메인으로 들어가기
 		unApprovalStockRequestList();
 	}
+	
+	/*	if($(".option.active").attr("id") === "stock"){
+			//페이지 로드 시, 입고요청 페이지 메인으로 들어가기
+			unApprovalStockRequestList();
+		} */
 	//미승인건만 체크 defalut
 	$("#unApproval").prop("checked", true);
+	
+	if(userDept === "구매팀" || userDept === "ERP팀"){
+		$.ajax({
+			url: "/request/unapproval/count",
+			type: "GET",
+			contentType: "application/json",
+			success: function(response){
+				let cnt_stockRequest = response["입고 요청"];
+				let cnt_modiLocaRequest = response["위치 변경"];
+				if(cnt_stockRequest > 0 || cnt_modiLocaRequest > 0){
+					newBadge("requestListPage");
+				}
+				if(cnt_stockRequest > 0){
+					newBadge("stock");
+				}
+				if(cnt_modiLocaRequest > 0){
+					newBadge("location");
+				}
+			},
+			error: function(xhr){
+				alert(xhr.responseText);
+				return false;
+			}
+		});
+	}//IF
+	
 });
 
 
@@ -27,7 +66,7 @@ $(document).on("click", ".option", function(){
 		}
 
     } else if($(this).attr("id") === "location"){
-        $(".location").addClass("active");    // 'location' 탭 클릭 시 위치 변경 요청 테이블을 활성화
+        $("#location").addClass("active");    // 'location' 탭 클릭 시 위치 변경 요청 테이블을 활성화
 		
 		if(isUnApproval){
 			unApprovalModiLocationRequestList();
@@ -186,12 +225,10 @@ $(document).on("click", ".location-th-check", function() {
 //미승인건만 보기 체크 시 미승인 건 들만 보여줌
 $("#unApproval").on("change", function(){
 	if($(this).prop("checked")){
-		//미승인건 approval = 0
-		let approval = 0;
 		
-		unApprovalStockRequestList(approval)
+		unApprovalStockRequestList();
 		
-		unApprovalModiLocationRequestList(approval);
+		unApprovalModiLocationRequestList();
 	}else{
 		getRequestStockList(userId, userDept);
 		getRequestModiLocationList(userId, userDept);
@@ -200,10 +237,11 @@ $("#unApproval").on("change", function(){
 
 //미승인 입고요청리스트
 function unApprovalStockRequestList(){
+
 	let approval = 0;
 	//입고요청 테이블
 	$.ajax({
-		url: "/request/stock/list/approval/" + approval,
+		url: "/request/stock/list/approval/" + approval + "/" + userDept + "/" + userId,
 		type: "POST",
 		success: function(response){
 			let list = response;
@@ -219,10 +257,11 @@ function unApprovalStockRequestList(){
 
 //미승인 위치변경요청리스트
 function unApprovalModiLocationRequestList(){
+	console.log(">>> inside unApprovalModiLocationRequestList");
 	let approval = 0;
 	//위치변경 테이블
 	$.ajax({
-		url: "/request/modi-location/list/approval/" + approval,
+		url: "/request/modi-location/list/approval/" + approval + "/" + userDept + "/" + userId,
 		type: "POST",
 		success: function(response){
 			let list = response;
@@ -329,3 +368,13 @@ $(document).on("click", "#location_approval", function(){
 		}
 	});
 })
+
+//미승인건 있을경우 new 달아주기
+function newBadge(type){
+	let badgeId = "#" + type;
+	if($(badgeId + " .new-badge").length === 0){
+		let newBadge = "<span class='new-badge'>N</span>";
+		$(badgeId).append(newBadge);
+	}
+	
+}

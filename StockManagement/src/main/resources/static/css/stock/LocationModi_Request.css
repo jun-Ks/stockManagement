@@ -34,7 +34,7 @@ body {
 	border: 1px solid #ccc;
 	border-radius: 8px;
 	font-size: 14px;
-	padding: 3px;
+	text-align: center;
 }
 .searchBox button {
 	background-color: #4f46e5;
@@ -119,7 +119,7 @@ h3{
     white-space: nowrap;       /* 줄 바꿈 없이 한 줄로 */
     overflow: hidden;          /* 넘치는 글자는 숨기기 */
     text-overflow: ellipsis;   /* 넘치면 ... 표시 */
-    max-width: 200px;          /* (필요하면) 최대 너비 지정 */
+    max-width: 150px;          /* (필요하면) 최대 너비 지정 */
 }
 
 
@@ -258,4 +258,9 @@ input.delivery-quantity {
 
 .openCartBtn:hover {
     background-color: #4338ca;
+}
+
+
+#th_cart_del{
+	width: 10px;
 }

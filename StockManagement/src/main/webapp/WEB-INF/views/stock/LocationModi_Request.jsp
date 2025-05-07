@@ -62,6 +62,7 @@
 	<div class="openCartBtn">
     	🛒
 	</div>	
-<script src="/js/stock/LocationModi_Request.js"></script>
+	<script src="/js/stock/LocationModi_Request.js"></script>
+
 </body>
 </html>

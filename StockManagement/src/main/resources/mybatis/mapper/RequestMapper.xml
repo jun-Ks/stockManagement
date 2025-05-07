@@ -6,8 +6,8 @@
 
 	<!-- 입고 요청 하기 -->
 	<insert id="insertRequestStockInfo">
-		INSERT INTO stockRequest (type, itemName, basicQuantity, drawingNo, location, requesterId, requesterDept, requesterName, groupId) 
-		VALUES(#{type}, #{itemName}, #{basicQuantity}, #{drawingNo}, #{location}, #{requesterId}, #{requesterDept}, #{requesterName}, #{groupId});
+		INSERT INTO stockRequest (type, itemCode, itemName, basicQuantity, drawingNo, location, requesterId, requesterDept, requesterName, groupId) 
+		VALUES(#{type}, #{itemCode}, #{itemName}, #{basicQuantity}, #{drawingNo}, #{location}, #{requesterId}, #{requesterDept}, #{requesterName}, #{groupId});
 	</insert>
 	
 	<!-- 위치 변경 요청 하기 -->
@@ -42,6 +42,20 @@
 		SELECT * 
 		FROM locationModiRequest 
 		WHERE approval = #{approval};
+	</select>
+	
+	<!-- 입고 요청 리스트 by 승인상태 + ID -->
+	<select id="getRequestStockListByApprovalId">
+		SELECT * 
+		FROM stockRequest
+		WHERE approval = #{approval} AND requesterId = #{requesterId};
+	</select>
+	
+	<!-- 위치 변경 요청 리스트 by 승인상태 + ID-->
+	<select id="getRequestModiLocaListByApprovalId">
+		SELECT * 
+		FROM locationModiRequest 
+		WHERE approval = #{approval} AND requesterId = #{requesterId};
 	</select>
 	
 	<!-- 입고 요청 리스트 -->
@@ -83,4 +97,14 @@
 		SET itemId = #{itemId} 
 		WHERE groupId = #{groupId};	
 	</update>
+	
+	<!-- 미승인건 개수세기 - 입고요청 -->
+	<select id="cntUnapprovalStockRequest">
+		SELECT COUNT(*) FROM stockRequest WHERE approval = 0;
+	</select>
+	
+	<!-- 미승인건 개수세기 - 위치변경 -->
+	<select id="cntUnapprovalModiLocationRequest">
+		SELECT COUNT(*) FROM locationModiRequest WHERE approval = 0;
+	</select>
 </mapper>

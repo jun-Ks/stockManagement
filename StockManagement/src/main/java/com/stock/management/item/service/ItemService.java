@@ -23,9 +23,9 @@ public class ItemService implements IItemService{
 	//키워드로 품목찾기
 	@Override
 	public List<ItemInfoDTO> getItemByOption(SearchDTO searchInfo) {
-		System.out.println(searchInfo.toString());
+		//System.out.println(searchInfo.toString());
 		List<ItemInfoDTO> itemList = mapper.getItemByOption(searchInfo);
-		System.out.println("service : " + itemList.toString());
+		//System.out.println("service : " + itemList.toString());
 		return itemList;
 	}
 	
@@ -111,6 +111,22 @@ public class ItemService implements IItemService{
 		return result;
 	}
 	
+	//관리자 - 제품정보 수정
+	@Override
+	public int modifyInfo(ItemInfoDTO info) {
+		
+		int result = mapper.modifyInfo(info); 
+		return result;
+	}
+	
+	//관리자 - 제품정보 삭제
+	@Override
+	public int deleteInfo(int itemId) {
+		
+		int result = mapper.deleteInfo(itemId);
+		return result;
+	}
+	
 	//관리자 - 품목등록/수정/삭제 로그 기록하기
 	@Override
 	public int insertManagementLog(ManagementLogDTO logInfo) {
@@ -118,6 +134,8 @@ public class ItemService implements IItemService{
 		
 		return result;
 	}
+
+
 	
 
 }

@@ -88,6 +88,32 @@
 	</div>	
 	
 	
+	<!-- 모달 창 -->
+	<div id="itemModal" class="modal" style="display:none;">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			
+			<h2 id="modal-title">품목 수정/삭제</h2>
+			
+			<p><strong>품목번호:</strong> <input type="text" id="modalNo" readonly></p>
+		    <p><strong>도면번호:</strong> <input type="text" id="modalDrawingNo"></p>
+		    <p><strong>세부규격:</strong> <input type="text" id="modalDetailDrawingNo"></p>
+		    <p><strong>타입:</strong> <input type="text" id="modalType"></p>
+		    <p><strong>품명:</strong> <input type="text" id="modalItemName"></p>
+		    <p><strong>수량:</strong> <input type="text" id="modalQuantity"></p>
+		    <p><strong>위치:</strong></p>
+		    <p class="location-selects">
+				<select id="modalRackName"></select>
+				<select id="modalRackNumber"></select>
+				<select id="modalRackStage"></select>
+			</p>
+			
+			<div class="modal-buttons-box">
+				<button id="deleteBtn">삭제</button>
+				<button id="modifyBtn">수정</button>
+			</div>
+		</div>
+	</div>
 	<script src="/js/stock/StockManagement.js"></script>
 </body>
 </html>

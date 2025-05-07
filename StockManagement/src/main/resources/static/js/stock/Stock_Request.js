@@ -58,7 +58,8 @@ $(document).ready(function() {
 
 
 $("#requestBtn").on("click", function(){
-	//출고정보 가져오기
+	//입고정보 가져오기
+	let itemCode = $("#itemCode").val().toUpperCase();
 	let type = $("#type").val().toUpperCase();
 	let itemName = $("#itemName").val().toUpperCase();
 	let drawingNo = $("#drawingNo").val().toUpperCase();
@@ -66,7 +67,7 @@ $("#requestBtn").on("click", function(){
 	let location = $("#rackName").val() + "-" + $("#rackNumber").val() + "-" + $("#rackStage").val();
 	let requesterId = $("#userId").text().toUpperCase();
 	
-	//출고정보 유효성검사 - 품목명 미입력 경고
+	//입고정보 유효성검사 - 품목명 미입력 경고
 	if(itemName === ""){
 		alert("품목명이 입력되지 않았습니다. 확인해주세요");
 		
@@ -74,8 +75,9 @@ $("#requestBtn").on("click", function(){
 	}
 	
 	
-	//출고정보 모으기
+	//입고정보 모으기
 	let request_info = {
+		itemCode: itemCode,
 	    requesterId: requesterId,
 	    type: type, 
 	    itemName: itemName, 
@@ -84,7 +86,7 @@ $("#requestBtn").on("click", function(){
 	    location: location.toUpperCase()
 	};
 	
-	//출고 정보들 백엔드로 넘기기
+	//입고 정보들 백엔드로 넘기기
 	$.ajax({
 		url: "/stock/request/info",
 		type: "POST",
@@ -92,11 +94,11 @@ $("#requestBtn").on("click", function(){
 		data: JSON.stringify(request_info),
 		success: function(response){
 			alert(response)
+			window.location.replace("/stock/request/list");
 		},
 		error: function(xhr){
 			alert(xhr.responseText);
 			
-			return false;
 		}
 	});	
 });

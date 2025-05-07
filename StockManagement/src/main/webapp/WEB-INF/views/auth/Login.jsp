@@ -14,6 +14,8 @@
 
 <div class="container">
 	<div class="input-group">
+		<img src="http://www.win-tec.co.kr/img/logo.png" alt="(주)윈텍" title="">
+		<h3>윈텍 창고 품목 검색/출고 페이지</h3>
 	    <input type="text" id="userId" placeholder="아이디" value="s2208"><br>
 	</div>
 	<div class="input-group">
@@ -22,6 +24,16 @@
 	<button id="login">로그인</button>
 </div>
 
+<footer>
+	<%@ include file="../etc/Footer.jsp" %>
+</footer>
+
 <script src="/js/user/Login.js"></script>
+
+	<div class="footer">
+	    <div class="footer-content">
+			<p>&copy; 2025 WINTEC — Developed by KSJ</p>
+	    </div>
+	</div>
 </body>
 </html>

@@ -12,6 +12,7 @@ public class DeliveryLogDTO {
 	private String userName;
 	private String userDept;
 	private int itemId;
+
 	private int cartQty;
 	private LocalDateTime deliveryDate;
 }

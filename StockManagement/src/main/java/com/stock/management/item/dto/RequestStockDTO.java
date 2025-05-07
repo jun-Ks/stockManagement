@@ -9,6 +9,7 @@ public class RequestStockDTO {
 	
 	private int no;
 	private int itemId;
+	private String itemCode;
 	private String type;
 	private String itemName;
 	private String drawingNo;

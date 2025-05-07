@@ -21,6 +21,7 @@ function serchItemInfo(){
 			let thead = 
 				"<tr>" + 
 					"<th id='th_no'>no</th>" + 
+					"<th id='th_itemCode'>품목코드</th>" + 
 					"<th id='th_drawingNo'>도면번호</th>" +
 					"<th id='th_detailDrawingNo'>세부규격</th>" + 
 					"<th id='th_type'>타입</th>" + 
@@ -48,6 +49,7 @@ function serchItemInfo(){
 				tbody +=
 					"<tr>" +
 						"<td class='td_no'>" + info[i].no + "</td>" +  
+						"<td class='td_itemCode'>" + info[i].itemCode + "</td>" +  
 						"<td class='td_drawingNo'>" + info[i].drawingNo + "</td>" + 
 						"<td class='td_detailDrwingNo'>" + info[i].detailDrawingNo + "</td>" + 
 						"<td class='td_type'>" + info[i].type + "</td>" +  
