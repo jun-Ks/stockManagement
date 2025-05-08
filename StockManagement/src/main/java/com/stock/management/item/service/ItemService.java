@@ -73,6 +73,16 @@ public class ItemService implements IItemService{
 		
 		return logList;
 	}
+	
+	
+	//기간별 사용자 상관없이 모든 출고로그가져오기
+	@Override
+	public List<DeliveryLogDTO> getAllDeliveryLog(String stratDate, String endDate) {
+		
+		List<DeliveryLogDTO> logList = mapper.getAllDeliveryLog(stratDate, endDate);
+		
+		return logList;
+	}
 
 	//제품 정보 등록(입고)하기
 	@Override
@@ -134,6 +144,7 @@ public class ItemService implements IItemService{
 		
 		return result;
 	}
+
 
 
 	

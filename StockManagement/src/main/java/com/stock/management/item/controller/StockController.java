@@ -71,5 +71,31 @@ public class StockController {
 		return ResponseEntity.ok(response);
 	}
 	
+	//사용자 관계없이 모든 출고정보가져오기
+	@GetMapping("/delivery/all-list/{startDate}/{endDate}")
+	public ResponseEntity<DeliveryListDTO> getAllDeliveryList(
+			@PathVariable("startDate") String startDate, 
+			@PathVariable("endDate") String endDate
+			){
+		
+		//기간 별 로그담기
+		List<DeliveryLogDTO> logList = service.getAllDeliveryLog(startDate, endDate);
+		
+		//제품 정보리스트 담기
+		List<ItemInfoDTO> itemInfoList = new ArrayList<>();
+		
+		for (int i = 0; i < logList.size(); i++) {
+		    int itemId = logList.get(i).getItemId();
+		    itemInfoList.addAll(service.getItemById(itemId));
+		}
+		
+		//출고 리스트 + 제품 정보 return
+		DeliveryListDTO response = new DeliveryListDTO();
+		response.setItemInfoList(itemInfoList);
+		response.setLogList(logList);
+		
+		return ResponseEntity.ok(response);
+	}
+	
 
 }

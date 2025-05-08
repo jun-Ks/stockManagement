@@ -46,6 +46,12 @@
 		AND userId = #{userId};
 	</select>
 	
+	<select id="getAllDeliveryLog">
+		SELECT * 
+		FROM deliveryLog 
+		WHERE DATE(deliveryDate) BETWEEN #{startDate} AND #{endDate}
+	</select>
+	
 	<!-- 제품정보 등록(입고) -->
 	<insert id="insertItemInfo" parameterType="java.util.List">
 	    INSERT INTO stockInfo (drawingNo, type, itemName, basicQuantity, calculatedQuantity, location, groupId)

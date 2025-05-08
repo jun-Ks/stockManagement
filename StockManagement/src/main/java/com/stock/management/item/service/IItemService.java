@@ -30,6 +30,9 @@ public interface IItemService {
 	//기간별 로그 가져오기
 	public List<DeliveryLogDTO> getDeliveryLogByDate(@Param("startDate") String stratDate, @Param("endDate") String endDate, @Param("userId") String userId);
 	
+	//기간별 사용자 상관없이 출고로그 모두 가져오기
+	public List<DeliveryLogDTO> getAllDeliveryLog(@Param("startDate") String stratDate, @Param("endDate") String endDate);
+		
 	//제품 정보 등록(입고)하기
 	public int insertItemInfo(List<ItemInfoDTO> itemInfo);
 	
