@@ -20,7 +20,8 @@
 
 	<div class="optionsBox">
 		<div class="check-option">
-			<input type="checkbox" id="unApproval"> 미승인건만 보기
+			<input type="checkbox" id="unApproval">
+			<label for="unApproval">미승인건만 보기</label>
 		</div>
 	</div>
 

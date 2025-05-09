@@ -8,7 +8,14 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class PageController {
-	
+
+	private String isLogined(HttpSession session, String page){
+		if(session.getAttribute("userId") == null){
+			return "/auth/Login";
+		}
+		return page;
+	}
+
 	//로그인 페이지
 	@GetMapping("/")
 	public String indexPage() {
@@ -17,42 +24,38 @@ public class PageController {
 	
 	//재고 검색 / 출고
 	@GetMapping("/stock")
-	public String stockViewPage() {
-		return "/stock/StockSearch";
+	public String stockViewPage(HttpSession session) {
+		return isLogined(session, "/stock/StockSearch");
 	}
 	
 	//출고현황 리스트
 	@GetMapping("/stock/delivery/list/")
-	public String deliveryListByToday() {
-		return "/stock/DeliveryList";
+	public String deliveryListByToday(HttpSession session) {
+		return isLogined(session, "/stock/DeliveryList");
 	}
 	
 	//입고요청
 	@GetMapping("/stock/request")
-	public String updateStockRequest() {
-		
-		return "/stock/Stock_Request";
+	public String updateStockRequest(HttpSession session) {
+		return isLogined(session, "/stock/Stock_Request");	
 	}
 	
 	//위치 변경 
 	@GetMapping("/stock/location/modi/request")
-	public String updateLocationRequest() {
-		
-		return "/stock/LocationModi_Request";
+	public String updateLocationRequest(HttpSession session) {
+		return isLogined(session, "/stock/LocationModi_Request");		
 	}
 	
 	//요청/변경 현황페이지
 	@GetMapping("/stock/request/list")
-	public String requestListPage() {
-		
-		return "/stock/RequestList";
+	public String requestListPage(HttpSession session) {
+		return isLogined(session, "/stock/RequestList");	
 	}
 	
 	//관리자 품목 관리
 	@GetMapping("/stock/management")
-	public String managementPage() {
-		
-		return "/stock/StockManagement";
+	public String managementPage(HttpSession session) {
+		return isLogined(session, "/stock/StockManagement");	
 	}
 	
 	@PostMapping("/auth/logout")

@@ -358,3 +358,11 @@ table {
 #modalNo{
 	background-color: lightgray;
 }
+
+#toolRoom{
+	margin-left: 30px;
+}
+
+#toolRoom span{
+	font-size: 13px;
+}

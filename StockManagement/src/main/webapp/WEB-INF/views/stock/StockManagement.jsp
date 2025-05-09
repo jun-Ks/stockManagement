@@ -58,8 +58,12 @@
 			</div>
 		
 			<div class="form-group">
-				<label>위치</label>
-				<div id="notice"> * 위치가 아래 항목으로 등록 할 수 없을 경우, 빈공백으로 등록 후 전산팀으로 "위치 등록 요청"을 해주세요.</div>
+				<label>위치
+					<span id="toolRoom">
+						<input type="checkbox" id="toolRoom-chk"> <span>공구실</span>
+					</span>
+				</label>
+				<!-- <div id="notice"> * 위치가 아래 항목으로 등록 할 수 없을 경우, 빈공백으로 등록 후 전산팀으로 "위치 등록 요청"을 해주세요.</div> -->
 				<div class="location-selects">
 					<select id="rackName"></select>
 					<select id="rackNumber"></select>

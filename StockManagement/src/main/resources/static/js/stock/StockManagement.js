@@ -39,6 +39,10 @@ function insertStockInfo(){
 	let basicQuantity = $("#basicQuantity").val();
 	let location = ($("#rackName").val() + "-" + $("#rackNumber").val() + "-" + $("#rackStage").val()).toUpperCase();
 	
+	//공구실 체크되어있으면 location = 공구실로 설정
+	if($("#toolRoom-chk").prop("checked")){
+		location = "공구실";
+	}
 	let insertData = {
 		itemCode: itemCode, 
 		type: type, 
@@ -421,3 +425,14 @@ function deleteInfo(itemId){
 		}
 	});
 }
+
+//위치 - 공구실 체크 시 위치 select박스 비활성화
+$("#toolRoom-chk").on("change", function() {
+    if ($(this).prop("checked")) {
+        // 체크되었을 때 select 비활성화
+        $(".location-selects select").prop("disabled", true);
+    } else {
+        // 체크 해제 시 select 활성화
+        $(".location-selects select").prop("disabled", false);
+    }
+});

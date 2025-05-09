@@ -122,7 +122,9 @@ input[type="checkbox"] {
 .tab-content.active {
 	display: block;
 }
-
+label{
+	cursor: pointer;
+}
 @keyframes fadeInScale {
 	from {
 		opacity: 0;

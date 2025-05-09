@@ -108,21 +108,28 @@ function makeTbl(logList, itemInfoList){
 	$(".deliveryList thead").html(thead);
 
 	let tbody = ""; 
-
-	for(let i = 0; i < logList.length; i++){
-		tbody +=
-			"<tr>" +
-				"<td>" + itemInfoList[i].no + "</td>" +
-				"<td>" + itemInfoList[i].drawingNo + "</td>" +
-				"<td>" + itemInfoList[i].itemName + "</td>" +
-				"<td>" + itemInfoList[i].location + "</td>" + 
-				"<td>" + logList[i].cartQty + "</td>" +
-				"<td>" + logList[i].userId + "</td>" +
-				"<td>" + logList[i].userDept + "</td>" +
-				"<td>" + logList[i].userName + "</td>" +
-				"<td>" + logList[i].deliveryDate.replace("T", " ") + "</td>" +
-			"</tr>";
+	if(logList.length > 0){
+		for(let i = 0; i < logList.length; i++){
+			tbody +=
+				"<tr>" +
+					"<td class='td_no'>" + itemInfoList[i].no + "</td>" +
+					"<td>" + itemInfoList[i].drawingNo + "</td>" +
+					"<td>" + itemInfoList[i].itemName + "</td>" +
+					"<td>" + itemInfoList[i].location + "</td>" + 
+					"<td>" + logList[i].cartQty + "</td>" +
+					"<td>" + logList[i].userId + "</td>" +
+					"<td>" + logList[i].userDept + "</td>" +
+					"<td>" + logList[i].userName + "</td>" +
+					"<td>" + logList[i].deliveryDate.replace("T", " ") + "</td>" +
+				"</tr>";
+		}
+	}else{
+		tbody = 
+			`<tr>
+				<td colspan='9'> 출고 데이터가 없습니다. </td>
+			</tr>`;
 	}
+	
 	$(".deliveryList tbody").html(tbody);
 }
 
@@ -135,22 +142,29 @@ $("#manager-shipment-chk").on("change", function(){
 })
 //엑셀 변환
 $("#createExcel").on("click", function(){
-	let searched_startDate = $("#searched-startDate").text();
-	let searched_endDate = $("#searched-endDate").text();
-	let status = 0; //0본인, 1전체
-	
-	//관리자 + 관리자 메뉴 체크 유무
-	let is_checked = $("#manager-shipment-chk").prop("checked");
-	
-	if(userDept === "구매팀" || userDept === "ERP팀"){
-		//본인 것만
-		if(is_checked){
-			status = 0;
-		}else{
-			status = 1;
+	if($(".td_no").length === 0){
+		alert("엑셀 변환 할 데이터가 없습니다.")
+		return false;
+		
+	}else{
+		let searched_startDate = $("#searched-startDate").text();
+		let searched_endDate = $("#searched-endDate").text();
+		let status = 0; //0본인, 1전체
+		
+		//관리자 + 관리자 메뉴 체크 유무
+		let is_checked = $("#manager-shipment-chk").prop("checked");
+		
+		if(userDept === "구매팀" || userDept === "ERP팀"){
+			//본인 것만
+			if(is_checked){
+				status = 0;
+			}else{
+				status = 1;
+			}
 		}
+		deliveryAjax(searched_startDate, searched_endDate, status, userId);
 	}
-	deliveryAjax(searched_startDate, searched_endDate, status, userId);
+	
 });
 
 function deliveryAjax(searched_startDate, searched_endDate, status, userId){
@@ -169,7 +183,6 @@ function deliveryAjax(searched_startDate, searched_endDate, status, userId){
 	            const match = disposition.match(/filename="?(.+)"?/);
 	            if (match.length > 1) {
 	                filename = decodeURIComponent(match[1]);
-					console.log(filename)
 	            }
 	        }
 

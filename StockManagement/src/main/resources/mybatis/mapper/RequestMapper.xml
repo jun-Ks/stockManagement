@@ -19,9 +19,7 @@
 	<!-- 입고 요청 리스트 by id -->
 	<select id="getRequestStockListById">
 		SELECT * 
-		FROM 
-3
- 
+		FROM stockRequest 
 		WHERE requesterId = #{requesterId};
 	</select>
 	

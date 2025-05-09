@@ -44,7 +44,7 @@ body {
 }
 
 .deliveryList {
-	width: 80%;
+	width: 100%;
 	border-collapse: collapse;
 	background-color: #ffffff;
 	border-radius: 12px;
@@ -97,9 +97,24 @@ body {
 #searched-date, #manager-menu{
 	text-align: center;
 	margin-bottom: 30px;
+
 }
 
+.table-box{
+	margin: 0 auto;
+	width:80%;
+	
+}
 
+.button-area {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+#createExcel{
+	width: 3%;
+	cursor: pointer;
+}
 @media (max-width: 768px) {
 	.searchBox {
 		flex-direction: column;
