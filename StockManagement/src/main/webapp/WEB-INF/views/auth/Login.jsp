@@ -16,12 +16,15 @@
 	<div class="input-group">
 		<img src="http://www.win-tec.co.kr/img/logo.png" alt="(주)윈텍" title="">
 		<h3>윈텍 창고 품목 검색/출고 페이지</h3>
-	    <input type="text" id="userId" placeholder="아이디" value="s2208"><br>
+	    <input type="text" id="userId" placeholder="아이디"><br>
 	</div>
 	<div class="input-group">
-	    <input type="password" id="userPw" placeholder="패스워드" value="1111"><br>
+	    <input type="password" id="userPw" placeholder="패스워드"><br>
 	</div>
 	<button id="login">로그인</button>
+	<br>
+	<!--<button id="call-erpteam">전산팀 호출하기</button> !-->
+
 </div>
 
 <footer>

@@ -19,3 +19,7 @@ $("#login").on("click", function(){
 		}
 	});
 })
+
+$("#call-erpteam").on("click", function(){
+	alert("hi")
+});
