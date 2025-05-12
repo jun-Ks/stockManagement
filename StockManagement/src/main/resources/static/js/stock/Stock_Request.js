@@ -63,6 +63,7 @@ $("#requestBtn").on("click", function(){
 	let type = $("#type").val().toUpperCase();
 	let itemName = $("#itemName").val().toUpperCase();
 	let drawingNo = $("#drawingNo").val().toUpperCase();
+	let detailDrawingNo = $("#detailDrawingNo").val().toUpperCase();
 	let basicQuantity = parseInt($("#basicQuantity").val());
 	let location = $("#rackName").val() + "-" + $("#rackNumber").val() + "-" + $("#rackStage").val();
 	let requesterId = $("#userId").text().toUpperCase();
@@ -82,6 +83,7 @@ $("#requestBtn").on("click", function(){
 	    type: type, 
 	    itemName: itemName, 
 	    drawingNo: drawingNo,
+		detailDrawingNo: detailDrawingNo,
 	    basicQuantity: basicQuantity,
 	    location: location.toUpperCase()
 	};

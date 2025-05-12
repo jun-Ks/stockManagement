@@ -13,6 +13,7 @@ public class RequestStockDTO {
 	private String type;
 	private String itemName;
 	private String drawingNo;
+	private String detailDrawingNo;
 	private int basicQuantity;
 	private String location;
 	private int approval;

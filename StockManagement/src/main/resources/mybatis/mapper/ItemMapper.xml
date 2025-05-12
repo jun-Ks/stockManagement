@@ -54,10 +54,10 @@
 	
 	<!-- 제품정보 등록(입고) -->
 	<insert id="insertItemInfo" parameterType="java.util.List">
-	    INSERT INTO stockInfo (drawingNo, type, itemName, basicQuantity, calculatedQuantity, location, groupId)
+	    INSERT INTO stockInfo (itemCode, drawingNo, detailDrawingNo, type, itemName, basicQuantity, calculatedQuantity, location, groupId)
 	    VALUES
 	    <foreach collection="list" item="item" separator=",">
-	        (#{item.drawingNo}, #{item.type}, #{item.itemName}, #{item.basicQuantity}, #{item.calculatedQuantity}, #{item.location}, #{item.groupId})
+	        (#{item.itemCode}, #{item.drawingNo}, #{item.detailDrawingNo}, #{item.type}, #{item.itemName}, #{item.basicQuantity}, #{item.calculatedQuantity}, #{item.location}, #{item.groupId})
 	    </foreach>
 	</insert>
 	

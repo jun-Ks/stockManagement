@@ -8,6 +8,7 @@ import lombok.Data;
 public class RequestModiLocationDTO {
 	private int no;
 	private int itemId;
+	private String itemCode;
 	private String drawingNo;
 	private String type;
 	private String itemName;

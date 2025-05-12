@@ -84,7 +84,7 @@ $("#searchKeyword").on("keyup", function(e) {
 $(document).on("click", ".putCart", function(){
 	$(".cartBox").addClass("active"); // 슬라이드 인
 	let row = $(this).closest("tr");
-	
+	let itemCode = row.find(".td_itemCode").text();
 	let no = row.find(".td_no").text();
 	let drawingNo = row.find(".td_drawingNo").text();
 	let type = row.find(".td_type").text();
@@ -95,6 +95,7 @@ $(document).on("click", ".putCart", function(){
 	let thead = 
 		"<tr>" + 
 			"<th id='th_cart_no'>no</th>" + 
+			"<th id='th_cart_itemCode'>품목코드</th>" + 
 			"<th id='th_cart_drawingNo'>도면번호</th>" +
 			"<th id='th_cart_type'>타입</th>" + 
 			"<th id='th_cart_itemName'>품명</th>" + 
@@ -109,6 +110,7 @@ $(document).on("click", ".putCart", function(){
 	let tbody = 
 		"<tr>" +
 			"<td class='cart_id'>" + no + "</td>" + 
+			"<td class='cart_itemCode'>" + itemCode + "</td>" + 
 			"<td class='cart_drawingNo'>" + drawingNo + "</td>" + 
 			"<td class='cart_type'>" + type + "</td>" + 
 			"<td class='cart_itemName'>" + itemName + "</td>" + 
@@ -229,6 +231,7 @@ $(document).on("click", "#requestBtn", function(){
 		//장바구니에 담긴 id, 출고 수량 담기
 		$(".cart_id").each(function(){
 			let item_id = $(this).text();
+			let itemCode = $(this).closest("tr").find($(".cart_itemCode")).text();
 			let drawingNo = $(this).closest("tr").find($(".cart_drawingNo")).text();
 			let type = $(this).closest("tr").find($(".cart_type")).text();
 			let location = $(this).closest("tr").find($(".cart_location")).text();
@@ -243,6 +246,7 @@ $(document).on("click", "#requestBtn", function(){
 				requesterName: $("#userName").text(),
 				requesterDept: $("#userDept").text(),
 				itemId: item_id,
+				itemCode: itemCode, 
 				drawingNo: drawingNo,
 				type: type,
 				itemName: itemName,

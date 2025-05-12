@@ -35,6 +35,9 @@ public class RequestController {
 	//입고 요청
 	@PostMapping("/stock/request/info")
 	public ResponseEntity<String> insertRequestStockInfo(@RequestBody RequestStockDTO requestInfo){
+		System.out.println(requestInfo.toString());
+
+		
 		String uuid = UUID.randomUUID().toString();
 		
 		requestInfo.setGroupId(uuid);
@@ -48,6 +51,7 @@ public class RequestController {
 			 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                      .body("요청실패.. 전산팀에 문의해주세요.");
 		}
+
 	}
 	
 	//위치 변경 요청

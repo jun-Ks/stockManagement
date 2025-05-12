@@ -41,7 +41,7 @@
 			    <label for="type">도면번호</label>
 			    <div class="input-wrapper">
 			        <input type="text" id="drawingNo">
-			        <span class="search">중복체크</span>
+			        <!-- <span class="search">중복체크</span> -->
 			    </div>
 			</div>
 			
@@ -75,8 +75,9 @@
 		<div class="modify-box">
 			<div class="searchBox">
 				<select id="search-option">
-					<option value="itemName">품목명</option>
 					<option value="drawingNo">도면번호</option>
+					<option value="itemName">품목명</option>
+					<option value="itemCode">품목코드</option>
 					<option value="type">타입</option>
 					<option value="location">위치</option>
 				</select>

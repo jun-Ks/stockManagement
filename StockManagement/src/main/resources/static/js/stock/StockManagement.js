@@ -34,6 +34,7 @@ function insertStockInfo(){
 
 	let itemCode = $("#code").val().toUpperCase();
 	let type = $("#type").val().toUpperCase();
+	let itemName = $("#itemName").val().toUpperCase();
 	let drawingNo = $("#drawingNo").val().toUpperCase();
 	let detailDrawingNo = $("#detailDrawingNo").val().toUpperCase();
 	let basicQuantity = $("#basicQuantity").val();
@@ -46,6 +47,7 @@ function insertStockInfo(){
 	let insertData = {
 		itemCode: itemCode, 
 		type: type, 
+		itemName: itemName,
 		drawingNo: drawingNo, 
 		detailDrawingNo, detailDrawingNo,
 		basicQuantity: basicQuantity,
@@ -93,6 +95,7 @@ function serchItemInfo(){
 			let thead = 
 				"<tr>" + 
 					"<th id='th_no'>no</th>" + 
+					"<th id='th_itemCode'>품목코드</th>" + 
 					"<th id='th_drawingNo'>도면번호</th>" +
 					"<th id='th_detailDrawingNo'>세부규격</th>" + 
 					"<th id='th_type'>타입</th>" + 
@@ -106,7 +109,7 @@ function serchItemInfo(){
 			if(info.length === 0){
 				let emptyTbody = 
 					"<tr>" + 
-						"<td colspan='7'>검색결과가 없습니다.</td>" +
+						"<td colspan='8'>검색결과가 없습니다.</td>" +
 					"</tr>";
 					
 				$(".stockList tbody").html(emptyTbody);
@@ -120,6 +123,7 @@ function serchItemInfo(){
 				tbody +=
 					"<tr id='itemId-" + info[i].no + "'>" +
 						"<td class='td_no'>" + info[i].no + "</td>" +  
+						"<td class='td_itemCode'>" + info[i].itemCode + "</td>" + 
 						"<td class='td_drawingNo'>" + info[i].drawingNo + "</td>" + 
 						"<td class='td_detailDrawingNo'>" + info[i].detailDrawingNo + "</td>" + 
 						"<td class='td_type'>" + info[i].type + "</td>" +  

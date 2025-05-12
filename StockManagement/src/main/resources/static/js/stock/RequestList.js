@@ -119,8 +119,10 @@ function makeStockPartTable(list, userDept) {
 			((userDept === "구매팀" || userDept === "ERP팀") ? "<th class='stock-th-check'>선택</th>" : "") + 
 			"<th>no</th>" +
 			"<th>타입</th>" +
+			"<th>품목코드</th>" +
 			"<th>품목명</th>" +
 			"<th>도면번호</th>" +
+			"<th>세부규격</th>" + 
 			"<th>수량</th>" +
 			"<th>위치</th>" +
 			"<th>요청자 부서</th>" +
@@ -138,8 +140,10 @@ function makeStockPartTable(list, userDept) {
 					((userDept === "구매팀" || userDept === "ERP팀") ? "<td><input type='checkbox' class='stockTbl_check'></td>" : "") +
 					"<td class='stock_requestNo'>" + list[i].no + "</td>" +
 					"<td class='stock_type'>" + list[i].type + "</td>" +
+					"<td class='stock_itemCode'>" + list[i].itemCode + "</td>" + 
 					"<td class='stock_itemName'>" + list[i].itemName + "</td>" +
 					"<td class='stock_drawingNo'>" + (list[i].drawingNo === null ? "-" : list[i].drawingNo) + "</td>" +
+					"<td class='stock_detailDrawingNo'>" + (list[i].detailDrawingNo === null ? "-" : list[i].drawingNo) + "</td>" +
 					"<td class='stock_basicQuantity'>" + list[i].basicQuantity + "</td>" +
 					"<td class='stock_location'>" + (list[i].location === null ? "-" : list[i].location) + "</td>" +
 					"<td class='stock_requesterDept'>" + list[i].requesterDept + "</td>" +
@@ -152,7 +156,7 @@ function makeStockPartTable(list, userDept) {
 		tbody = 
 			`
 			<tr>
-				<td colspan='11'>요청 데이터가 없습니다. </td>
+				<td colspan='13'>요청 데이터가 없습니다. </td>
 			</tr>
 			`;
 	}
@@ -164,7 +168,7 @@ function makeStockPartTable(list, userDept) {
 			if($(this).text() === "미승인"){
 				let tfoot = 
 					"<tr>" + 
-						"<td colspan='12'><button id='stock_approval'>입고 승인하기</button></td>" +
+						"<td colspan='13'><button id='approval'>입고 승인하기</button></td>" +
 					"</tr>";
 						
 				$(".requestStockList tfoot").html(tfoot);
@@ -183,6 +187,7 @@ function makeLocationPartTable(list, userDept) {
 			((userDept === "구매팀" || userDept === "ERP팀") ? "<th class='location-th-check'>선택</th>" : "") + 
 			"<th>no</th>" +
 			"<th>품목no</th>" +
+			"<th>품목코드</th>" + 
 			"<th>타입</th>" + 
 			"<th>품목명</th>" +
 			"<th>도면번호</th>" +
@@ -204,6 +209,7 @@ function makeLocationPartTable(list, userDept) {
 					((userDept === "구매팀" || userDept === "ERP팀") ? "<td><input type='checkbox' class='locationTbl_check'></td>" : "") +
 					"<td class='location_requestNo'>" + list[i].no + "</td>" +
 					"<td class='location_itemid'>" + list[i].itemId + "</td>" + 
+					"<td class='location_itemCode'>" + list[i].itemCode + "</td>" + 
 					"<td>" + list[i].type + "</td>" +
 					"<td>" + list[i].itemName + "</td>" +
 					"<td>" + list[i].drawingNo + "</td>" +
@@ -219,7 +225,7 @@ function makeLocationPartTable(list, userDept) {
 		tbody = 
 		`
 		<tr>
-			<td colspan='12'>요청 데이터가 없습니다.</td>
+			<td colspan='13'>요청 데이터가 없습니다.</td>
 		</tr>
 		`;
 	}
@@ -231,7 +237,7 @@ function makeLocationPartTable(list, userDept) {
 			if($(this).text() === "미승인"){
 				let tfoot = 
 					"<tr>" + 
-						"<td colspan='12'><button id='location_approval'>변경 승인하기</button></td>" +
+						"<td colspan='13'><button id='location_approval'>변경 승인하기</button></td>" +
 					"</tr>";
 					
 				$(".requestModiLocationList tfoot").html(tfoot);
@@ -305,7 +311,7 @@ function unApprovalModiLocationRequestList(){
 	});
 }
 //입고승인하기
-$(document).on("click", "#stock_approval", function() {
+$(document).on("click", "#approval", function() {
 	let stockRequestData =[];
 	let approvalUser = userName;
 	let isApproval = true;
@@ -316,8 +322,10 @@ $(document).on("click", "#stock_approval", function() {
 			if(approval === "미승인"){
 				 let requestNo = $(this).closest("tr").find(".stock_requestNo").text();
 			     let type = $(this).closest("tr").find(".stock_type").text().toUpperCase();
+				 let itemCode = $(this).closest("tr").find(".stock_itemCode").text().toUpperCase();
 			     let itemName = $(this).closest("tr").find(".stock_itemName").text().toUpperCase();
 			     let drawingNo = $(this).closest("tr").find(".stock_drawingNo").text() === "-" ? "" : $(this).closest("tr").find(".stock_drawingNo").text().toUpperCase();
+				 let detailDrawingNo = $(this).closest("tr").find(".stock_detailDrawingNo").text();
 			     let basicQuantity = $(this).closest("tr").find(".stock_basicQuantity").text();
 			     let location = $(this).closest("tr").find(".stock_location").text().toUpperCase();
 			     let requesterDept = $(this).closest("tr").find(".stock_requesterDept").text();
@@ -326,8 +334,10 @@ $(document).on("click", "#stock_approval", function() {
 				stockRequestData.push({
 					no: requestNo,
 					type: type, 
+					itemCode: itemCode,
 					itemName: itemName, 
 					drawingNo: drawingNo, 
+					detailDrawingNo: detailDrawingNo,
 					basicQuantity: basicQuantity,
 					location: location, 
 					requesterDept: requesterDept, 

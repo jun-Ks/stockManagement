@@ -39,6 +39,11 @@
 	</div>
 
 	<div class="form-group">
+		<label for="detailDrawingNo">세부규격</label>
+		<input type="text" id="detailDrawingNo">
+	</div>
+
+	<div class="form-group">
 		<label for="basicQuantity">수량</label>
 		<input type="number" id="basicQuantity" min="0" step="1">
 	</div>
