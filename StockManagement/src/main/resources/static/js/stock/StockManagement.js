@@ -175,6 +175,7 @@ $(document).on("click", ".stockList tbody tr", function(e){
 	
 	//이외 input text값 추가
 	let td_no = $(this).find(".td_no").text();
+	let td_itemCode = $(this).find(".td_itemCode").text();
     let td_drawingNo = $(this).find(".td_drawingNo").text();
     let td_detailDrawingNo = $(this).find(".td_detailDrawingNo").text();
     let td_type = $(this).find(".td_type").text();
@@ -182,6 +183,7 @@ $(document).on("click", ".stockList tbody tr", function(e){
     let td_quantity = $(this).find(".td_quantity").text();
 	
     $("#modalNo").val(td_no);
+	$("#modalItemCode").val(td_itemCode);
     $("#modalDrawingNo").val(td_drawingNo);
     $("#modalDetailDrawingNo").val(td_detailDrawingNo);
     $("#modalType").val(td_type);
@@ -335,6 +337,7 @@ $("#modifyBtn").on("click", function(){
 	if (confirm("수정하시겠습니까?")) {
 		let no = $("#modalNo").val();
 		let drawingNo = $("#modalDrawingNo").val().toUpperCase();
+		let itemCode = $("#modalItemCode").val().toUpperCase();
 		let detailDrawingNo = $("#modalDetailDrawingNo").val().toUpperCase();
 		let type = $("#modalType").val().toUpperCase();
 		let itemName = $("#modalItemName").val().toUpperCase();
@@ -347,6 +350,7 @@ $("#modifyBtn").on("click", function(){
 
 		let info = {
 			no: no,
+			itemCode: itemCode,
 			drawingNo: drawingNo,
 			detailDrawingNo: detailDrawingNo,
 			type: type,
@@ -367,6 +371,7 @@ $("#modifyBtn").on("click", function(){
 				let itemRow = $("#itemId-" + no);
 				
 				itemRow.find(".td_drawingNo").text(drawingNo);
+				itemRow.find(".td_itemCode").text(itemCode);
 				itemRow.find(".td_detailDrawingNo").text(detailDrawingNo);
 				itemRow.find(".td_type").text(type);
 				itemRow.find(".td_itemName").text(itemName);

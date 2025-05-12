@@ -105,7 +105,6 @@ public class ItemController {
 	//제품정보수정
 	@PutMapping("/item/info/modification")
 	public ResponseEntity<String> modifyInfo(@RequestBody ItemInfoDTO info){
-		
 		int result = service.modifyInfo(info);
 		
 		if(result > 0) {

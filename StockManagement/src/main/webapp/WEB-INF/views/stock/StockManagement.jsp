@@ -101,6 +101,7 @@
 			<h2 id="modal-title">품목 수정/삭제</h2>
 			
 			<p><strong>품목번호:</strong> <input type="text" id="modalNo" readonly></p>
+			<p><strong>품목코드:</strong> <input type="text" id="modalItemCode"></p>
 		    <p><strong>도면번호:</strong> <input type="text" id="modalDrawingNo"></p>
 		    <p><strong>세부규격:</strong> <input type="text" id="modalDetailDrawingNo"></p>
 		    <p><strong>타입:</strong> <input type="text" id="modalType"></p>

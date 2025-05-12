@@ -84,7 +84,7 @@
 	<!-- 관리자 - 정보수정 -->
 	<update id="modifyInfo">
 		UPDATE stockInfo 
-		SET drawingNo = #{drawingNo}, detailDrawingNo = #{detailDrawingNo}, type = #{type}, itemName = #{itemName},
+		SET drawingNo = #{drawingNo}, itemCode = #{itemCode}, detailDrawingNo = #{detailDrawingNo}, type = #{type}, itemName = #{itemName},
 			calculatedQuantity = #{calculatedQuantity}, location = #{location}, modifyDate = NOW()
 		WHERE no = #{no};
 	</update>
