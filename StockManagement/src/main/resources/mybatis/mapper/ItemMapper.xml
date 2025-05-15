@@ -6,7 +6,7 @@
 
 	<!-- serch option에 따라 검색하기 -->
 	<select id="getItemByOption">
-		SELECT no, itemCode, drawingNo, detailDrawingNo, type, itemName, calculatedQuantity, location
+		SELECT no, itemCode, drawingNo, detailDrawingNo, type, itemName, calculatedQuantity, status, note, location
 		FROM stockInfo 
 		WHERE ${searchOption} LIKE CONCAT('%', #{searchKeyword}, '%');
 	</select>
@@ -54,10 +54,10 @@
 	
 	<!-- 제품정보 등록(입고) -->
 	<insert id="insertItemInfo" parameterType="java.util.List">
-	    INSERT INTO stockInfo (itemCode, drawingNo, detailDrawingNo, type, itemName, basicQuantity, calculatedQuantity, location, groupId)
+	    INSERT INTO stockInfo (itemCode, drawingNo, detailDrawingNo, type, itemName, basicQuantity, calculatedQuantity, note, status, location, groupId)
 	    VALUES
 	    <foreach collection="list" item="item" separator=",">
-	        (#{item.itemCode}, #{item.drawingNo}, #{item.detailDrawingNo}, #{item.type}, #{item.itemName}, #{item.basicQuantity}, #{item.calculatedQuantity}, #{item.location}, #{item.groupId})
+	        (#{item.itemCode}, #{item.drawingNo}, #{item.detailDrawingNo}, #{item.type}, #{item.itemName}, #{item.basicQuantity}, #{item.calculatedQuantity}, #{item.note}, #{item.status}, #{item.location}, #{item.groupId})
 	    </foreach>
 	</insert>
 	
@@ -77,15 +77,15 @@
 	
 	<!-- 관리자 - 품목 정보등록 -->
 	<insert id="insertInfo" useGeneratedKeys="true" keyProperty="no">
-		INSERT INTO stockInfo (itemCode, drawingNo, detailDrawingNo, type, itemName, basicQuantity, calculatedQuantity, location)
-		VALUES (#{itemCode}, #{drawingNo}, #{detailDrawingNo}, #{type}, #{itemName}, #{basicQuantity}, #{calculatedQuantity}, #{location});
+		INSERT INTO stockInfo (itemCode, drawingNo, detailDrawingNo, type, itemName, basicQuantity, calculatedQuantity, location, status, note)
+		VALUES (#{itemCode}, #{drawingNo}, #{detailDrawingNo}, #{type}, #{itemName}, #{basicQuantity}, #{calculatedQuantity}, #{location}, #{status}, #{note});
 	</insert>
 	
 	<!-- 관리자 - 정보수정 -->
 	<update id="modifyInfo">
 		UPDATE stockInfo 
 		SET drawingNo = #{drawingNo}, itemCode = #{itemCode}, detailDrawingNo = #{detailDrawingNo}, type = #{type}, itemName = #{itemName},
-			calculatedQuantity = #{calculatedQuantity}, location = #{location}, modifyDate = NOW()
+			calculatedQuantity = #{calculatedQuantity}, location = #{location}, status = #{status}, note = #{note}, modifyDate = NOW()
 		WHERE no = #{no};
 	</update>
 	

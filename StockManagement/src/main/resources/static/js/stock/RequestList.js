@@ -18,7 +18,7 @@ $(document).ready(function(){
 	//미승인건만 체크 defalut
 	$("#unApproval").prop("checked", true);
 	
-	if(userDept === "구매팀" || userDept === "ERP팀"){
+	if(userDept === "구매팀" || userDept === "ERP팀" || userDept === "생산관리부"){
 		$.ajax({
 			url: "/request/unapproval/count",
 			type: "GET",
@@ -116,19 +116,20 @@ function getRequestModiLocationList(userId, userDept){
 function makeStockPartTable(list, userDept) {
 	let thead = 
 		"<tr>" + 
-			((userDept === "구매팀" || userDept === "ERP팀") ? "<th class='stock-th-check'>선택</th>" : "") + 
-			"<th>no</th>" +
-			"<th>타입</th>" +
-			"<th>품목코드</th>" +
-			"<th>품목명</th>" +
-			"<th>도면번호</th>" +
-			"<th>세부규격</th>" + 
-			"<th>수량</th>" +
-			"<th>위치</th>" +
-			"<th>요청자 부서</th>" +
-			"<th>요청자 성명</th>" +
-			"<th>요청날짜</th>" +
-			"<th>승인여부</th>" +
+			((userDept === "구매팀" || userDept === "ERP팀" || userDept === "생산관리부") ? "<th class='stock-th-check'>선택</th>" : "") + 
+			"<th id='th_no'>no</th>" +
+			"<th id='th_itemCode'>품목코드</th>" +
+			"<th id='th_drawingNo'>도면번호</th>" +
+			"<th id='th_detailDrawingNo'>세부규격</th>" + 
+			"<th id='th_type'>타입</th>" +
+			"<th id='th_itemName'>품목명</th>" +
+			"<th id='th_basicQuantity'>수량</th>" +
+			"<th id='th_location'>위치</th>" +
+			"<th id='th_note'>비고</th>" + 
+			"<th id='th_requesterDept'>요청자 부서</th>" +
+			"<th id='th_requesterName'>요청자 성명</th>" +
+			"<th id='th_requesterDate'>요청날짜</th>" +
+			"<th id='th_approval'>승인여부</th>" +
 		"</tr>";
 	$(".requestStockList thead").html(thead);
 
@@ -137,15 +138,16 @@ function makeStockPartTable(list, userDept) {
 		for(let i = 0; i < list.length; i++){
 			tbody += 
 				"<tr>" + 
-					((userDept === "구매팀" || userDept === "ERP팀") ? "<td><input type='checkbox' class='stockTbl_check'></td>" : "") +
+					((userDept === "구매팀" || userDept === "ERP팀" || userDept === "생산관리부") ? "<td><input type='checkbox' class='stockTbl_check'></td>" : "") +
 					"<td class='stock_requestNo'>" + list[i].no + "</td>" +
-					"<td class='stock_type'>" + list[i].type + "</td>" +
 					"<td class='stock_itemCode'>" + list[i].itemCode + "</td>" + 
-					"<td class='stock_itemName'>" + list[i].itemName + "</td>" +
 					"<td class='stock_drawingNo'>" + (list[i].drawingNo === null ? "-" : list[i].drawingNo) + "</td>" +
 					"<td class='stock_detailDrawingNo'>" + (list[i].detailDrawingNo === null ? "-" : list[i].drawingNo) + "</td>" +
+					"<td class='stock_type'>" + list[i].type + "</td>" +
+					"<td class='stock_itemName'>" + list[i].itemName + "</td>" +
 					"<td class='stock_basicQuantity'>" + list[i].basicQuantity + "</td>" +
 					"<td class='stock_location'>" + (list[i].location === null ? "-" : list[i].location) + "</td>" +
+					"<td class='stock_note'>" + list[i].note + "</td>" + 
 					"<td class='stock_requesterDept'>" + list[i].requesterDept + "</td>" +
 					"<td class='stock_requesterName'>" + list[i].requesterName + "</td>" +
 					"<td>" + list[i].insertDate.replace("T", " ") + "</td>" +
@@ -156,19 +158,19 @@ function makeStockPartTable(list, userDept) {
 		tbody = 
 			`
 			<tr>
-				<td colspan='13'>요청 데이터가 없습니다. </td>
+				<td colspan='14'>요청 데이터가 없습니다. </td>
 			</tr>
 			`;
 	}
 	
 	$(".requestStockList tbody").html(tbody);
 	
-	if(userDept === "구매팀" || userDept === "ERP팀"){
+	if(userDept === "구매팀" || userDept === "ERP팀" || userDept === "생산관리부"){
 		$(".stock_approval").each(function(){
 			if($(this).text() === "미승인"){
 				let tfoot = 
 					"<tr>" + 
-						"<td colspan='13'><button id='approval'>입고 승인하기</button></td>" +
+						"<td colspan='14'><button id='approval'>입고 승인하기</button></td>" +
 					"</tr>";
 						
 				$(".requestStockList tfoot").html(tfoot);
@@ -184,19 +186,20 @@ function makeLocationPartTable(list, userDept) {
 	
 	let thead = 
 		"<tr>" + 
-			((userDept === "구매팀" || userDept === "ERP팀") ? "<th class='location-th-check'>선택</th>" : "") + 
-			"<th>no</th>" +
-			"<th>품목no</th>" +
-			"<th>품목코드</th>" + 
-			"<th>타입</th>" + 
-			"<th>품목명</th>" +
-			"<th>도면번호</th>" +
-			"<th>위치</th>" +
-			"<th>변경 요청 위치</th>" + 
-			"<th>요청자 부서</th>" +
-			"<th>요청자 성명</th>" +
-			"<th>요청날짜</th>" +
-			"<th>승인여부</th>" +
+			((userDept === "구매팀" || userDept === "ERP팀" || userDept === "생산관리부") ? "<th class='location-th-check'>선택</th>" : "") + 
+			"<th id='th_no'>no</th>" +
+			"<th id='th_itemNo'>품목no</th>" +
+			"<th id='th_itemCode'>품목코드</th>" + 
+			"<th id='th_drawingNo'>도면번호</th>" +
+			"<th id='th_type'>타입</th>" + 
+			"<th id='th_itemName'>품목명</th>" +
+			"<th id='th_note'>비고</th>" + 
+			"<th id='th_location'>위치</th>" +
+			"<th id='th_modiLocation'>변경 요청 위치</th>" + 
+			"<th id='th_requesterDept'>요청자 부서</th>" +
+			"<th id='th_requesterName'>요청자 성명</th>" +
+			"<th id='th_requesterDate'>요청날짜</th>" +
+			"<th id='th_approval'>승인여부</th>" +
 		"</tr>";
 	$(".requestModiLocationList thead").html(thead);
 
@@ -206,13 +209,14 @@ function makeLocationPartTable(list, userDept) {
 		for(let i = 0; i < list.length; i++){
 			tbody += 
 				"<tr>" +
-					((userDept === "구매팀" || userDept === "ERP팀") ? "<td><input type='checkbox' class='locationTbl_check'></td>" : "") +
+					((userDept === "구매팀" || userDept === "ERP팀" || userDept === "생산관리부") ? "<td><input type='checkbox' class='locationTbl_check'></td>" : "") +
 					"<td class='location_requestNo'>" + list[i].no + "</td>" +
 					"<td class='location_itemid'>" + list[i].itemId + "</td>" + 
 					"<td class='location_itemCode'>" + list[i].itemCode + "</td>" + 
 					"<td>" + list[i].type + "</td>" +
 					"<td>" + list[i].itemName + "</td>" +
 					"<td>" + list[i].drawingNo + "</td>" +
+					"<td class='location_note'>" + list[i].note + "</td>" + 
 					"<td>" + list[i].location + "</td>" +
 					"<td class='location_modiLocaion'>" + list[i].modiLocation + "</td>" +
 					"<td>" + list[i].requesterDept + "</td>" +
@@ -225,19 +229,19 @@ function makeLocationPartTable(list, userDept) {
 		tbody = 
 		`
 		<tr>
-			<td colspan='13'>요청 데이터가 없습니다.</td>
+			<td colspan='14'>요청 데이터가 없습니다.</td>
 		</tr>
 		`;
 	}
 
 	$(".requestModiLocationList tbody").html(tbody);
 	
-	if(userDept === "구매팀" || userDept === "ERP팀"){
+	if(userDept === "구매팀" || userDept === "ERP팀" || userDept === "생산관리부"){
 		$(".location_approval").each(function(){
 			if($(this).text() === "미승인"){
 				let tfoot = 
 					"<tr>" + 
-						"<td colspan='13'><button id='location_approval'>변경 승인하기</button></td>" +
+						"<td colspan='14'><button id='location_approval'>변경 승인하기</button></td>" +
 					"</tr>";
 					
 				$(".requestModiLocationList tfoot").html(tfoot);

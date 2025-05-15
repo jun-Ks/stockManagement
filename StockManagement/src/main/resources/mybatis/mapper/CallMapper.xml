@@ -4,8 +4,29 @@
 
 <mapper namespace="com.stock.management.user.mapper.ICallMapper">
 
+    <!-- 로그 등록하기 -->
     <insert id="insertCallLog">
         INSERT INTO callLog (requesterName, requesterDept, requesterId, requesterLocation, reason) 
         VALUES (#{requesterName}, #{requesterDept}, #{requesterId}, #{requesterLocation}, #{reason});
     </insert>
+
+    <!--로그리스트 가져오기-->
+    <select id="getLogList">
+        SELECT * FROM callLog;
+    </select>
+
+    <!--가장 최근에 등록한 로그 no가져오기 -->
+    <select id="getCurrentNo">
+        SELECT no FROM callLog 
+        ORDER BY no DESC 
+        LIMIT 1;
+    </select>
+
+    <!-- 특정 NO의 담당자가 없으면 0, 있으면 1반환-->
+    <select id="getCheckerStatus">
+        SELECT COUNT(*)
+        FROM callLog
+        WHERE callChecker IS NOT NULL AND no = #{no};
+    </select>
+
 </mapper>

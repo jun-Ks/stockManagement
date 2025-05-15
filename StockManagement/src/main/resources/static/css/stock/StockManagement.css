@@ -108,13 +108,16 @@ table {
 #th_location{
 	width: 25px;
 }
-#th_type{
+#th_type, #th_status{
 	width: 40px;
+}
+#th_note{
+	width:40px;
 }
 #th_itemCode{
 	width: 50px;
 }
-.td_type{
+.td_type, .td_note{
 	white-space: nowrap; /* 한 줄로만 표시되게 설정 */
     overflow-x: auto; /* 테이블이 길어지면 수평 스크롤이 생기도록 설정 */
 }
@@ -233,12 +236,17 @@ table {
 }
 .searchBox select,
 .searchBox input,
-.searchBox button{
+.searchBox button,
+.status-select select{
 	padding: 8px 12px;
 	border: 1px solid #ccc;
 	border-radius: 8px;
 	font-size: 14px;
 }
+.status-select select{
+	width: 100%;
+}
+
 .rackName, .rackStage, .rackNumber{
 	border: 1px solid #ccc;
 	border-radius: 8px;
@@ -317,7 +325,9 @@ table {
 	border-color: #4a90e2;
 	outline: none;
 }
-
+.modal-index{
+  text-align: left;
+}
 .modal-content button {
 	padding: 10px 20px;
 	margin: 0 auto;

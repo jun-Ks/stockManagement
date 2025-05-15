@@ -38,43 +38,51 @@ function insertStockInfo(){
 	let drawingNo = $("#drawingNo").val().toUpperCase();
 	let detailDrawingNo = $("#detailDrawingNo").val().toUpperCase();
 	let basicQuantity = $("#basicQuantity").val();
-	let location = ($("#rackName").val() + "-" + $("#rackNumber").val() + "-" + $("#rackStage").val()).toUpperCase();
-	
+	let rackName = ($("#rackName").val() || "").toUpperCase();
+	let rackNumber = ($("#rackNumber").val() || "").toUpperCase();
+	let rackStage = ($("#rackStage").val() || "").toUpperCase();
+	let location = (rackName + "-" + rackNumber + "-" + rackStage);
+	let status = $("#status").val();
+	let note = $("#note").val();
 	//공구실 체크되어있으면 location = 공구실로 설정
 	if($("#toolRoom-chk").prop("checked")){
 		location = "공구실";
 	}
-	let insertData = {
-		itemCode: itemCode, 
-		type: type, 
-		itemName: itemName,
-		drawingNo: drawingNo, 
-		detailDrawingNo, detailDrawingNo,
-		basicQuantity: basicQuantity,
-		calculatedQuantity: basicQuantity,
-		location: location
-	};
 
-	$.ajax({
-		url: "/item/info",
-		type: "POST",
-		contentType: "application/json",
-		data: JSON.stringify({
-			insertData, 
-			userId, 
-			userName, 
-			userDept
-		}),
-		success: function(response){
-			alert(response);
-			window.location.reload();
-		},
-		error: function(xhr){
-			alert(xhr.responseText);
-		}
-	});
+	if(checkData(itemCode, type, itemName, drawingNo,	detailDrawingNo, basicQuantity, rackName, rackNumber, rackStage, status)){
+		let insertData = {
+			itemCode: itemCode, 
+			type: type, 
+			itemName: itemName,
+			drawingNo: drawingNo, 
+			detailDrawingNo, detailDrawingNo,
+			basicQuantity: basicQuantity,
+			calculatedQuantity: basicQuantity,
+			location: location,
+			status: status,
+			note: note
+		};
+		
+		$.ajax({
+			url: "/item/info",
+			type: "POST",
+			contentType: "application/json",
+			data: JSON.stringify({
+				insertData, 
+				userId, 
+				userName, 
+				userDept
+			}),
+			success: function(response){
+				alert(response);
+				window.location.reload();
+			},
+			error: function(xhr){
+				alert(xhr.responseText);
+			}
+		});
+	}
 }
-
 
 //품목검색 함수
 function serchItemInfo(){
@@ -100,8 +108,10 @@ function serchItemInfo(){
 					"<th id='th_detailDrawingNo'>세부규격</th>" + 
 					"<th id='th_type'>타입</th>" + 
 					"<th id='th_itemName'>품명</th>" + 
+					"<th id='th_status'>제품상태</th>" +
 					"<th id='th_quantity'>수량</th>" + 
 					"<th id='th_location'>위치</th>" +
+					"<th id='th_note'>비고</th>" + 
 					"<th id='th_del'>삭제</th>" + 
 				"</tr>";
 			$(".stockList thead").html(thead);	
@@ -109,7 +119,7 @@ function serchItemInfo(){
 			if(info.length === 0){
 				let emptyTbody = 
 					"<tr>" + 
-						"<td colspan='8'>검색결과가 없습니다.</td>" +
+						"<td colspan='10'>검색결과가 없습니다.</td>" +
 					"</tr>";
 					
 				$(".stockList tbody").html(emptyTbody);
@@ -127,9 +137,11 @@ function serchItemInfo(){
 						"<td class='td_drawingNo'>" + info[i].drawingNo + "</td>" + 
 						"<td class='td_detailDrawingNo'>" + info[i].detailDrawingNo + "</td>" + 
 						"<td class='td_type'>" + info[i].type + "</td>" +  
-						"<td class='td_itemName'>" + info[i].itemName + "</td>" +  
+						"<td class='td_itemName'>" + info[i].itemName + "</td>" + 
+						"<td class='td_status'>" + info[i].status + "</td>" +  
 						"<td class='td_quantity'>" + info[i].calculatedQuantity + "</td>" +  
 						"<td class='td_location'>" + info[i].location + "</td>" +
+						"<td class='td_note'>" + info[i].note + "</td>" + 
 						"<td class='td_del'> x </td>" + 
 					"</tr>";						
 			}
@@ -161,6 +173,7 @@ $(document).on("click", ".stockList tbody tr", function(e){
 	if ($(e.target).hasClass("td_del")) {
 	    return; // .td_del 클릭 시 모달을 띄우지 않도록 종료
 	}
+
 	
     $("#itemModal").fadeIn();
 	
@@ -172,7 +185,11 @@ $(document).on("click", ".stockList tbody tr", function(e){
 	let td_rackStage = location_parts[2];
 	   
 	makeRackSelect_modal(td_rackName, td_rackNumber, td_rackStage);
-	
+
+	//수정 모달에 status select내용 추가
+	let td_status = $(this).find(".td_status").text();
+	makeStatusSelect_modal(td_status);
+
 	//이외 input text값 추가
 	let td_no = $(this).find(".td_no").text();
 	let td_itemCode = $(this).find(".td_itemCode").text();
@@ -182,6 +199,8 @@ $(document).on("click", ".stockList tbody tr", function(e){
     let td_itemName = $(this).find(".td_itemName").text();
     let td_quantity = $(this).find(".td_quantity").text();
 	
+	let td_note = $(this).find(".td_note").text();
+
     $("#modalNo").val(td_no);
 	$("#modalItemCode").val(td_itemCode);
     $("#modalDrawingNo").val(td_drawingNo);
@@ -189,6 +208,7 @@ $(document).on("click", ".stockList tbody tr", function(e){
     $("#modalType").val(td_type);
     $("#modalItemName").val(td_itemName);
     $("#modalQuantity").val(td_quantity);
+	$("#modalNote").val(td_note);
 
 	
 });
@@ -230,7 +250,7 @@ function makeRackSelect(){
 		$('#rackNumber').empty().append('<option value="NULL">선택</option>');
 		$('#rackStage').empty().append('<option value="NULL">선택</option>');
 
-		if (selectedRack === 'NULL') return;
+		if (selectedRack === "") return;
 
 		const maxNumber = rackNumberMap[selectedRack] || 0;
 
@@ -332,6 +352,22 @@ function makeRackSelect_modal(td_rackName, td_rackNumber, td_rackStage) {
 	});
 }
 
+//수정모달 - 제품상태 selectbox 생성
+function makeStatusSelect_modal(td_status){
+	let selectData = 
+		"<option value='" + td_status + "'>" + td_status + "</option>" +
+		"<option value=''>----------------------------------------------------------------</option>" + 
+		"<option value='완제품'>완제품</option>" + +
+		"<option value='가공중'>가공중</option>" +
+		"<option value='소재'>소재</option>" +
+		"<option value='불량'>불량</option>" +
+		"<option value=''>----------------------------------------------------------------</option>" +
+		"<option value='부자재'>부자재</option>" +
+		"<option value='공구'>공구</option>" +
+		"<option value='기타'>기타</option>";
+	$("#modalStatus").html(selectData);
+	
+}
 //수정 버튼 클릭 - 데이터 컨트롤러로 넘기기
 $("#modifyBtn").on("click", function(){
 	if (confirm("수정하시겠습니까?")) {
@@ -345,9 +381,10 @@ $("#modifyBtn").on("click", function(){
 		let modalRackName = $("#modalRackName").val().toUpperCase();
 		let modalRackNumber = $("#modalRackNumber").val().toUpperCase();
 		let modalRackStage = $("#modalRackStage").val().toUpperCase();
-
+		let note = $("#modalNote").val();
 		let location = modalRackName + "-" + modalRackNumber + "-" + modalRackStage;
-
+		let status = $("#modalStatus").val();
+		
 		let info = {
 			no: no,
 			itemCode: itemCode,
@@ -356,7 +393,9 @@ $("#modifyBtn").on("click", function(){
 			type: type,
 			itemName: itemName,
 			calculatedQuantity: calculatedQuantity,
-			location: location
+			location: location,
+			note: note,
+			status: status
 		};
 
 		$.ajax({
@@ -377,7 +416,8 @@ $("#modifyBtn").on("click", function(){
 				itemRow.find(".td_itemName").text(itemName);
 				itemRow.find(".td_quantity").text(calculatedQuantity);
 				itemRow.find(".td_location").text(location);
-
+				itemRow.find(".td_status").text(status);
+				itemRow.find(".td_note").text(note);
 				
 			},
 			error: function(xhr){
@@ -445,3 +485,33 @@ $("#toolRoom-chk").on("change", function() {
         $(".location-selects select").prop("disabled", false);
     }
 });
+
+//유효성검사 함수
+function checkData(itemCode, type, itemName, drawingNo,	detailDrawingNo, basicQuantity, rackName, rackNumber, rackStage, status){
+	const data = [
+		        { value: itemCode,        name: "품목코드" },
+        { value: type,            name: "타입" },
+        { value: itemName,        name: "품목명" },
+        { value: drawingNo,       name: "도면번호" },
+        { value: detailDrawingNo, name: "세부규격" },
+        { value: status,          name: "제품상태" },
+        { value: basicQuantity,   name: "수량" }
+	];
+
+	for(let i = 0; i < data.length; i++){
+		if(!data[i].value){
+			alert(`${data[i].name} 입력되지 않았습니다.`);
+			return false;
+		}
+	}
+
+	let is_locationChecked = $("#toolRoom-chk").prop("checked")
+	
+	if(!is_locationChecked){
+		if (!rackName || !rackNumber || !rackStage) {
+		alert("위치가 입력되지 않았습니다.");
+		return false;
+		}
+	}
+	return true;
+}

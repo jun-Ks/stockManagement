@@ -15,6 +15,7 @@ public class RequestStockDTO {
 	private String drawingNo;
 	private String detailDrawingNo;
 	private int basicQuantity;
+	private String note;
 	private String location;
 	private int approval;
 	private LocalDateTime insertDate;

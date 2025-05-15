@@ -38,14 +38,14 @@ body {
     border-color: #2980b9;
 }
 
-.requestList {
+ .requestList {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     padding: 20px;
-}
+} 
 
-.requestList table {
+table{
     width: 80%;
     border-collapse: collapse;
     margin-bottom: 40px;
@@ -55,6 +55,7 @@ body {
     overflow: hidden;
     margin: 0 auto;
 }
+
 
 .requestList th, .requestList td {
     padding: 12px;
@@ -134,4 +135,67 @@ label{
 		opacity: 1;
 		transform: scale(1);
 	}
+}
+.stock_note, .stock_detailDrawingNo, .location_note{
+    max-width: 175px;       /* 셀 너비와 맞추기 */
+    overflow-x: auto;
+    white-space: nowrap;
+    margin: 0 auto;
+    padding-bottom: 10px; 
+}
+.stock-th-check, .location-th-check, #th_itemNo{
+    width: 10px;
+}
+#th_no{
+    width: 30px;
+}
+
+#th_itemCode{
+    width: 80px;
+}
+#th_drawingNo{
+    width: 150px;
+}
+#th_detailDrawingNo, #th_note{
+    width: 100px;
+    padding: 0;
+    box-sizing: border-box;
+}
+.stock_detailDrawingNo, .stock_note{
+    overflow: hidden; /* 내용이 길 경우 잘리도록 설정 */
+    white-space: nowrap; /* 한 줄로만 표시되게 설정 */
+    overflow-x: auto; /* 테이블이 길어지면 수평 스크롤이 생기도록 설정 */
+}
+#th_requestNo{
+    width: 10px;
+}
+#th_type{
+    width: 30px;
+}
+#th_itemName{
+    width: 100px;
+}
+#th_basicQuantity{
+    width: 30px;
+}
+#th_location, #th_modiLocation{
+    width: 50px;
+}
+#th_note{
+    width: 30px;
+}
+#th_requesterDept{
+    width: 65px;
+}
+#th_requesterName{
+    width: 65px;
+}
+#th_requesterDate{
+    width: 100px;
+}
+#th_approval{
+    width: 50px;
+}
+.location_modiLocaion{
+    background-color: rgba(233, 231, 231, 0.5); /* 마지막 인자 0.5는 50% 투명도 */
 }

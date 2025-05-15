@@ -14,4 +14,7 @@ public class CallLogDTO {
     private String requesterLocation;
     private String reason;
     private LocalDateTime requesterDate;
+
+    private String callChecker;
+    private LocalDateTime acceptDate;
 }

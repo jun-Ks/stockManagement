@@ -51,7 +51,25 @@
 			        <input type="text" id="detailDrawingNo">
 			    </div>
 			</div>
-		
+
+			<div class="form-group">
+				<label>제품상태</label>
+				<div class="select-status">
+					<select id="status">
+						<option value="">선택해주세요.</option>
+						<option value="">---------------</option>
+						<option value="완제품">완제품</option>
+						<option value="가공중">가공중</option>
+						<option value="소재">소재</option>
+						<option value="불량">불량</option>
+						<option value="">---------------</option>
+						<option value="부자재">부자재</option>
+						<option value="공구">공구</option>
+						<option value="기타">기타</option>
+					</select>
+				</div>
+			</div>
+
 			<div class="form-group">
 				<label for="basicQuantity">수량</label>
 				<input type="number" id="basicQuantity" min="0" step="1">
@@ -70,6 +88,12 @@
 					<select id="rackStage"></select>
 				</div>
 			</div>
+
+			<div class="form-group">
+				<label for="note">비고</label>
+				<input type="text" id="note">
+			</div>
+
 			<button id="insertBtn">등록</button>
 		</div>
 		<div class="modify-box">
@@ -100,20 +124,24 @@
 			
 			<h2 id="modal-title">품목 수정/삭제</h2>
 			
-			<p><strong>품목번호:</strong> <input type="text" id="modalNo" readonly></p>
-			<p><strong>품목코드:</strong> <input type="text" id="modalItemCode"></p>
-		    <p><strong>도면번호:</strong> <input type="text" id="modalDrawingNo"></p>
-		    <p><strong>세부규격:</strong> <input type="text" id="modalDetailDrawingNo"></p>
-		    <p><strong>타입:</strong> <input type="text" id="modalType"></p>
-		    <p><strong>품명:</strong> <input type="text" id="modalItemName"></p>
-		    <p><strong>수량:</strong> <input type="text" id="modalQuantity"></p>
-		    <p><strong>위치:</strong></p>
+			<p class="modal-index"><strong>품목번호:</strong> <input type="text" id="modalNo" readonly></p>
+			<p class="modal-index"><strong>품목코드:</strong> <input type="text" id="modalItemCode"></p>
+		    <p class="modal-index"><strong>도면번호:</strong> <input type="text" id="modalDrawingNo"></p>
+		    <p class="modal-index"><strong>세부규격:</strong> <input type="text" id="modalDetailDrawingNo"></p>
+		    <p class="modal-index"><strong>타입:</strong> <input type="text" id="modalType"></p>
+		    <p class="modal-index"><strong>품명:</strong> <input type="text" id="modalItemName"></p>
+		    <p class="modal-index"><strong>제품상태:</strong></p>
+			<p class="status-select">
+				<select id="modalStatus"></select>
+			</p>
+		    <p class="modal-index"><strong>수량:</strong> <input type="text" id="modalQuantity"></p>
+		    <p class="modal-index"><strong>위치:</strong></p>
 		    <p class="location-selects">
 				<select id="modalRackName"></select>
 				<select id="modalRackNumber"></select>
 				<select id="modalRackStage"></select>
 			</p>
-			
+			<p class="modal-index"><strong>비고:</strong><input type="text" id="modalNote"></p>
 			<div class="modal-buttons-box">
 				<button id="deleteBtn">삭제</button>
 				<button id="modifyBtn">수정</button>

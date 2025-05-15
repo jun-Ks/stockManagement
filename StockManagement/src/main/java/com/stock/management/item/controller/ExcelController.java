@@ -55,7 +55,7 @@ public class ExcelController {
  		}else {
  			//전체 리스트 변환
  			String fileName = startDate + "~" + endDate + "_출고조회리스트(전체)_" + dateStr;
- 			List<DeliveryLogDTO> allLogList = itemService.getAllDeliveryLog(userId, endDate);
+ 			List<DeliveryLogDTO> allLogList = itemService.getAllDeliveryLog(startDate, endDate);
  			makeExcel(allLogList, response, fileName);
  		}
 		

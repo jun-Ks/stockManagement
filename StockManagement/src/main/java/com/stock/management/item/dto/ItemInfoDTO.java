@@ -15,7 +15,9 @@ public class ItemInfoDTO {
 	private String itemName;
 	private int basicQuantity;
 	private int calculatedQuantity;
+	private String status;
 	private String location;
+	private String note;
 	private LocalDateTime insertDate;
 	private LocalDateTime modifyDate;
 	

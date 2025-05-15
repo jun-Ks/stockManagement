@@ -66,6 +66,7 @@ $("#requestBtn").on("click", function(){
 	let detailDrawingNo = $("#detailDrawingNo").val().toUpperCase();
 	let basicQuantity = parseInt($("#basicQuantity").val());
 	let location = $("#rackName").val() + "-" + $("#rackNumber").val() + "-" + $("#rackStage").val();
+	let note = $("#note").val();
 	let requesterId = $("#userId").text().toUpperCase();
 	
 	//입고정보 유효성검사 - 품목명 미입력 경고
@@ -85,6 +86,7 @@ $("#requestBtn").on("click", function(){
 	    drawingNo: drawingNo,
 		detailDrawingNo: detailDrawingNo,
 	    basicQuantity: basicQuantity,
+		note: note,
 	    location: location.toUpperCase()
 	};
 	

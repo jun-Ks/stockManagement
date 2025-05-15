@@ -63,4 +63,17 @@ public class PageController {
 		session.invalidate();
 		return "redirect:/"; // 로그인 페이지로 이동
 	}
+
+	//로그페이지
+	@GetMapping("/erpteam/log")
+	public String callLog(HttpSession session){
+		String dept = (String) session.getAttribute("userDept");
+
+		if(dept != null && dept.equals("ERP팀")){
+			return isLogined(session, "/etc/CallLog");
+		}else if(dept == null){
+			return "redirect:/";
+		}
+		return "redirect:/";
+	}
 }

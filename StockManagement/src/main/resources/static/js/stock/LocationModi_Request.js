@@ -25,8 +25,10 @@ function searchItemInfo(){
 					"<th id='th_detailDrawingNo'>세부규격</th>" + 
 					"<th id='th_type'>타입</th>" + 
 					"<th id='th_itemName'>품명</th>" + 
+					"<th id='th_status'>제품상태</th>" + 
 					"<th id='th_quantity'>수량</th>" + 
 					"<th id='th_location'>위치</th>" +
+					"<th id='th_note'>비고</th>" + 
 					"<th id='th_putCart'>위치수정</th>"
 				"</tr>";
 			$(".infoTable thead").html(thead);	
@@ -52,9 +54,11 @@ function searchItemInfo(){
 						"<td class='td_drawingNo'>" + info[i].drawingNo + "</td>" + 
 						"<td class='td_detailDrwingNo'>" + info[i].detailDrawingNo + "</td>" + 
 						"<td class='td_type'>" + info[i].type + "</td>" +  
-						"<td class='td_itemName'>" + info[i].itemName + "</td>" +  
+						"<td class='td_itemName'>" + info[i].itemName + "</td>" + 
+						"<td class='td_status'>" + info[i].status + "</td>" +  
 						"<td class='td_quantity'>" + info[i].calculatedQuantity + "</td>" +  
 						"<td class='td_location'>" + info[i].location + "</td>" +
+						"<td class='td_note'>" + info[i].note + "</td>" +
 						"<td class='putCart'> + </td>" + 
 					"</tr>";						
 			}
@@ -90,6 +94,7 @@ $(document).on("click", ".putCart", function(){
 	let type = row.find(".td_type").text();
 	let itemName = row.find(".td_itemName").text();
 	let calculatedQuantity = row.find(".td_quantity").text();
+	let note = row.find(".td_note").text();
 	let location = row.find(".td_location").text();
 	
 	let thead = 
@@ -122,13 +127,14 @@ $(document).on("click", ".putCart", function(){
 				"<select class='rackStage'></select>" +
 			"</td>" + 
 			"<td class='cart_del'>-</td>" + 
+			"<td class='cart_note' style='display:none'>" + note + "</td>" + 
 		"</tr>";
 		
 	$(".cartTable tbody").append(tbody);
 	
 	let tfoot = 
 		"<tr>" + 
-			"<td colspan='7'><button id='requestBtn'>수정요청</button></td>" + 
+			"<td colspan='7' class='cart-last-td'><button id='requestBtn'>수정요청</button></td>" + 
 		"</tr>";
 	$(".cartTable tfoot").html(tfoot);
 	
@@ -236,6 +242,7 @@ $(document).on("click", "#requestBtn", function(){
 			let type = $(this).closest("tr").find($(".cart_type")).text();
 			let location = $(this).closest("tr").find($(".cart_location")).text();
 			let itemName = $(this).closest("tr").find($(".cart_itemName")).text();
+			let note = $(this).closest("tr").find($(".cart_note")).text();
 			let modi_location = 
 				$(this).closest("tr").find($(".rackName")).val() + "-" +
 				$(this).closest("tr").find($(".rackNumber")).val() + "-" +
@@ -251,6 +258,7 @@ $(document).on("click", "#requestBtn", function(){
 				type: type,
 				itemName: itemName,
 				location: location,
+				note: note,
 				modiLocation: modi_location.toLocaleUpperCase()
 			});
 		});
@@ -281,9 +289,11 @@ $(document).on("click", "#requestBtn", function(){
 //장바구니에서 - 버튼 클릭하면 리스트 삭제
 $(document).on("click", ".cart_del", function(){
 	$(this).closest("tr").remove();
-
+	
 	if($(".cart_id").length === 0){
 		$(".cartBox").removeClass("active"); // 슬라이드 아웃
+		$("#requestBtn").hide();
+		$(".cart-last-td").text("위치 변경 요청 할 항목이 없습니다.");
 	}
 });
 

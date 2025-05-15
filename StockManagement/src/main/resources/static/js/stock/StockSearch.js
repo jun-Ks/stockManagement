@@ -26,8 +26,10 @@ function serchItemInfo(){
 					"<th id='th_detailDrawingNo'>세부규격</th>" + 
 					"<th id='th_type'>타입</th>" + 
 					"<th id='th_itemName'>품명</th>" + 
+					"<th id='th_status'>제품상태</th>" + 
 					"<th id='th_quantity'>수량</th>" + 
 					"<th id='th_location'>위치</th>" +
+					"<th id='th_note'>비고</th>" + 
 					"<th id='th_putCart'>출고</th>"
 				"</tr>";
 			$(".infoTable thead").html(thead);	
@@ -35,7 +37,7 @@ function serchItemInfo(){
 			if(info.length === 0){
 				let emptyTbody = 
 					"<tr>" + 
-						"<td colspan='7'>검색결과가 없습니다.</td>" +
+						"<td colspan='11'>검색결과가 없습니다.</td>" +
 					"</tr>";
 					
 				$(".infoTable tbody").html(emptyTbody);
@@ -54,8 +56,10 @@ function serchItemInfo(){
 						"<td class='td_detailDrwingNo'>" + info[i].detailDrawingNo + "</td>" + 
 						"<td class='td_type'>" + info[i].type + "</td>" +  
 						"<td class='td_itemName'>" + info[i].itemName + "</td>" +  
+						"<td class='td_status'>" + info[i].status + "</td>" + 
 						"<td class='td_quantity'>" + info[i].calculatedQuantity + "</td>" +  
 						"<td class='td_location'>" + info[i].location + "</td>" +
+						"<td class='td_note'>" + info[i].note + "</td>" + 
 						"<td class='putCart'> + </td>" + 
 					"</tr>";						
 			}
@@ -85,45 +89,45 @@ $("#searchKeyword").on("keyup", function(e) {
 $(document).on("click", ".putCart", function(){
 	$(".cartBox").addClass("active"); // 슬라이드 인
 
-		let row = $(this).closest("tr");
-		let no = row.find(".td_no").text();
-		let drawingNo = row.find(".td_drawingNo").text();
-		let type = row.find(".td_type").text();
-		let itemName = row.find(".td_itemName").text();
-		let calculatedQuantity = row.find(".td_quantity").text();
-		let location = row.find(".td_location").text();
+	let row = $(this).closest("tr");
+	let no = row.find(".td_no").text();
+	let drawingNo = row.find(".td_drawingNo").text();
+	let type = row.find(".td_type").text();
+	let itemName = row.find(".td_itemName").text();
+	let calculatedQuantity = row.find(".td_quantity").text();
+	let location = row.find(".td_location").text();
+	
+	let thead = 
+		"<tr>" + 
+			"<th id='th_cart_no'>no</th>" + 
+			"<th id='th_cart_drawingNo'>도면번호</th>" +
+			"<th id='th_cart_itemName'>품명</th>" + 
+			"<th id='th_cart_location'>위치</th>" +
+			"<th id='th_cart_qty'>수량</th>" +
+			"<th id='th_cart_delivaryQty'>출고수량</th>" +
+			"<th id='th_cart_del'>삭제</th>" +  
+		"</tr>";
 		
-		let thead = 
-			"<tr>" + 
-				"<th id='th_cart_no'>no</th>" + 
-				"<th id='th_cart_drawingNo'>도면번호</th>" +
-				"<th id='th_cart_itemName'>품명</th>" + 
-				"<th id='th_cart_location'>위치</th>" +
-				"<th id='th_cart_qty'>수량</th>" +
-				"<th id='th_cart_delivaryQty'>출고수량</th>" +
-				"<th id='th_cart_del'>삭제</th>" +  
-			"</tr>";
-			
-		$(".cartTable thead").html(thead);
+	$(".cartTable thead").html(thead);
+	
+	let tbody = 
+		"<tr>" +
+		"<td class='cart_id'>" + no + "</td>" + 
+		"<td>" + drawingNo + "</td>" + 
+		"<td class='cart_itemName'>" + itemName + "</td>" + 
+		"<td class='cart_location'>" + location + "</td>" +
+		"<td class='cart_qty'>" + calculatedQuantity + "</td>" + 
+		"<td><input type='number' class='delivery-quantity'></td>" + 
+		"<td class='cart_del'>-</td>" + 
+		"</tr>";
 		
-		let tbody = 
-			"<tr>" +
-				"<td class='cart_id'>" + no + "</td>" + 
-				"<td>" + drawingNo + "</td>" + 
-				"<td class='cart_itemName'>" + itemName + "</td>" + 
-				"<td class='cart_location'>" + location + "</td>" +
-				"<td class='cart_qty'>" + calculatedQuantity + "</td>" + 
-				"<td><input type='number' class='delivery-quantity'></td>" + 
-				"<td class='cart_del'>-</td>" + 
-			"</tr>";
-			
 		$(".cartTable tbody").append(tbody);
-		
-		let tfoot = 
-			"<tr>" + 
-				"<td colspan='7'><button id='deliveryBtn'>출고하기</button></td>" + 
-			"</tr>";
-		$(".cartTable tfoot").html(tfoot);
+	
+	let tfoot = 
+		"<tr>" + 
+			"<td colspan='7' class='cart-last-td'><button id='deliveryBtn'>출고하기</button></td>" + 
+		"</tr>";
+	$(".cartTable tfoot").html(tfoot);
 })
 
 //수량에 특수문자 음수 등 넣지 못하도록 막기 + 출고수량이 재고수량 보다 초과하지 못하도록 경고창
@@ -135,11 +139,13 @@ $(document).on("input", ".delivery-quantity", function(){
 	let cart_qty = parseInt(row.find(".cart_qty").text().replace(/[^0-9]/g, ""));
 	let currentVal = parseInt(val);
 
+	/*
 	if (currentVal > cart_qty) {
 		alert("현재고 초과 수량으로 출고 할 수 없습니다.");
 		$(this).val(cart_qty); // 최대치로 조정
 		
 	}
+		*/
 });
 
 //출고하기
@@ -204,6 +210,8 @@ $(document).on("click", ".cart_del", function(){
 
 	if($(".cart_id").length === 0){
 		$(".cartBox").removeClass("active"); // 슬라이드 아웃
+		$("#deliveryBtn").hide();
+		$(".cart-last-td").text("출고 할 품목이 없습니다.");
 	}
 });
 

@@ -13,6 +13,7 @@ public class RequestModiLocationDTO {
 	private String type;
 	private String itemName;
 	private String location;
+	private String note;
 	private String modiLocation;
 	private LocalDateTime insertDate;
 	private int approval;

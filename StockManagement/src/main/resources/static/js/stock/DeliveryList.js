@@ -3,7 +3,7 @@
 $(document).ready(function(){
 	
 	//관리자 체크메뉴 show, hide
-	if(userDept === "구매팀" || userDept === "ERP팀"){
+	if(userDept === "구매팀" || userDept === "ERP팀" || userDept === "생산관리부"){
 		$("#manager-menu").show();
 		$("#manager-shipment-chk").attr("checked", "true")
 	}else{
@@ -44,7 +44,25 @@ function inputToday(){
 
 //조회버튼 클릭 시 해당 기간 내 데이터 조회
 $("#searchData").on("click", function(){
-	searchListByDate();
+	let startDate = $("#startDate").val();
+	let endDate = $("#endDate").val();
+	if(startDate > endDate){
+		alert("종료일보다 시작일이 클 수 없습니다.");
+		return false;
+	}else{
+		if(userDept === "구매팀" || userDept === "ERP팀" || userDept === "생산관리부"){
+			let is_checked = $("#manager-shipment-chk").prop("checked"); //체크 시 본인거만
+			if(is_checked){
+				searchListByDate();
+			}else{
+				searchAllListByDate();
+			}
+		}
+		//이외사용자는 본인것만
+		searchListByDate();
+	}
+
+	
 });
 
 //기간 내 데이터 조회함수
@@ -98,6 +116,7 @@ function makeTbl(logList, itemInfoList){
 			"<th>제품 ID</th>" + 
 			"<th>도면번호</th>" + 
 			"<th>품목명</th>" + 
+			"<th>제품상태</th>" + 
 			"<th>위치</th>"+
 			"<th>출고수량</th>" +
 			"<th>출고자 id </th>" +
@@ -115,6 +134,7 @@ function makeTbl(logList, itemInfoList){
 					"<td class='td_no'>" + itemInfoList[i].no + "</td>" +
 					"<td>" + itemInfoList[i].drawingNo + "</td>" +
 					"<td>" + itemInfoList[i].itemName + "</td>" +
+					"<td>" + itemInfoList[i].status + "</td>" + 
 					"<td>" + itemInfoList[i].location + "</td>" + 
 					"<td>" + logList[i].cartQty + "</td>" +
 					"<td>" + logList[i].userId + "</td>" +
@@ -154,7 +174,7 @@ $("#createExcel").on("click", function(){
 		//관리자 + 관리자 메뉴 체크 유무
 		let is_checked = $("#manager-shipment-chk").prop("checked");
 		
-		if(userDept === "구매팀" || userDept === "ERP팀"){
+		if(userDept === "구매팀" || userDept === "ERP팀" || userDept === "생산관리부"){
 			//본인 것만
 			if(is_checked){
 				status = 0;
@@ -162,6 +182,8 @@ $("#createExcel").on("click", function(){
 				status = 1;
 			}
 		}
+		//이외사용자는 본인것만
+		console.log(searched_startDate + " / " + searched_endDate + "/ " + status + " / " + userId)
 		deliveryAjax(searched_startDate, searched_endDate, status, userId);
 	}
 	

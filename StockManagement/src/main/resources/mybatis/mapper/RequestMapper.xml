@@ -6,14 +6,14 @@
 
 	<!-- 입고 요청 하기 -->
 	<insert id="insertRequestStockInfo">
-		INSERT INTO stockRequest (type, itemCode, itemName, basicQuantity, drawingNo, detailDrawingNo, location, requesterId, requesterDept, requesterName, groupId) 
-		VALUES(#{type}, #{itemCode}, #{itemName}, #{basicQuantity}, #{drawingNo}, #{detailDrawingNo}, #{location}, #{requesterId}, #{requesterDept}, #{requesterName}, #{groupId});
+		INSERT INTO stockRequest (type, itemCode, itemName, basicQuantity, drawingNo, detailDrawingNo, location, requesterId, requesterDept, note, requesterName, groupId) 
+		VALUES(#{type}, #{itemCode}, #{itemName}, #{basicQuantity}, #{drawingNo}, #{detailDrawingNo}, #{location}, #{requesterId}, #{requesterDept}, #{note}, #{requesterName}, #{groupId});
 	</insert>
 	
 	<!-- 위치 변경 요청 하기 -->
 	<insert id="insertRequestModiLocationInfo">
-		INSERT INTO locationModiRequest (itemId, itemCode, modiLocation, location, requesterId, requesterName, requesterDept, drawingNo, type, itemName, groupId)
-		VALUES(#{itemId}, #{itemCode}, #{modiLocation}, #{location}, #{requesterId}, #{requesterName}, #{requesterDept}, #{drawingNo}, #{type}, #{itemName}, #{groupId});
+		INSERT INTO locationModiRequest (itemId, itemCode, modiLocation, location, requesterId, requesterName, requesterDept, drawingNo, type, itemName, groupId, note)
+		VALUES(#{itemId}, #{itemCode}, #{modiLocation}, #{location}, #{requesterId}, #{requesterName}, #{requesterDept}, #{drawingNo}, #{type}, #{itemName}, #{groupId}, #{note});
 	</insert>
 	
 	<!-- 입고 요청 리스트 by id -->

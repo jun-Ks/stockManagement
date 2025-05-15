@@ -57,6 +57,11 @@
 		</div>
 	</div>
 
+	<div class="form-group">
+		<label for="note">비고</label>
+		<input type="text" id="note">
+	</div>
+
 	<button id="requestBtn">입고요청</button>
 </div>
 
