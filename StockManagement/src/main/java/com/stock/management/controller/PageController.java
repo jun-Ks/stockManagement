@@ -3,6 +3,7 @@ package com.stock.management.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -66,11 +67,13 @@ public class PageController {
 
 	//로그페이지
 	@GetMapping("/erpteam/log")
-	public String callLog(HttpSession session){
+	public String callLog(HttpSession session , @RequestParam(name = "linkDept", required = false) String linkDept){
 		String dept = (String) session.getAttribute("userDept");
-
+		
 		if(dept != null && dept.equals("ERP팀")){
 			return isLogined(session, "/etc/CallLog");
+		}else if(linkDept != null && linkDept.equals("ERP팀")){
+			return "/etc/CallLog";
 		}else if(dept == null){
 			return "redirect:/";
 		}
