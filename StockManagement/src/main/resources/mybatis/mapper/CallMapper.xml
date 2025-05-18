@@ -12,7 +12,7 @@
 
     <!--로그리스트 가져오기-->
     <select id="getLogList">
-        SELECT * FROM callLog;
+        SELECT * FROM callLog ORDER BY requesterDate DESC;
     </select>
 
     <!--가장 최근에 등록한 로그 no가져오기 -->

@@ -24,17 +24,18 @@ $(document).ready(function(){
             $(".logList thead").html(thead);
 
             $.each(logs, function(index, log){
+                let acceptDateClass = (log.acceptDate != null) ? "acceptDate-highlight" : "";
                 let tbody = 
                     "<tr>" + 
                         "<td>" + log.no + "</td>" + 
                         "<td>" + log.requesterId + "</td>" + 
-                        "<td>" + log.requesterName + "</td>" + 
+                        "<td class='td_requesterName'>" + log.requesterName + "</td>" + 
                         "<td>" + log.requesterDept + "</td>" + 
                         "<td>" + log.requesterLocation + "</td>" + 
                         "<td>" + log.reason + "</td>" + 
-                        "<td>" + log.requesterDate + "</td>" + 
-                        "<td>" + log.callChecker + "</td>" + 
-                        "<td>" + log.acceptDate + "</td>" +
+                        "<td>" + (log.requesterDate != null ? log.requesterDate.replace("T", " ") : "-") + "</td>" + 
+                        "<td class='td_callChecker'>" + (log.callChecker === null ? "-" : log.callChecker) + "</td>" + 
+                        "<td class='td_acceptDate "+ acceptDateClass +"'>" + (log.acceptDate != null ? log.acceptDate.replace("T", " ") : "-") + "</td>" +
                     "</tr>";
                     $(".logList tbody").append(tbody);
             });
