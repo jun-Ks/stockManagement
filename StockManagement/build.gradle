@@ -60,8 +60,15 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	 
+
+    //EXCEL 
 	implementation 'org.apache.poi:poi-ooxml:5.2.3'
+
+    //QR
+    implementation 'com.google.zxing:core:3.5.2'
+    implementation 'com.google.zxing:javase:3.5.2'
+    implementation 'commons-codec:commons-codec:1.16.0'
+
 }
 
 tasks.named('test') {

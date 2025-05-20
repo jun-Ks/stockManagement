@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.stock.management.label.mapper.ILabelMapper">
+
+    <select id="getLabelInfo">
+        SELECT * FROM rackLabel
+    </select>
+
+    <!--rackname으로 모든 정보가져오기-->
+    <select id="getLabelInfoByRackName">
+        SELECT * FROM rackLabel 
+        WHERE rackName = #{rackName}
+    </select>
+
+    <!--rackName만 가져오기-->
+    <select id="getRackName">
+        SELECT DISTINCT rackName 
+        FROM rackLabel
+    </select>
+
+    <!--rackNumber만 가져오기-->
+    <select id="getRackNumberByName">
+        SELECT DISTINCT rackNumber 
+        FROM rackLabel
+        WHERE rackName = #{rackName}
+    </select>
+
+    <!--rackStage만 가져오기-->
+    <select id="getRackStageByNameNumber">
+        SELECT DISTINCT rackStage 
+        FROM rackLabel 
+        WHERE rackName = #{rackName} AND rackNumber = #{rackNumber}
+    </select>
+
+    <!--rackName, rackNumber로 fullName가져오기-->
+    <select id="getFullNameByNameNumber">
+        SELECT fullName 
+        FROM rackLabel 
+        WHERE rackName = #{rackName} AND rackNumber = #{rackNumber}
+    </select>
+    
+    <!--rackName으로 fullName가져오기-->
+    <select id="getFullNameByName">
+        SELECT fullName 
+        FROM rackLabel
+        WHERE rackName = #{rackName}
+    </select>
+</mapper>

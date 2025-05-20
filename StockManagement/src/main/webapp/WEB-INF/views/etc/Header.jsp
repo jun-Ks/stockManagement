@@ -31,6 +31,7 @@
 		<a href="/stock/location/modi/request" class="header-menu" id="locationModiPage">위치 수정요청</a>
 		<a href="/stock/request/list" class="header-menu" id="requestListPage">입고/위치수정 요청 리스트</a>
 		<a href="/stock/management" class="header-menu" id="stock-management">품목관리</a>
+		<a href="/stock/location/label" class="header-menu" id="make-label">QR라벨 관리</a>
 		<a href="#" class="header-menu" id="call-erpteam">🚨전산팀 호출하기🚨</a>
 		<a href="/erpteam/log" class="header-menu" id="call-log">호출 로그</a>
 	</div>

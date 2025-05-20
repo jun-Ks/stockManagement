@@ -79,4 +79,11 @@ public class PageController {
 		}
 		return "redirect:/";
 	}
+
+	//QR라벨 페이지
+	@GetMapping("/stock/location/label")
+	public String getMethodName(HttpSession session) {
+		return isLogined(session, "/stock/LabelPage");	
+	}
+	
 }
