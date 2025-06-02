@@ -17,6 +17,7 @@
 	<header>
 		<%@ include file="../etc/Header.jsp" %>
 	</header>
+	
 	<div class="optionsBox"> 
 	    <div class="option active" id="stock-insert">품목등록</div>
 	    <div class="option" id="stock-modify">품목 수정/삭제</div>

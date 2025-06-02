@@ -10,6 +10,8 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@100;300;400;500;700&display=swap" rel="stylesheet">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
 <link rel="stylesheet" href="/css/stock/RequestList.css">
 
 </head>
@@ -27,23 +29,33 @@
 
 	<div class="optionsBox"> 
 	    <div class="option active" id="stock">
-	    	입고 요청
+	    	데이터 추가 요청
 	    </div>
 	    <div class="option" id="location">
-	    	위치 변경 요청
+	    	수량/위치 변경 요청
+	    </div>
+		<div class="option" id="purchase">
+	    	구매 요청
 	    </div>
 	</div>
 
 	<div class="requestList">
 		<div class="tab-content stock active">
-			<table class="requestStockList" border="1">
+			<table class="requestStockList">
 				<thead></thead>
 				<tbody></tbody>
 				<tfoot></tfoot>
 			</table>
 		</div>
 		<div class="tab-content location">
-			<table class="requestModiLocationList" border="1">
+			<table class="requestModiLocationList">
+				<thead></thead>
+				<tbody></tbody>
+				<tfoot></tfoot>
+			</table>
+		</div>
+		<div class="tab-content purchase">
+			<table class="requestPurchaseList">
 				<thead></thead>
 				<tbody></tbody>
 				<tfoot></tfoot>

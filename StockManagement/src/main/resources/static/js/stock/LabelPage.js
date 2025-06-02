@@ -102,6 +102,7 @@ $("#makeQR").on("click", function(){
                 }
             }
             $(".infoTable tbody").html(tbody);
+           
         },
         error: function(xhr){
             alert(xhr.responseText);

@@ -29,6 +29,7 @@
 	<header>
 		<%@ include file="../etc/Header.jsp" %>
 	</header>
+
 	<div class="searchBox">
 		<select id="search-option">
 			<option value="drawingNo">도면번호</option>

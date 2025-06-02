@@ -29,7 +29,7 @@ function searchItemInfo(){
 					"<th id='th_quantity'>수량</th>" + 
 					"<th id='th_location'>위치</th>" +
 					"<th id='th_note'>비고</th>" + 
-					"<th id='th_putCart'>위치수정</th>"
+					"<th id='th_putCart'>수정</th>"
 				"</tr>";
 			$(".infoTable thead").html(thead);	
 					
@@ -100,13 +100,14 @@ $(document).on("click", ".putCart", function(){
 	let thead = 
 		"<tr>" + 
 			"<th id='th_cart_no'>no</th>" + 
-			"<th id='th_cart_itemCode'>품목코드</th>" + 
+			//"<th id='th_cart_itemCode'>품목코드</th>" + 
 			"<th id='th_cart_drawingNo'>도면번호</th>" +
 			"<th id='th_cart_type'>타입</th>" + 
 			"<th id='th_cart_itemName'>품명</th>" + 
-			//"<th id='cart_qty'>수량</th>" +
+			"<th id='th_cart_qty'>수량</th>" +
+			"<th id='th_cart_request-qty'>수정 수량</th>" + 
 			"<th id='th_cart_location'>현 위치</th>" +
-			"<th id='th_cart_request-loca'>수정 요청 위치</th>" + 
+			"<th id='th_cart_request-loca'>수정 위치</th>" + 
 			"<th id='th_cart_del'>삭제</th>"
 		"</tr>";
 		
@@ -115,11 +116,12 @@ $(document).on("click", ".putCart", function(){
 	let tbody = 
 		"<tr>" +
 			"<td class='cart_id'>" + no + "</td>" + 
-			"<td class='cart_itemCode'>" + itemCode + "</td>" + 
+			//"<td class='cart_itemCode'>" + itemCode + "</td>" + 
 			"<td class='cart_drawingNo'>" + drawingNo + "</td>" + 
 			"<td class='cart_type'>" + type + "</td>" + 
 			"<td class='cart_itemName'>" + itemName + "</td>" + 
-			//"<td>" + calculatedQuantity + "</td>" + 
+			"<td class='cart_quantity'>" + calculatedQuantity + "</td>" + 
+			"<td class='request-quantity'><input type='text' class='input_quantity'></td>" + 
 			"<td class='cart_location'>" + location + "</td>" +
 			"<td class='request-location'>" +
 				"<select class='rackName'></select> - " +
@@ -134,7 +136,7 @@ $(document).on("click", ".putCart", function(){
 	
 	let tfoot = 
 		"<tr>" + 
-			"<td colspan='7' class='cart-last-td'><button id='requestBtn'>수정요청</button></td>" + 
+			"<td colspan='9' class='cart-last-td'><button id='requestBtn'>수정요청</button></td>" + 
 		"</tr>";
 	$(".cartTable tfoot").html(tfoot);
 	
@@ -161,7 +163,8 @@ function selectLocation(row){
 	let $rackStage = row.find('.rackStage');
 
 	$rackName.append('<option value="NULL">선택</option>');
-
+	$rackNumber.append('<option value="NULL"></option>');
+	$rackStage.append('<option value="NULL"></option>');
 	$.each(rackNames, function(index, name) {
 		$rackName.append(`<option value="${name}">${name.toUpperCase()}</option>`);
 	});
@@ -208,38 +211,71 @@ $(document).on("click", "#requestBtn", function(){
 	
 	$(".request-location").each(function(){
 		let savedLocation = $(this).closest("tr").find(".cart_location").text().toUpperCase();
-		
+
 		const rackName = $(this).find(".rackName").val();
 		const rackNumber = $(this).find(".rackNumber").val();
 		const rackStage = $(this).find(".rackStage").val();
-		
 		let requestLocation = rackName + "-" + rackNumber + "-" + rackStage;
+
+		let savedQuantity = $(this).closest("tr").find(".cart_quantity").text();
+		const input_quantity = $(this).closest("tr").find(".input_quantity").val();
 		
-		
-		if(rackName === "NULL" || rackNumber === "NULL" || rackStage === "NULL"){
-			alert("수정 요청 할 랙 위치가 선택 되지 않았습니다. 확인해주세요.");
+		//조건검사
+		// 항목의 존재 여부
+		const hasRackName = rackName !== "NULL";
+		const hasRackNumber = rackNumber !== "NULL";
+		const hasRackStage = rackStage !== "NULL";
+		const hasQuantity = input_quantity !== "";
+		const isRackAllFilled = hasRackName && hasRackNumber && hasRackStage;
+		const alertmsg = "수정 사항이 선택(혹은 입력)이 되지 않았습니다. 확인해주세요.";
+
+		// === 1단계: 입력 유효성 검사 ===
+		if (!hasRackName && !hasRackNumber && !hasRackStage && !hasQuantity) {
+			alert(alertmsg);
 			location_test = false;
 			return false;
 		}
-		
-		if(savedLocation === requestLocation.toLocaleUpperCase()){
+
+		if (hasQuantity && (hasRackName || hasRackNumber || hasRackStage) && !isRackAllFilled) {
+			alert(alertmsg);
+			location_test = false;
+			return false;
+		}
+
+		if (!hasQuantity && (hasRackName || hasRackNumber || hasRackStage) && !isRackAllFilled) {
+			alert(alertmsg);
+			location_test = false;
+			return false;
+		}
+
+		// === 2단계: 실제 변경 사항 비교 ===
+		// (입력은 했지만 바뀐 게 없다면 false 처리)
+		if (isRackAllFilled && savedLocation === requestLocation.toUpperCase()) {
 			alert("수정 할 위치가 현 위치랑 같습니다. 확인해주세요.");
 			location_test = false;
 			return false;
 		}
-	})
+
+		if (hasQuantity && savedQuantity === input_quantity) {
+			alert("수정 할 수량이 현 수량과 같습니다. 확인해주세요.");
+			location_test = false;
+			return false;
+		}
+
+	});
 	
-	//유효성 검사 true일 경우 출고 진행되도록 설정
+	//유효성 검사 true일 경우 수정 진행되도록 설정
 	if(location_test){
 		//장바구니 정보담기
 		let cart_info = [];
 		
-		//장바구니에 담긴 id, 출고 수량 담기
 		$(".cart_id").each(function(){
 			let item_id = $(this).text();
 			let itemCode = $(this).closest("tr").find($(".cart_itemCode")).text();
 			let drawingNo = $(this).closest("tr").find($(".cart_drawingNo")).text();
 			let type = $(this).closest("tr").find($(".cart_type")).text();
+			let quantity = $(this).closest("tr").find($(".cart_quantity")).text();
+			let modi_quantity = $(this).closest("tr").find($(".input_quantity")).val();
 			let location = $(this).closest("tr").find($(".cart_location")).text();
 			let itemName = $(this).closest("tr").find($(".cart_itemName")).text();
 			let note = $(this).closest("tr").find($(".cart_note")).text();
@@ -259,14 +295,16 @@ $(document).on("click", "#requestBtn", function(){
 				itemName: itemName,
 				location: location,
 				note: note,
-				modiLocation: modi_location.toLocaleUpperCase()
+				modiLocation: modi_location.toLocaleUpperCase(),
+				quantity: parseInt(quantity),
+				modiQuantity: parseInt(modi_quantity)
 			});
 		});
 		console.log(cart_info)
 		
 		//위치 수정 정보들 백엔드로 넘기기
 		$.ajax({
-			url: "/stock/request/modi/location",
+			url: "/stock/request/modi/location/quantity",
 			type: "POST",
 			contentType: "application/json",
 			data: JSON.stringify(cart_info),

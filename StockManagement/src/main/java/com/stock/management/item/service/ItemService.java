@@ -97,9 +97,9 @@ public class ItemService implements IItemService{
 	
 	//제품위치 수정하기
 	@Override
-	public int modifyLocation(int itemId, String modiLocation) {
+	public int modifyLocation(int itemId, String modiLocation, int quantity) {
 		
-		int result = mapper.modifyLocation(itemId, modiLocation);
+		int result = mapper.modifyLocation(itemId, modiLocation, quantity);
 		
 		return result;
 	}
@@ -142,6 +142,14 @@ public class ItemService implements IItemService{
 	public int insertManagementLog(ManagementLogDTO logInfo) {
 		int result = mapper.insertManagementLog(logInfo);
 		
+		return result;
+	}
+
+	//구매요청 수량 적용
+	@Override
+	public int updateQuantity(int requestQuantity, int itemId) {
+		int result = mapper.updateQuantity(requestQuantity, itemId);
+
 		return result;
 	}
 

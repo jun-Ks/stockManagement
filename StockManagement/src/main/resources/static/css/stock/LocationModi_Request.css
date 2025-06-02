@@ -112,7 +112,7 @@ h3{
 .cartTable {
     width: 100%; /* cartBox 너비를 가득 채우기 위해 width 설정 */
     border-collapse: collapse;
-    table-layout: auto; /* 셀 레이아웃을 자동으로 설정 */
+    table-layout: auto;
 }
 
 .cart_itemName {
@@ -148,7 +148,7 @@ table {
 	width: 10px;
 }
 #th_quantity, #th_putCart{
-	width: 10px;
+	width: 20px;
 }
 #th_location{
 	width: 25px;
@@ -220,7 +220,7 @@ table {
 	color: #059669;
 }
 
-input.delivery-quantity {
+input.delivery-quantity, .input_quantity {
 	width: 80px;
 	padding: 5px;
 	border: 1px solid #ccc;
@@ -267,7 +267,11 @@ input.delivery-quantity {
 }
 
 
-#th_cart_del{
+#th_cart_del, #th_cart_request-qty{
 	width: 10px;
 }
 
+/* #th_cart_no, #th_cart_itemName, #th_cart_request-qty, #th_cart_request-loca, */
+.cart_id, .cart_itemName, .request-quantity, .request-location{
+	border-right: 1px solid rgb(167, 167, 167);
+}

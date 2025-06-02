@@ -1,4 +1,6 @@
 $(document).ready(function() {
+	$("#stockDataRequestBox").hide();
+	$(".purchaseRequestList").hide();
 	const rackNames = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n'];
 	const rackNumberMap = {
 		a: 14,
@@ -114,4 +116,205 @@ $("#basicQuantity").on("input", function () {
     value = value.replace(/[^0-9]/g, ""); 
     
     $(this).val(value);
+});
+
+//option 선택 시 active 클래스 추가
+$(document).on("click", ".option", function(){
+
+    $(".option").removeClass("active");
+    $(this).addClass("active");
+
+    if($(this).attr("id") === "purchaseRequestBtn"){
+		
+        $("#stock-purchaseRequestBtn").addClass("active");     
+
+		$("#stockDataRequestBox").hide();
+		$("#purchaseRequestBox").show();
+		
+    } else if($(this).attr("id") === "stockDataInsertRequestBtn"){
+		
+        $("#stockDataInsertRequestBtn").addClass("active");
+
+		$("#stockDataRequestBox").show();
+		$("#purchaseRequestBox").hide();
+    }
+});
+
+// 모달 열기
+$("#searchItemBtn").on("click", function () {
+  $("#itemSearchModal").addClass("active");
+});
+
+// 모달 닫기
+$(".modal-close").on("click", function () {
+  $("#itemSearchModal").removeClass("active");
+});
+
+// 모달 외부 클릭 시 닫기
+$(window).on("click", function (e) {
+  if ($(e.target).is("#itemSearchModal")) {
+    $("#itemSearchModal").removeClass("active");
+  }
+});
+
+
+//검색 모달창
+$("#modal-search").on("click", function(){
+	let searchOption = $("#search-option").val();
+	let searchKeyword = $("#searchKeyword").val().toUpperCase();
+
+	$.ajax({
+		url: "/stock/item",
+		type: "POST",
+		data:{
+			searchOption: searchOption,
+			searchKeyword: searchKeyword
+		},
+		success: function(response){
+			let info = response;
+			
+			let thead = 
+				"<tr>" + 
+					"<th id='th_no'>no</th>" + 
+					"<th id='th_itemCode'>품목코드</th>" + 
+					"<th id='th_drawingNo'>도면번호</th>" +
+					//"<th id='th_detailDrawingNo'>세부규격</th>" + 
+					//"<th id='th_type'>타입</th>" + 
+					"<th id='th_itemName'>품명</th>" + 
+					//"<th id='th_status'>제품상태</th>" + 
+					"<th id='th_quantity'>수량</th>" + 
+					"<th id='th_location'>위치</th>" +
+					//"<th id='th_note'>비고</th>" + 
+					"<th id='th_putCart'>추가</th>"
+				"</tr>";
+			$(".infoTable thead").html(thead);	
+					
+			if(info.length === 0){
+				let emptyTbody = 
+					"<tr>" + 
+						"<td colspan='7'>검색결과가 없습니다.</td>" +
+					"</tr>";
+					
+				$(".infoTable tbody").html(emptyTbody);
+				
+				return;
+			}
+			
+			let tbody = "";
+			for(let i = 0; i < info.length; i++){
+				
+				tbody +=
+					"<tr>" +
+						"<td class='td_no'>" + info[i].no + "</td>" +  
+						"<td class='td_itemCode'>" + info[i].itemCode + "</td>" +  
+						"<td class='td_drawingNo'>" + info[i].drawingNo + "</td>" + 
+						//"<td class='td_detailDrwingNo'>" + info[i].detailDrawingNo + "</td>" + 
+						//"<td class='td_type'>" + info[i].type + "</td>" +  
+						"<td class='td_itemName'>" + info[i].itemName + "</td>" +  
+						//"<td class='td_status'>" + info[i].status + "</td>" + 
+						"<td class='td_quantity'>" + info[i].calculatedQuantity + "</td>" +  
+						"<td class='td_location'>" + info[i].location + "</td>" +
+						//"<td class='td_note'>" + info[i].note + "</td>" + 
+						"<td class='putCart'> + </td>" + 
+					"</tr>";						
+			}
+			$(".infoTable tbody").html(tbody);
+		},
+		error: function(xhr){
+			alert(xhr.responseText);
+			
+			return false;
+		}
+	});
+})
+
+//품목추가 검색 창에서 추가 버튼 클릭 하면 장바구니 테이블로 이동
+$(document).on("click", ".putCart", function(){
+	$(".purchaseRequestList").show();
+	let tr = $(this).closest("tr");
+
+	tr.css("background-color", "lightgray");
+	let td_no = tr.find(".td_no").text();
+	let td_itemCode = tr.find(".td_itemCode").text();
+	let td_drawingNo = tr.find(".td_drawingNo").text();
+	let td_itemName = tr.find(".td_itemName").text();
+	let td_quantity = tr.find(".td_quantity").text();
+	let td_location = tr.find(".td_location").text();
+
+
+	let tbody = 
+		"<tr>" +
+			"<td class='cart_no'>" + td_no + "</td>" + 
+			"<td class='cart_itemCode'>" + td_itemCode + "</td>" +
+			"<td class='cart_drawingNo'>" + td_drawingNo + "</td>" +
+			"<td class='cart_itemName'>" + td_itemName + "</td>" +
+			"<td class='cart_location'>" + td_location + "</td>" +
+			"<td class='cart_quantity'>" + td_quantity + "</td>" +
+			"<td class='cart_requestQty'><input type='text' class='cart_input_qty'></td>" + 
+			"<td class='cart_del'>❌</td>" + 
+		"</tr>";
+
+	$(".requestListTbl tbody").append(tbody)
+});
+
+//cart에서 x버튼누르면 삭제
+$(document).on("click", ".cart_del", function(){
+	let tr = $(this).closest("tr");
+	tr.remove();
+
+	if($(".cart_no").length === 0){
+		$(".purchaseRequestList").hide();
+	}
+})
+
+//수량 추가 요청 건 전송
+$("#sendRequestBtn").on("click", function(){
+
+	if($(".cart_no").length === 0){
+		alert("요청 할 항목이 없습니다.")
+		return false;
+	}
+	let data =[];
+	$(".cart_no").each(function(list, index){
+		let requesterId = $("#userId").text();
+		let requesterDept = $("#userDept").text();
+		let requesterName = $("#userName").text();
+	
+		let cart_no = $(this).text();
+		let cart_requestQty = $(this).closest("tr").find(".cart_input_qty").val();
+		
+
+		data = [{
+			requesterId: requesterId,
+			requesterDept: requesterDept,
+			requesterName: requesterName,
+			no: cart_no,
+			requestQuantity: cart_requestQty
+		}];
+	})
+	$.ajax({
+		url: "/stock/request/qty",
+		type: "POST",
+		data: JSON.stringify(data),
+		contentType: "application/json",
+		success: function(response){
+			alert(response);
+			window.location.replace("/stock/request/list");
+		},
+		error: function(xhr){
+			
+			return false;
+		}
+	});
+})
+
+$(document).on("input", ".cart_input_qty", function(){
+    let val = $(this).val().replace(/[^0-9]/g, "");
+
+    // 0 하나만 입력된 경우 제거
+    if (val === "0") {
+        val = "";
+    }
+
+    $(this).val(val);
 });

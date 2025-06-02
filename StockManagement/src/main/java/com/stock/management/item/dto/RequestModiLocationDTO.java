@@ -13,9 +13,11 @@ public class RequestModiLocationDTO {
 	private String type;
 	private String itemName;
 	private String location;
-	private String note;
 	private String modiLocation;
+	private int quantity;
+	private int modiQuantity;
 	private LocalDateTime insertDate;
+	private String note;
 	private int approval;
 	
 	private String requesterId;

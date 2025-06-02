@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.stock.management.item.dto.ItemInfoDTO;
 import com.stock.management.item.dto.RequestModiLocationDTO;
+import com.stock.management.item.dto.RequestPurchaseDTO;
 import com.stock.management.item.dto.RequestStockDTO;
 import com.stock.management.item.mapper.IRequestMapper;
 import com.stock.management.user.dto.UserInfoDTO;
@@ -186,6 +187,49 @@ public class RequestService implements IRequestService{
 	@Override
 	public int cntUnapprovalModiLocationRequest() {
 		int result = mapper.cntUnapprovalModiLocationRequest();
+		return result;
+	}
+
+	//미승인건 개수세기 - 구매요청
+	@Override
+	public int cntUnapprovalPurchaseRequest() {
+		int result = mapper.cntUnapprovalPurchaseRequest();
+		return result;
+	}
+
+	//요청정보수정
+	@Override
+	public int requestInfoUpdate(String column, Object modiData, int requestId) {
+		int result = mapper.requestInfoUpdate(column, modiData, requestId); 
+		return result;
+	}
+
+	//수량 추가 요청
+	@Override
+	public int insertPurchaseList(List<RequestPurchaseDTO> requestInfo) {
+		int result = mapper.insertPurchaseList(requestInfo);
+		return result;
+	}
+
+	//수량 추가 요청 리스트가져오기
+	@Override
+	public List<RequestPurchaseDTO> getRequestPurchaseList(int approval) {
+		List<RequestPurchaseDTO> list = mapper.getRequestPurchaseList(approval);
+
+		return list;
+	}
+
+	//구매수량 - 수량변경
+	@Override
+	public int updateRequestPurchaseQty(int requestId, int requestQuantity) {
+		int result = mapper.updateRequestPurchaseQty(requestId, requestQuantity);
+
+		return result;
+	}
+	//수량 추가 승인
+	@Override
+	public int approvalRequestPurchase(int requestId, String approvalUserName) {
+		int result = mapper.approvalRequestPurchase(requestId, approvalUserName);
 		return result;
 	}
 

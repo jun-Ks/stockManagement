@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.stock.management.item.dto.ItemInfoDTO;
 import com.stock.management.item.dto.RequestModiLocationDTO;
+import com.stock.management.item.dto.RequestPurchaseDTO;
 import com.stock.management.item.dto.RequestStockDTO;
 
 @Mapper
@@ -58,4 +59,22 @@ public interface IRequestMapper {
 	
 	//미승인건 개수세기 - 위치변경
 	public int cntUnapprovalModiLocationRequest();
+
+	//미승인건 개수세기 - 구매요청
+	public int cntUnapprovalPurchaseRequest();
+
+	//요청정보 수정
+	public int requestInfoUpdate(@Param("column") String column, @Param("modiData") Object modiData , @Param("requestId") int requestId);
+
+	//수량 추가 요청
+	public int insertPurchaseList(@Param("list") List<RequestPurchaseDTO> requestInfo);
+
+	//수량 추가 요청 리스트가져오기
+	public List<RequestPurchaseDTO> getRequestPurchaseList(@Param("approval") int approval);
+
+	//구매수량 - 수량변경
+	public int updateRequestPurchaseQty(@Param("no") int requestId, @Param("requestQuantity") int requestQuantity);
+
+	//수량 추가 승인
+	public int approvalRequestPurchase(@Param("no") int requestId, @Param("approvalUserName") String approvalUserName);
 }

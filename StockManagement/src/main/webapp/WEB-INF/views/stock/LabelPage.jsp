@@ -33,6 +33,7 @@
 	</div>
 	
 	<div class="infoBox">
+		<p id="label"></p>
 		<div class="resultBox">
 			<table class="infoTable" border="1">
 				<thead></thead>

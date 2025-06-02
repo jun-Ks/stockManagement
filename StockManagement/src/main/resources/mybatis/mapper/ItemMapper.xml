@@ -64,7 +64,7 @@
 	<!--제품위치 수정 -->
 	<update id="modifyLocation">
 		UPDATE stockInfo 
-		SET location = #{modiLocation}
+		SET location = #{modiLocation}, calculatedQuantity = #{modiQuantity}
 		WHERE no = #{itemId};
 	</update>
 	
@@ -100,4 +100,11 @@
 		INSERT INTO managementLog (userId, userDept, userName, itemId, type, drawingNo)  
 		VALUES (#{userId}, #{userDept}, #{userName}, #{itemId}, #{type}, #{drawingNo});
 	</insert>
+
+	<!--구매 요청 내용 원데이터 적용-->
+	<update id="updateQuantity">
+		UPDATE stockInfo
+		SET calculatedQuantity = (calculatedQuantity + #{requestQuantity})
+		WHERE no = #{requestId}
+	</update>
 </mapper>

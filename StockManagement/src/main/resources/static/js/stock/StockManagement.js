@@ -55,7 +55,7 @@ function insertStockInfo(){
 			type: type, 
 			itemName: itemName,
 			drawingNo: drawingNo, 
-			detailDrawingNo, detailDrawingNo,
+			detailDrawingNo: detailDrawingNo,
 			basicQuantity: basicQuantity,
 			calculatedQuantity: basicQuantity,
 			location: location,
@@ -357,7 +357,7 @@ function makeStatusSelect_modal(td_status){
 	let selectData = 
 		"<option value='" + td_status + "'>" + td_status + "</option>" +
 		"<option value=''>----------------------------------------------------------------</option>" + 
-		"<option value='완제품'>완제품</option>" + +
+		"<option value='완제품'>완제품</option>" +
 		"<option value='가공중'>가공중</option>" +
 		"<option value='소재'>소재</option>" +
 		"<option value='불량'>불량</option>" +

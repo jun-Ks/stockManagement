@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.stock.management.item.dto.ItemInfoDTO;
+import com.stock.management.item.dto.PurchaseApprovalDTO;
 import com.stock.management.item.dto.RequestModiLocationDTO;
+import com.stock.management.item.dto.RequestPurchaseDTO;
 import com.stock.management.item.dto.RequestStockDTO;
 import com.stock.management.item.service.IItemService;
 import com.stock.management.item.service.IRequestService;
@@ -54,8 +57,8 @@ public class RequestController {
 
 	}
 	
-	//위치 변경 요청
-	@PostMapping("/stock/request/modi/location")
+	//위치+수량 변경 요청
+	@PostMapping("/stock/request/modi/location/quantity")
 	public ResponseEntity<String> insertRequestModiLocationInfo(@RequestBody List<RequestModiLocationDTO> requestInfo) {
 		
 		int result = 0;
@@ -72,8 +75,9 @@ public class RequestController {
 			return ResponseEntity.ok(result + "건 요청 등록 완료.");
 		}
 		
-		 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                 .body("요청실패.. 전산팀에 문의해주세요.");
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+		.body("요청실패.. 전산팀에 문의해주세요.");
 	}
 	
 	//재고 요청 리스트 전개 by id
@@ -202,8 +206,8 @@ public class RequestController {
 			@PathVariable("approvalUser") String approvalUser,
 			@RequestBody List<RequestModiLocationDTO> requestInfo
 			){
-		
-		
+		//  System.out.println(requestInfo.toString());
+	 	
 		int updateResult = 0;
 		
 		//요청정보 승인
@@ -211,7 +215,8 @@ public class RequestController {
 			int approvalResult = service.approvalLocationRequest(approvalUser, info.getItemId());
 			
 			if(approvalResult > 0) {
-				updateResult += itemService.modifyLocation(info.getItemId(), info.getModiLocation());
+				System.out.println(info.getQuantity());
+				updateResult += itemService.modifyLocation(info.getItemId(), info.getModiLocation(), info.getModiQuantity());
 			}
 		}
 		
@@ -229,11 +234,111 @@ public class RequestController {
 	public ResponseEntity<?> cntUnapproval(){
 		int cnt_stockRequest = service.cntUnapprovalStockRequest();
 		int cnt_modiLocaRequest = service.cntUnapprovalModiLocationRequest();
+		int cnt_purchaseRequest = service.cntUnapprovalPurchaseRequest();
 		
 		Map<String, Integer> countResult = new HashMap<>();
 		
 		countResult.put("입고 요청", cnt_stockRequest);
 		countResult.put("위치 변경", cnt_modiLocaRequest);
+		countResult.put("구매 요청", cnt_purchaseRequest);
+
 		return ResponseEntity.ok(countResult);
+	}
+
+	//요청 정보 수정
+	@PutMapping("/request/list/type/{type}/id/{requestId}")
+	public ResponseEntity<?> putMethodName(
+		@PathVariable("type") String type, 
+		@PathVariable("requestId") String string_requestId, 
+		@RequestBody Object modiData) {
+
+		int requestId = Integer.parseInt(string_requestId);
+		String column = "";
+		if(type.equals("a")){
+			column = "modiQuantity";
+		}else if(type.equals("b")){
+			column = "modiLocation";
+		}
+	
+		int result = service.requestInfoUpdate(column, modiData, requestId);
+
+
+		if(result > 0 ) {
+			return ResponseEntity.ok(modiData);
+		}else{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+				.body("수정실패.. 전산팀에 문의해주세요.");
+		}
+		
+	}
+
+	//구매요청추가
+	@PostMapping("/stock/request/qty")
+	public ResponseEntity<String> requestQty(@RequestBody List<RequestPurchaseDTO> requestInfo) {
+		for(int i = 0 ; i < requestInfo.size(); i++) {
+			String uuid = UUID.randomUUID().toString();
+			requestInfo.get(i).setGroupId(uuid);
+		}
+		
+		int result = service.insertPurchaseList(requestInfo);
+		if(result > 0){
+			return ResponseEntity.ok("요청 등록완료");
+		}else{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+				.body("수정실패.. 전산팀에 문의해주세요.");
+		}
+	}
+
+	//구매요청 리스트
+	@GetMapping("/request/purchase/list/approval/{approval}")
+	public ResponseEntity<List<RequestPurchaseDTO>> getMethodName(@PathVariable("approval") int approval) {
+		List<RequestPurchaseDTO> list = service.getRequestPurchaseList(approval);
+
+		return ResponseEntity.ok(list);
+	}
+	
+	//구매요청 - 수량 변경
+	@PutMapping("/request/purchase/list/id/{requestId}")
+	public ResponseEntity<?> updateRequestPurchaseQty(@PathVariable("requestId") int no, @RequestBody int requestQuantity) {
+		
+		int result = service.updateRequestPurchaseQty(no, requestQuantity);
+
+		if(result > 0){
+			return ResponseEntity.ok(requestQuantity);
+		}else{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+				.body("수정실패.. 전산팀에 문의해주세요.");
+		}
+	}
+	
+	//구매요청 승인
+	@PutMapping("/request/purchase/approval/")
+	public ResponseEntity<String> updateStockQuantity(@RequestBody List<PurchaseApprovalDTO> approvalList) {
+		int updateInfoResult = 0;
+		int finalResult = 0;
+		System.out.println(approvalList.size());
+		for(int i = 0; i < approvalList.size(); i++){
+			String approvalUser = approvalList.get(i).getApprovalUser();
+			int requestId = approvalList.get(i).getRequestListId();
+			System.out.println(approvalUser + " / " + requestId);
+			updateInfoResult += service.approvalRequestPurchase(requestId, approvalUser);
+			System.out.println("updateInfo : " + updateInfoResult);
+			if(updateInfoResult > 0) {
+				int itemId = approvalList.get(i).getItemId();
+				int requestQuantity = approvalList.get(i).getRequestQuantity();
+				finalResult += itemService.updateQuantity(requestQuantity, itemId);
+				System.out.println("final : " + finalResult);
+			}else{
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+				.body("요청 등록 실패.. 전산팀에 문의해주세요.");
+			}
+		}
+		
+		if(finalResult > 0){
+			return ResponseEntity.ok("수량 등록 완료");
+		}else{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+				.body("요청 등록 실패.. 전산팀에 문의해주세요.");
+		}
 	}
 }

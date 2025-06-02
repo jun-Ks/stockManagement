@@ -82,7 +82,33 @@ table{
     width: 48%;
 }
 
-button {
+.td_modi_QuantityBtn, .td_modi_QuantityCancelBtn, 
+.td_modi_locationBtn, .td_modi_locationCancelBtn,
+.td_purchase_QuantityBtn, .td_purchase_QuantityCancelBtn {
+  background: none;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.3s;
+}
+
+.td_modi_QuantityBtn:hover,
+.td_modi_locationBtn:hover,
+.td_purchase_QuantityBtn:hover {
+  color: #4caf50;
+}
+
+.td_modi_QuantityCancelBtn:hover, 
+.td_modi_locationCancelBtn:hover, 
+.td_purchase_QuantityCancelBtn:hover{
+  color: #f44336;
+}
+
+.input_modi_quantity, .input_purchase_quantity{
+    width: 55px;
+}
+#approval, #location_approval, #purchase_approval{
     background-color: #3498db;
     color: white;
     border: none;
@@ -95,7 +121,7 @@ button {
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-button:hover {
+#approval:hover, #location_approval:hover, #purchase_approval:hover {
     background-color: #2980b9;
     transform: translateY(-2px);
 }
@@ -136,14 +162,17 @@ label{
 		transform: scale(1);
 	}
 }
-.stock_note, .stock_detailDrawingNo, .location_note{
+.stock_note, .stock_detailDrawingNo, .location_note, .{
     max-width: 175px;       /* 셀 너비와 맞추기 */
     overflow-x: auto;
     white-space: nowrap;
     margin: 0 auto;
     padding-bottom: 10px; 
 }
-.stock-th-check, .location-th-check, #th_itemNo{
+#th_itemNo, .location_itemid, #th_location_itemNo{
+    display: none;
+}
+.stock-th-check, .location-th-check, #th_itemNo, #th_modiQuantity, #th_quantity, .purchase-th-check{
     width: 10px;
 }
 #th_no{
@@ -161,7 +190,7 @@ label{
     padding: 0;
     box-sizing: border-box;
 }
-.stock_detailDrawingNo, .stock_note{
+.stock_detailDrawingNo, .stock_note, .purchase_type, .purchase_detailDrawingNo{
     overflow: hidden; /* 내용이 길 경우 잘리도록 설정 */
     white-space: nowrap; /* 한 줄로만 표시되게 설정 */
     overflow-x: auto; /* 테이블이 길어지면 수평 스크롤이 생기도록 설정 */
@@ -199,3 +228,40 @@ label{
 .location_modiLocaion{
     background-color: rgba(233, 231, 231, 0.5); /* 마지막 인자 0.5는 50% 투명도 */
 }
+
+.modalRackName, .modalRackNumber, .modalRackStage, .input_modi_quantity {
+    width: 50px;               /* 너비 유지 */
+    font-size: 12px;           /* 작은 폰트 크기 */
+    padding: 5px 3px;          /* 안쪽 여백 */
+    border: 1px solid #ccc;    /* 연한 회색 테두리 */
+    border-radius: 4px;        /* 살짝 둥글게 */
+    background-color: #fff;    /* 배경 흰색 */
+    color: #333;               /* 텍스트 진한 회색 */
+    margin: 0 3px;             /* 셀렉트 박스들 사이 간격 */
+    box-sizing: border-box;    /* 패딩+테두리 포함 너비 */
+}
+.modalRackName, .modalRackNumber, .modalRackStage{
+    cursor: pointer;           /* 마우스 포인터 변경 */
+
+}
+#th_requestQuantity,#th_basicQuantity{
+    width: 50px;
+}
+
+.purchase_basicQuantity{
+    color:rgba(15, 1, 1, 0.5)
+}
+
+/*
+.btn-container {
+  display: flex;
+  flex-wrap: wrap;      
+  gap: 5px;             
+}
+
+.btn-container button {
+  flex: 0 1 auto;        
+  min-width: 80px;      
+}
+
+*/

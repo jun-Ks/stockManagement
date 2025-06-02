@@ -36,8 +36,8 @@ public interface IItemService {
 	//제품 정보 등록(입고)하기
 	public int insertItemInfo(List<ItemInfoDTO> itemInfo);
 	
-	//제품 위치 수정하기
-	public int modifyLocation(@Param("itemId") int itemId, @Param("modiLocation") String modiLocation);
+	//제품 위치+수량 수정하기
+	public int modifyLocation(@Param("itemId") int itemId, @Param("modiLocation") String modiLocation, @Param("modiQuantity") int quantity);
 	
 	//제품아이디로 그룹아이디가져오기
 	public int getItemIdIdByGroupId(@Param("groupId") String groupId);
@@ -53,5 +53,8 @@ public interface IItemService {
 	
 	//관리자 - 품목등록/수정/삭제 로그 기록하기
 	public int insertManagementLog(ManagementLogDTO logInfo);
+	
+	//구매요청 수량 적용
+	public int updateQuantity(@Param("requestQuantity") int requestQuantity, @Param("requestId") int itemId);
 	
 }
