@@ -9,4 +9,7 @@ public class DeliveryListDTO {
 	
     private List<DeliveryLogDTO> logList;
     private List<ItemInfoDTO> itemInfoList;
+
+    private DeliveryLogDTO log;
+    private ItemInfoDTO info;
 }

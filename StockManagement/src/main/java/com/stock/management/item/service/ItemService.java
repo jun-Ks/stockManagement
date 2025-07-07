@@ -153,6 +153,22 @@ public class ItemService implements IItemService{
 		return result;
 	}
 
+	//item no로 품목정보가져오기
+	@Override
+	public ItemInfoDTO getItemInfoByItemNo(int itemNo) {
+		ItemInfoDTO info = mapper.getItemInfoByItemNo(itemNo);
+
+		return info;
+	}
+
+	//출고no로 출고 정보가져오기
+	@Override
+	public DeliveryLogDTO getDeliveryLogByNo(int no) {
+		DeliveryLogDTO log = mapper.getDeliveryLogByNo(no);
+
+		return log;
+	}
+
 
 
 	

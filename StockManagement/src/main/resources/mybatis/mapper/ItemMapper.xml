@@ -107,4 +107,18 @@
 		SET calculatedQuantity = (calculatedQuantity + #{requestQuantity})
 		WHERE no = #{requestId}
 	</update>
+
+	<!--itemNo로 품목정보가져오기-->
+	<select id="getItemInfoByItemNo">
+		SELECT no, itemCode, drawingNo, itemName, calculatedQuantity, status, note, location
+		FROM stockInfo 
+		WHERE no = #{no}
+	</select>
+
+	<!--deliveryNo로 출고정보가져오기-->
+	<select id="getDeliveryLogByNo">
+		SELECT * 
+		FROM deliveryLog 
+		WHERE no = #{no}
+	</select>
 </mapper>

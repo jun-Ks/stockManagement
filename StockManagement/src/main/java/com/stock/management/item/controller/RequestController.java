@@ -341,4 +341,42 @@ public class RequestController {
 				.body("요청 등록 실패.. 전산팀에 문의해주세요.");
 		}
 	}
+
+	//구매요청등록 - 개별
+	@PostMapping("/mobile/stock/request/qty")
+	public ResponseEntity<String> requestQtyByMobile(@RequestBody RequestPurchaseDTO requestInfo) {
+		String uuid = UUID.randomUUID().toString();
+		requestInfo.setGroupId(uuid);
+		
+		int result = service.requestQtyByMobile(requestInfo);
+		
+		if(result > 0){
+			return ResponseEntity.ok("요청 등록완료");
+		}else{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+				.body("수정실패.. 전산팀에 문의해주세요.");
+		}
+	}
+	
+	//구매요청리스트 - all by RequesterId
+	@GetMapping("/stock/request/list/requester/{requesterId}/{startDate}/{endDate}")
+	public ResponseEntity<List<RequestPurchaseDTO>> getRequestPurchaseListByRequesterId(
+		@PathVariable("requesterId") String requesterId,
+		@PathVariable("startDate") String startDate,
+		@PathVariable("endDate") String endDate) {
+		
+		List<RequestPurchaseDTO> list = service.getRequestPurchaseListByRequesterId(requesterId, startDate, endDate);
+
+		return ResponseEntity.ok(list);
+	}
+	
+	//구매요청리스트 - 개별 by no
+	@GetMapping("/stock/request/no/{no}")
+	public ResponseEntity<RequestPurchaseDTO> getRequestPurchaseByNo(@PathVariable("no") int no) {
+
+		RequestPurchaseDTO info = service.getRequestPurchaseByNo(no);
+		
+		return ResponseEntity.ok(info);
+	}
+	
 }

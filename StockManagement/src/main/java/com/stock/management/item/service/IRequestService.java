@@ -76,4 +76,13 @@ public interface IRequestService {
 
 	//수량 추가 승인
 	public int approvalRequestPurchase(@Param("no") int requestId, @Param("approvalUserName") String approvalUserName);
+
+	//구매요청등록 - 개별
+	public int requestQtyByMobile(@Param("item") RequestPurchaseDTO requestInfo);
+
+	//구매요청리스트
+	public List<RequestPurchaseDTO> getRequestPurchaseListByRequesterId(@Param("requesterId") String requesterId, @Param("startDate") String startDate, @Param("endDate") String endDate);
+
+	//구매요청리스트 개별
+	public RequestPurchaseDTO getRequestPurchaseByNo(@Param("no") int no);
 }

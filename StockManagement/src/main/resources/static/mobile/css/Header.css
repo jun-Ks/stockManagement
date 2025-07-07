@@ -1,0 +1,26 @@
+
+.header {
+  background-color: #2d3436;
+  color: #fff;
+  padding: 10px 16px;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.loginInfo{
+  text-align: center;
+}
+
+
+.goToMenu {
+  position: absolute;
+  left: 16px; /* or 원하는 거리 */
+}
+
+#logout{
+  color:rgb(255, 86, 86)
+}

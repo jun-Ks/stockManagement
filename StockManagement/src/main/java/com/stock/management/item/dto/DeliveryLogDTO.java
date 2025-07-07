@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class DeliveryLogDTO {
-	
+	private int no;
 	private int id;
 	private String userId;
 	private String userName;

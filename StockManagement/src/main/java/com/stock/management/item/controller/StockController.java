@@ -97,5 +97,19 @@ public class StockController {
 		return ResponseEntity.ok(response);
 	}
 	
+	//delivery no로 출고정보가져오기
+	@GetMapping("/delivery/list/{deliveryNo}")
+	public ResponseEntity<DeliveryListDTO> getDeliveryLogByNo(@PathVariable("deliveryNo") int no) {
+		
+		DeliveryLogDTO deliveryLog = service.getDeliveryLogByNo(no);
 
+		//itemId로 제품정보가져오기
+		ItemInfoDTO itemInfo = service.getItemInfoByItemNo(deliveryLog.getItemId());
+		
+		DeliveryListDTO dto = new DeliveryListDTO();
+		dto.setLog(deliveryLog);
+		dto.setInfo(itemInfo);
+		
+		return ResponseEntity.ok(dto);
+	}
 }

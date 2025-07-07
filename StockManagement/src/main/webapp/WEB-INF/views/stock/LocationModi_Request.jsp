@@ -53,7 +53,7 @@
 		
 		<div class="cartBox">
 			<div class="closeBtn"> <button>X</button></div>
-			<div><h3>위치 변경 리스트</h3></div>
+			<div><h3>수량/위치 변경 리스트</h3></div>
 			<table class="cartTable">
 				<thead></thead>
 				<tbody></tbody>

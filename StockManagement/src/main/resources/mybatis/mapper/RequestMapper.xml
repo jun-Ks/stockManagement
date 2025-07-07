@@ -158,4 +158,36 @@
 		WHERE no = #{no}
 	</update>
 
+	<!--구매요청등록 - 개별-->
+	<insert id="requestQtyByMobile">
+		INSERT INTO purchaseRequest (
+			itemId, itemCode, type, itemName, drawingNo, note, quantity,
+			requestQuantity, location, 
+			requesterId, requesterName, requesterDept, 
+			approval, groupId, insertDate
+		)
+		SELECT 
+			s.no, s.itemCode, s.type, s.itemName, s.drawingNo, s.note, s.calculatedQuantity,
+			#{item.requestQuantity}, s.location,
+			#{item.requesterId}, #{item.requesterName}, #{item.requesterDept},
+			0, #{item.groupId}, NOW()
+		FROM stockInfo s
+		WHERE s.no = #{item.itemId}
+	</insert>
+
+	<!--모든 구매요청리스트가져오기-->
+	<select id="getRequestPurchaseListByRequesterId">
+		SELECT * 
+		FROM purchaseRequest 
+		WHERE requesterId = #{requesterId}
+			AND DATE(insertDate) BETWEEN #{startDate} AND #{endDate};
+	</select>
+
+	<!--요청리스트 가져오기 by 요청no -->
+	<select id="getRequestPurchaseByNo">
+		SELECT no, itemCode, itemName, drawingNo, type, 
+			quantity, requestQuantity, location, approval, insertDate
+		FROM purchaseRequest
+		WHERE no = #{no}
+	</select>
 </mapper>

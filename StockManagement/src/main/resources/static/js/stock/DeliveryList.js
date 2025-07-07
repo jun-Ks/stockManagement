@@ -146,7 +146,7 @@ function makeTbl(logList, itemInfoList){
 	}else{
 		tbody = 
 			`<tr>
-				<td colspan='9'> 출고 데이터가 없습니다. </td>
+				<td colspan='10'> 출고 데이터가 없습니다. </td>
 			</tr>`;
 	}
 	

@@ -59,6 +59,7 @@ public class PageController {
 		return isLogined(session, "/stock/StockManagement");	
 	}
 	
+	//로그아웃
 	@PostMapping("/auth/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
@@ -86,4 +87,5 @@ public class PageController {
 		return isLogined(session, "/stock/LabelPage");	
 	}
 	
+
 }

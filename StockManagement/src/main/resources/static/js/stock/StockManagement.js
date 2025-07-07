@@ -220,7 +220,7 @@ $(".close").on("click", function(){
 
 //location 값생성
 function makeRackSelect(){
-	const rackNames = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n'];
+	const rackNames = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o'];
 	const rackNumberMap = {
 		a: 14,
 		b: 12, c: 12, d: 12, e: 12, f: 12,
@@ -228,7 +228,8 @@ function makeRackSelect(){
 		h: 12, i: 12, j: 12,
 		k: 4,
 		l: 6, m: 6,
-		n: 2
+		n: 2,
+		o: 16
 	};
 
 
@@ -272,7 +273,7 @@ function makeRackSelect(){
 		let floors = [];
 		if (['a','b','c','d','e','f','g','h','i','j'].includes(selectedRack)) {
 			floors = ['1F', '2F', '3F'];
-		} else if (['k','l','m','n'].includes(selectedRack)) {
+		} else if (['k','l','m','n', 'o'].includes(selectedRack)) {
 			floors = ['1F', '2F', '3F', '4F', '5F'];
 		}
 

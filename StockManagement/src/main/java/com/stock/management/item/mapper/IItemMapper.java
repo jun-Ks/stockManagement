@@ -57,4 +57,10 @@ public interface IItemMapper {
 
 	//구매요청 수량 적용
 	public int updateQuantity(@Param("requestQuantity") int requestQuantity, @Param("requestId") int itemId);
+
+	//itemNo로 품목정보가져오기
+	public ItemInfoDTO getItemInfoByItemNo(@Param("no") int itemNo);
+
+	//delivery no로 출고정보가져오기
+	public DeliveryLogDTO getDeliveryLogByNo(@Param("no") int no);
 }

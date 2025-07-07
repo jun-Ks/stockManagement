@@ -1,0 +1,48 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+#title{
+    margin-top: 100px;
+    text-align: center;
+}
+.menu-container {
+    max-width: 320px; /* <= 여기 값을 줄이면 전체 너비가 줄어듭니다 */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(2, 1fr); /* 2개씩 정렬 */
+    gap: 1.2rem;
+    margin: 100px auto; 
+}
+
+.menu-card {
+    background-color: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.menu-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.menu-card h3 {
+    margin-top: 45px;
+    margin-bottom: 50px;
+    font-size: 1.1rem;
+}
+
+.menu-card p {
+    font-size: 0.9rem;
+    color: #666;
+}
+

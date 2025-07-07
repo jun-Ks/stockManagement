@@ -10,7 +10,7 @@ $("#login").on("click", function(){
 			pw: userPw
 		},
 		success: function(response){
-			location.href = response;
+			location.href = "/m/menu";
 		},
 		error: function(xhr){
 			alert(xhr.responseText);
@@ -20,10 +20,9 @@ $("#login").on("click", function(){
 	});
 })
 
-$('#userId, #userPw').on('keydown', function(e){
-      if(e.key === 'Enter' || e.keyCode === 13){
-        $('#login').click();
-      }
+// 엔터 키로 로그인
+$("#userId, #userPw").on("keyup", function(e) {
+    if (e.key === "Enter" || e.keyCode === 13) {
+        $("#login").click();
+    }
 });
-
-

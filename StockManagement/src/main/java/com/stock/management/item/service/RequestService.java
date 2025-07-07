@@ -233,6 +233,30 @@ public class RequestService implements IRequestService{
 		return result;
 	}
 
+	//구매요청등록 - 개별
+	@Override
+	public int requestQtyByMobile(RequestPurchaseDTO requestInfo) {
+		int result = mapper.requestQtyByMobile(requestInfo);
+
+		return result;
+	}
+
+	//구매요청리스트 by requesterId
+	@Override
+	public List<RequestPurchaseDTO> getRequestPurchaseListByRequesterId(String requesterId, String startDate, String endDate) {
+		List<RequestPurchaseDTO> list = mapper.getRequestPurchaseListByRequesterId(requesterId, startDate, endDate);
+
+		return list;
+	}
+
+	//구매요청리스트 개별
+	@Override
+	public RequestPurchaseDTO getRequestPurchaseByNo(int no) {
+		RequestPurchaseDTO info = mapper.getRequestPurchaseByNo(no);
+
+		return info;
+	}
+
 
 	
 

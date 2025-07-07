@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.stock.management.item.dto.SearchDTO;
 import com.stock.management.item.dto.CartInfoDTO;
+import com.stock.management.item.dto.DeliveryLogDTO;
 import com.stock.management.item.dto.ItemInfoDTO;
 import com.stock.management.item.dto.ItemInfoInsertDTO;
 import com.stock.management.item.dto.ManagementLogDTO;
 import com.stock.management.item.service.IItemService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 public class ItemController {
@@ -114,7 +118,8 @@ public class ItemController {
 		 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                  .body("수정실패.. 전산팀에 문의해주세요.");
 	}
-	
+
+	//제품정보삭제	
 	@DeleteMapping("/item/info/{itemId}")
 	public ResponseEntity<String> deleteInfo(@PathVariable("itemId") String itemId){
 		int int_itemId = Integer.parseInt(itemId);
@@ -127,4 +132,14 @@ public class ItemController {
                 .body("삭제실패.. 전산팀에 문의해주세요.");
 		
 	}
+
+	//item no로 품목 정보가져오기
+	@GetMapping("/stock/item/{itemNo}")
+	public ResponseEntity<ItemInfoDTO> getMethodName(@PathVariable("itemNo") int itemNo) {
+		
+		ItemInfoDTO info = service.getItemInfoByItemNo(itemNo);
+
+		return ResponseEntity.ok(info);
+	}
+	
 }

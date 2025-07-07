@@ -14,7 +14,7 @@
 
 <div class="container">
 	<div class="input-group">
-		<img src="http://www.win-tec.co.kr/img/logo.png" alt="(주)윈텍" title="">
+		<img src="/mobile/img/logo.png" alt="(주)윈텍" title="">
 		<h3>윈텍 창고 품목 검색/출고 페이지</h3>
 	    <input type="text" id="userId" placeholder="아이디"><br>
 	</div>
