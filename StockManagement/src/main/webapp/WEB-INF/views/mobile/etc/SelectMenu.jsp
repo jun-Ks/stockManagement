@@ -25,6 +25,12 @@
         <div class="menu-card" onclick="location.href='/m/delivery/list'">
             <h3>출고리스트</h3>
         </div>
+        <div class="menu-card" onclick="location.href='/m/stock/location/modi/request'">
+            <h3>수량/위치 수정요청</h3>
+        </div>
+        <div class="menu-card" onclick="location.href='/m/delivery/list'">
+            <h3>수정요청 리스트</h3>
+        </div>
         <div class="menu-card" onclick="location.href='/m/purchase'">
             <h3>구매요청</h3>
         </div>

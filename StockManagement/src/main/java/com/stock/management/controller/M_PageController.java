@@ -70,4 +70,16 @@ public class M_PageController {
 		return "/mobile/auth/Login"; // 로그인 페이지로 이동
 	}
 
+    //스캔테스트
+    @GetMapping("/test/key")
+    public String testPage(){
+        return "/mobile/stock/KeyTest";
+    }
+
+    //수량/위칭 수정요청
+    @GetMapping("/stock/location/modi/request")
+    public String stockLocationModiRequestPage() {
+        return "/mobile/stock/LocationModi_Request";
+    }
+    
 }

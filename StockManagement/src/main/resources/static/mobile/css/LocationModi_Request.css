@@ -8,8 +8,8 @@ body {
 .searchBox{
   text-align: center;
 }
-.input_location {
 
+.input_location {
   padding: 10px;
   width: 60%;
   max-width: 300px;
@@ -171,18 +171,18 @@ body {
   color: #000;
 }
 
-.modal-deliveryTable {
+.modal-table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.modal-deliveryTable th, .modal-deliveryTable td {
+.modal-table th, .modal-table td {
   padding: 10px;
   border-bottom: 1px solid #eee;
   font-size: 14px;
 }
 
-.modal-deliveryTable th {
+.modal-table th {
   background-color: #f1f2f6;
   text-align: left;
   color: #2d3436;
@@ -213,13 +213,14 @@ body {
   background-color: #b2bec3;
 }
 
-.modal-deliveryInput {
+.modal-modifyInput {
+  display: none;
   text-align: center;
   margin-top: 20px;
 }
 
 .keyboard {
-  display: grid;
+  display: none;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
   margin: 0 auto -10px auto;
@@ -246,12 +247,16 @@ body {
   background-color: #dcdde1;
 }
 
-.modal-deliveryBtn {
-  margin: 20px auto 0 auto;
-  display: block;
+.modal-confirmBtns {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* 버튼 사이 여백 */
+  margin-top: 20px;
+}
+
+.modal-confirmBtns button  {
   padding: 12px 24px;
   font-size: 16px;
-  background-color: #0984e3;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -259,14 +264,46 @@ body {
   transition: background-color 0.2s ease;
 }
 
+.modal-requestBtn{
+  background-color: #0984e3;
+}
+
+.modal-cancelBtn{
+  background-color: #afafaf;
+}
+
 .modal-deliveryBtn:hover {
   background-color: #74b9ff;
 }
+
+.modal-th_modiLoation{
+  letter-spacing: -0.5px;
+}
+
+
+.modal-td_modiLocation select {
+  width: 60px;
+  padding: 10px 10px;
+  font-size: 14px;
+  border: 3px solid #ff7f50;
+  border-radius: 6px;
+  appearance: none;
+  background-color: #fff;
+  background-image: url("data:image/svg+xml,..."); /* 생략 가능 */
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px;
+  text-align: center;
+  outline: none;
+  font-weight: bold;
+}
+
 
 #search-location::placeholder{
   font-size: 12px;
 }
 
+/* 검색초기화버튼 */
 .floating-button {
   position: fixed;
   bottom: 20px;
@@ -291,6 +328,32 @@ body {
   text-decoration: none;
 }
 
+/* sweetalert2 */
+.swal2-popup .swal2-title {
+    font-size: 23px !important; /* 원하는 크기로 조절 (기본은 약 26px) */
+}
+
+.swal2-popup .custom-action-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.swal2-popup .action-btn {
+  font-weight: bold;
+  font-size: 19.5px;
+  background-color: #3085d6;
+  border: none;
+  border-radius: 4px;
+  min-width: 100px;
+  cursor: pointer;
+}
+
+.swal2-popup .action-btn:hover {
+  background-color: #2563eb;
+}
+
 /* 모바일 환경 강제 2열 유지 */
 @media (max-width: 480px) {
   .info-container {
@@ -312,4 +375,12 @@ body {
     height: 60px;
     font-size: 25px;
   }
+
+
 }
+@media (max-width: 360px){
+  .modal-td_modiLocation select {
+    width: 50px;
+  }
+}
+
