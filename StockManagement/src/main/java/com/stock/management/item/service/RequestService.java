@@ -33,7 +33,6 @@ public class RequestService implements IRequestService{
 	public int insertRequestStockInfo(RequestStockDTO requestInfo) {
 		
 		String requesterId = requestInfo.getRequesterId();
-		
 		//requesterId로 사용자 정보 불러오기
 		UserInfoDTO userInfo = userService.getUserInfoById(requesterId);
 		
@@ -53,8 +52,8 @@ public class RequestService implements IRequestService{
 	//위치변경정보 등록하기
 	@Override
 	public int insertRequestModiLocationInfo(RequestModiLocationDTO requestInfo) {
-		
 		String requesterId = requestInfo.getRequesterId();
+		System.out.println(requesterId);
 		
 		//requesterId로 사용자 정보 불러오기
 		UserInfoDTO userInfo = userService.getUserInfoById(requesterId);
@@ -62,6 +61,11 @@ public class RequestService implements IRequestService{
 		requestInfo.setRequesterDept(userInfo.getDept());
 		requestInfo.setRequesterName(userInfo.getName());
 	
+		//groupId 설정해주기
+		String groupId =UUID.randomUUID().toString();
+		
+		requestInfo.setGroupId(groupId);
+		
 		int result = mapper.insertRequestModiLocationInfo(requestInfo);
 		
 		return result;

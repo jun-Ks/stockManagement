@@ -38,7 +38,6 @@ public class RequestController {
 	//입고 요청
 	@PostMapping("/stock/request/info")
 	public ResponseEntity<String> insertRequestStockInfo(@RequestBody RequestStockDTO requestInfo){
-		System.out.println(requestInfo.toString());
 
 		
 		String uuid = UUID.randomUUID().toString();
@@ -215,7 +214,7 @@ public class RequestController {
 			int approvalResult = service.approvalLocationRequest(approvalUser, info.getItemId());
 			
 			if(approvalResult > 0) {
-				System.out.println(info.getQuantity());
+				//System.out.println(info.getQuantity());
 				updateResult += itemService.modifyLocation(info.getItemId(), info.getModiLocation(), info.getModiQuantity());
 			}
 		}
@@ -316,18 +315,18 @@ public class RequestController {
 	public ResponseEntity<String> updateStockQuantity(@RequestBody List<PurchaseApprovalDTO> approvalList) {
 		int updateInfoResult = 0;
 		int finalResult = 0;
-		System.out.println(approvalList.size());
+		//System.out.println(approvalList.size());
 		for(int i = 0; i < approvalList.size(); i++){
 			String approvalUser = approvalList.get(i).getApprovalUser();
 			int requestId = approvalList.get(i).getRequestListId();
-			System.out.println(approvalUser + " / " + requestId);
+			// System.out.println(approvalUser + " / " + requestId);
 			updateInfoResult += service.approvalRequestPurchase(requestId, approvalUser);
-			System.out.println("updateInfo : " + updateInfoResult);
+			// System.out.println("updateInfo : " + updateInfoResult);
 			if(updateInfoResult > 0) {
 				int itemId = approvalList.get(i).getItemId();
 				int requestQuantity = approvalList.get(i).getRequestQuantity();
 				finalResult += itemService.updateQuantity(requestQuantity, itemId);
-				System.out.println("final : " + finalResult);
+				// System.out.println("final : " + finalResult);
 			}else{
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 				.body("요청 등록 실패.. 전산팀에 문의해주세요.");
@@ -379,4 +378,43 @@ public class RequestController {
 		return ResponseEntity.ok(info);
 	}
 	
+	//수정요청 - 수량 OR 위치
+	@PutMapping("/stock/{data_type}/{no}")
+	public ResponseEntity<String> modifyInfo(@PathVariable("data_type") String data_type, @PathVariable("no") int no, @RequestBody RequestModiLocationDTO data) {
+		String location = "";
+		int quantity = 0;
+		//NO로 현 품목정보가져오기
+		ItemInfoDTO itemInfo = itemService.getItemInfoByItemNo(no);
+
+		//requestDTO에 담기
+		RequestModiLocationDTO requestInfo = new RequestModiLocationDTO();
+		requestInfo.setItemId(itemInfo.getNo());
+		requestInfo.setItemCode(itemInfo.getItemCode());
+		requestInfo.setDrawingNo(itemInfo.getDrawingNo());
+		requestInfo.setType(itemInfo.getType());
+		requestInfo.setItemName(itemInfo.getItemName());
+		requestInfo.setLocation(itemInfo.getLocation());
+		requestInfo.setQuantity(itemInfo.getCalculatedQuantity());
+		requestInfo.setNote(itemInfo.getNote());
+		requestInfo.setGroupId(itemInfo.getGroupId());
+		requestInfo.setRequesterId(data.getRequesterId());
+
+		//위치변경
+		if(data_type.equals("modiLocation")){
+			location = data.getModiLocation();
+			requestInfo.setModiLocation(location);
+		}else{
+			quantity = data.getModiQuantity();
+			requestInfo.setModiQuantity(no);
+		}
+
+		int result = service.insertRequestModiLocationInfo(requestInfo);
+
+		if(result > 0){
+			return ResponseEntity.ok("변경 요청 등록 완료");
+		}else{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+				.body("요청 등록 실패.. 전산팀에 문의해주세요.");
+		}
+	}
 }

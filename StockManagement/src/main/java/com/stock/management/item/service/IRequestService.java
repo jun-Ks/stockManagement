@@ -85,4 +85,6 @@ public interface IRequestService {
 
 	//구매요청리스트 개별
 	public RequestPurchaseDTO getRequestPurchaseByNo(@Param("no") int no);
+
+	
 }

@@ -110,7 +110,7 @@
 
 	<!--itemNo로 품목정보가져오기-->
 	<select id="getItemInfoByItemNo">
-		SELECT no, itemCode, drawingNo, itemName, calculatedQuantity, status, note, location
+		SELECT no, itemCode, drawingNo, type, itemName, calculatedQuantity, status, note, location, groupId
 		FROM stockInfo 
 		WHERE no = #{no}
 	</select>
