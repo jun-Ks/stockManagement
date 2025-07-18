@@ -190,7 +190,7 @@ body {
   text-align: center;
 }
 
-.input_delivery_quantity {
+.input_modify_quantity {
   width: 70px;
   padding: 5px;
   font-size: 15px;
@@ -216,14 +216,14 @@ body {
 .modal-modifyInput {
   display: none;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .keyboard {
   display: none;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  margin: 0 auto -10px auto;
+  margin: 5px auto 10px auto;
   max-width: 220px;
   justify-items: center;
   touch-action: manipulation; /* 더블탭 확대/스크롤 방지 */
@@ -241,6 +241,7 @@ body {
   background-color: #f1f2f6;
   border: 1px solid #ccc;
   cursor: pointer;
+  margin: 3px 3px 3px 3px;
 }
 
 .keyboard button:hover {
@@ -251,7 +252,7 @@ body {
   display: flex;
   justify-content: center;
   gap: 10px; /* 버튼 사이 여백 */
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .modal-confirmBtns button  {

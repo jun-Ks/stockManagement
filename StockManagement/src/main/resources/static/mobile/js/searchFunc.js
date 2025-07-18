@@ -86,9 +86,9 @@ $(document).on("click", ".modal", function (e) {
 
 
 // 출고 성공 알림 함수
-function showSuccessToast() {
+function showSuccessToast(msg) {
     Toastify({
-        text: "✅ 출고가 성공적으로 완료되었습니다!  ",
+        text: msg,
         duration: 3000,
         close: true,
         gravity: "top",

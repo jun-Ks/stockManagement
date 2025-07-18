@@ -53,7 +53,6 @@ public class RequestService implements IRequestService{
 	@Override
 	public int insertRequestModiLocationInfo(RequestModiLocationDTO requestInfo) {
 		String requesterId = requestInfo.getRequesterId();
-		System.out.println(requesterId);
 		
 		//requesterId로 사용자 정보 불러오기
 		UserInfoDTO userInfo = userService.getUserInfoById(requesterId);
@@ -65,7 +64,7 @@ public class RequestService implements IRequestService{
 		String groupId =UUID.randomUUID().toString();
 		
 		requestInfo.setGroupId(groupId);
-		
+
 		int result = mapper.insertRequestModiLocationInfo(requestInfo);
 		
 		return result;

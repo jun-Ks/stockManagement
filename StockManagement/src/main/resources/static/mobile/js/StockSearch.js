@@ -130,7 +130,7 @@ $(document).on("click", ".modal-deliveryBtn", function () {
         data: JSON.stringify(cart_info),
         success: function () {
             //성공메세지
-            showSuccessToast();
+            showSuccessToast("✅ 출고가 성공적으로 완료되었습니다!");
             
             //모달숨기기
             $(".modal").hide();

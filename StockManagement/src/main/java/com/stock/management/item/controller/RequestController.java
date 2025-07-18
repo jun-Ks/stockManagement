@@ -383,6 +383,8 @@ public class RequestController {
 	public ResponseEntity<String> modifyInfo(@PathVariable("data_type") String data_type, @PathVariable("no") int no, @RequestBody RequestModiLocationDTO data) {
 		String location = "";
 		int quantity = 0;
+		System.out.println("data-type : " + data_type);
+		System.out.println(data.getModiQuantity());
 		//NO로 현 품목정보가져오기
 		ItemInfoDTO itemInfo = itemService.getItemInfoByItemNo(no);
 
@@ -405,7 +407,8 @@ public class RequestController {
 			requestInfo.setModiLocation(location);
 		}else{
 			quantity = data.getModiQuantity();
-			requestInfo.setModiQuantity(no);
+			requestInfo.setModiLocation("-");
+			requestInfo.setModiQuantity(quantity);
 		}
 
 		int result = service.insertRequestModiLocationInfo(requestInfo);
