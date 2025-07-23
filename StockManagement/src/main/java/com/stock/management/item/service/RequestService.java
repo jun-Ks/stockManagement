@@ -260,6 +260,12 @@ public class RequestService implements IRequestService{
 		return info;
 	}
 
+	//위치, 수량 수정 요청 리스트 전개 by requesterId, startDate, endDate
+	@Override
+	public List<RequestModiLocationDTO> getRequestList(String requesterId, String startDate, String endDate) {
+		return mapper.getRequestList(requesterId, startDate, endDate);
+	}
+
 
 	
 

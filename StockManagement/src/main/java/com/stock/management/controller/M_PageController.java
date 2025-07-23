@@ -79,7 +79,13 @@ public class M_PageController {
     //수량/위칭 수정요청
     @GetMapping("/stock/location/modi/request")
     public String stockLocationModiRequestPage() {
-        return "/mobile/stock/LocationModi_Request";
+        return "/mobile/request/LocationModi_Request";
+    }
+    
+    //수량/위치 수정요청 리스트
+    @GetMapping("/stock/modi/request/list")
+    public String modifyRequestListPage() {
+        return "/mobile/request/ModiRequestList";
     }
     
 }

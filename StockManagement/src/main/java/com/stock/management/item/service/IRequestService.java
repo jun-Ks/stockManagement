@@ -86,5 +86,6 @@ public interface IRequestService {
 	//구매요청리스트 개별
 	public RequestPurchaseDTO getRequestPurchaseByNo(@Param("no") int no);
 
-	
+	//위치, 수량 수정 요청 리스트 전개 by requesterId, startDate, endDate
+	public List<RequestModiLocationDTO> getRequestList(@Param("requesterId") String requesterId, @Param("startDate") String startDate, @Param("endDate") String endDate);
 }

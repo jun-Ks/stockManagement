@@ -190,4 +190,12 @@
 		FROM purchaseRequest
 		WHERE no = #{no}
 	</select>
+
+	<!--수량, 위치변경 리스트 by requesterId, startDate, endDate-->
+	<select id="getRequestList">
+		SELECT no, itemCode, itemid, type, itemName, drawingNo, note, quantity, modiQuantity, location, modiLocation, approval, insertDate
+		FROM locationModiRequest
+		WHERE requesterId = #{requesterId}
+			AND DATE(insertDate) BETWEEN #{startDate} AND #{endDate};
+	</select>
 </mapper>

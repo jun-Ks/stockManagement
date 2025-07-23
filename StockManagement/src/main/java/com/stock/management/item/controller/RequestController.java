@@ -420,4 +420,14 @@ public class RequestController {
 				.body("요청 등록 실패.. 전산팀에 문의해주세요.");
 		}
 	}
+
+	//위치, 수량 수정 요청 리스트 전개 by requesterId, startDate, endDate
+	@GetMapping("/modi/request/list/{requesterId}/{startDate}/{endDate}")
+	public ResponseEntity<List<RequestModiLocationDTO>> getMethodName(@PathVariable("requesterId") String requesterId, @PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate) {
+
+		List<RequestModiLocationDTO> list = service.getRequestList(requesterId, startDate, endDate);
+
+		return ResponseEntity.ok(list);
+	}
+	
 }
