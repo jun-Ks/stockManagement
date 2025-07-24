@@ -32,7 +32,7 @@
             autocomplete="off"
             autocorrect="off"
             autocapitalize="off"
-            spellcheck="false" value="a-01"/>
+            spellcheck="false"/>
         <div class="input_location">PDA 오른쪽 주황색 버튼을 눌러 <br> QR코드를 스캔해주세요.</div>
     </div>
     <div class="info-container"></div>

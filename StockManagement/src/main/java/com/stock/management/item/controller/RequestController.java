@@ -430,4 +430,13 @@ public class RequestController {
 		return ResponseEntity.ok(list);
 	}
 	
+	//위치, 수량 수정요청 리스트 상세보기 by requestNo
+	@GetMapping("/modi/request/info/{requestNo}")
+	public ResponseEntity<RequestModiLocationDTO> getRequestInfo(@PathVariable("requestNo") int requestNo) {
+
+		RequestModiLocationDTO info = service.getRequestInfo(requestNo);
+
+		return ResponseEntity.ok(info);
+	}
+	
 }

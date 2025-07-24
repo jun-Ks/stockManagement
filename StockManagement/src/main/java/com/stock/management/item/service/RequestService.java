@@ -266,6 +266,12 @@ public class RequestService implements IRequestService{
 		return mapper.getRequestList(requesterId, startDate, endDate);
 	}
 
+	//위치, 수량 수정요청 리스트 상세보기 by requestNo
+	@Override
+	public RequestModiLocationDTO getRequestInfo(int requestNo) {
+		return mapper.getRequestInfo(requestNo);
+	}
+
 
 	
 
