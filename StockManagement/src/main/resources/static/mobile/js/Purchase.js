@@ -1,77 +1,3 @@
-function isAppMode() {
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches
-        || window.navigator.standalone === true;
-
-    const isAndroidWebView = /\bwv\b/.test(navigator.userAgent) || /; wv\)/.test(navigator.userAgent);
-
-    const isNoReferrer = document.referrer === ""; // 앱에서 열면 종종 referrer 없음
-
-    return isStandalone || isAndroidWebView || isNoReferrer;
-}
-
-//페이지 로드되면 input에 포커스 갖다놓기
-$(document).ready(function(){
-    let searchBox = $("#search-location");
-
-    searchBox.focus();
-})
-
-//검색버튼
-$("#search-btn").on("click", function(){
-    let searchBox = $("#search-location");
-    //유효성검사
-    if(searchBox.val() === ""){
-        alert("위치를 스캔(or 입력)해주세요.");
-        return false;
-    }
-    serchItemInfo();
-})
-
-$("#search-location").on("keydown", function(e){
-    if(e.key === "Enter" || e.keyCode === 13){
-        serchItemInfo();
-    };
-})
-
-//품목검색 함수
-function serchItemInfo(){
-	$(".cartBox").show();
-	let searchOption = "location";
-	let searchKeyword = $("#search-location").val().toUpperCase();
-
-	$.ajax({
-		url: "/stock/item",
-		type: "POST",
-		data:{
-			searchOption: searchOption,
-			searchKeyword: searchKeyword
-		},
-		success: function(list){
-			let infoCard = "";
-            list.forEach(function(info, index){
-                infoCard += 
-                    "<div class='info-card'>" + 
-                        "<div class='info'>" + 
-                            "<input type='hidden' value='" + info.no + "' class='item_no'>" + 
-                            "<h3>" + info.itemName + "</h3>" + 
-                            "<p class='drawingNo'>" + info.drawingNo + "</p>" + 
-                            "<span>" + "수량 : " + "</span>" + 
-                            "<span class='quantity'>" + info.calculatedQuantity + "</span>" + 
-                        "</div>" + 
-                    "</div>"
-                ;
-            });
-            $(".info-container").html(infoCard);
-            
-		},
-		error: function(xhr){
-			alert(xhr.responseText);
-			
-			return false;
-		}
-	});
-}
-
 //품목 선택 하면 모달 창띄우기
 $(document).on("click", ".info-card", function(){
     $("#purchaseModal").show();
@@ -221,9 +147,14 @@ $(document).on("click", ".keyboard-purchase", function(){
         contentType: "application/json",
         data: JSON.stringify(request_info),
         success: function(response){
-            alert(response)
+            showSuccessToast("✅ 요청이 성공적으로 완료되었습니다!");
             $(".modal").hide();
             
+            //포커스 옮겨주기
+            setTimeout(function () {
+                $('#search-location').focus();
+            }, 100); 
+            serchItemInfo("deliveryRefresh");
         },
         error: function(xhr){
             alert(xhr.responseText);
@@ -233,43 +164,3 @@ $(document).on("click", ".keyboard-purchase", function(){
     });
 });
 
-function onScanSuccessResult(decodedText){
-    $("#qrModal").hide();
-    let searchBox = $("#search-location");
-
-    html5QrCode.stop()
-      .then(() => {
-          html5QrCode.clear();
-          // 필요시 모달 닫기, 결과 처리 등
-          $("#qrModal").hide();
-          searchBox.val(decodedText);
-          serchItemInfo();
-      })
-      .catch(err => {
-         alert("카메라 종료 오류:", err);
-      });
-}
-
-let html5QrCode;
-
-$("#qrScan").on("click", function () {
-    let isBrowser = true;
-    if(isAppMode()){
-        isBrowser = false;
-        // 모달 열기
-        $("#qrModal").css("display", "block");
-        return false;
-    }
-    // 모달 열기
-    $("#qrModal").css("display", "block");
-
-    // QR 스캔 시작
-    if(isBrowser){
-        html5QrCode = new Html5Qrcode("reader");
-        html5QrCode.start(
-            { facingMode: "environment" },
-            { fps: 10, qrbox: 250 },
-            onScanSuccessResult
-        );
-    }
-});

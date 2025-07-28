@@ -1,12 +1,7 @@
-
 //품목 선택 하면 모달 창띄우기
 $(document).on("click", ".info-card", function () {
     $("#deliveryModal").show();
     let item_no = $(this).find(".item_no").val();
-
-    let searchOption = "no";
-    let searchKeyword = item_no;
-    let quantity = $(this).find(".quantity").text();
 
     $.ajax({
         url: "/stock/item/" + item_no,

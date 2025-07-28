@@ -12,6 +12,16 @@
 
     <script src="https://unpkg.com/html5-qrcode"></script>
 
+    <!-- Toastify CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <!-- Toastify JS -->
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <!-- sweetalert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- sweetalert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <link rel="stylesheet" type="text/css" href="/mobile/css/Purchase.css">
 </head>
 <body>
@@ -20,12 +30,18 @@
 	</header>
 
     <div class="searchBox">
-        <input type="text" id="search-location"> 
-        <!-- <input type="text" id="search-location" placeholder="여기를 터치 후 QR코드를 스캔해주세요.">  -->
-        <!-- <button id="search-btn">검색</button> -->
-        <button id="qrScan">QR스캔</button>
+        <input type="text"
+            id="search-location"
+            inputmode="none"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false" />
+        <div class="input_location">PDA 오른쪽 주황색 버튼을 눌러 <br> QR코드를 스캔해주세요.</div>
     </div>
+
     <div class="info-container"></div>
+    <div class="empty-container" style="display: none;"></div>
 
     <!-- 모달 구조 -->
     <div id="purchaseModal" class="modal">
@@ -57,19 +73,11 @@
 
     </div>
 
-    <!-- QR 모달 -->
-    <div id="qrModal" class="modal">
-    <div class="modal-content">
-        <span class="modal-close">&times;</span>
-        <h2>QR코드 스캔</h2>
-        <div id="reader" style="width: 100%; max-width: 320px; margin: 0 auto;"></div>
-    </div>
-    </div>
-
     <!-- 출고 리스트 바로가기 버튼 -->
     <a href="/m/purchase/requested-list" class="floating-button" title="출고리스트">
         <i class="fas fa-clipboard-list"></i>
     </a>
+        <script src="/mobile/js/searchFunc.js"></script>
     <script src="/mobile/js/Purchase.js"></script>
 </body>
 </html>

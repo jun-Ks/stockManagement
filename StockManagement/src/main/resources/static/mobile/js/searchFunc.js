@@ -43,20 +43,37 @@ function serchItemInfo(whether) {
         },
         success: function (list) {
             let infoCard = "";
-            list.forEach(function (info, index) {
-                infoCard +=
+            let empty_notice_style = `
+                font-size: 20px;
+                font-weight: bold;
+                margin: 30px auto;
+                text-align: center;
+            `;
+            if(list.length === 0){
+                $(".info-container").hide();
+                $(".empty-container").show();
+                infoCard = `
+                    <div class="empty_notice" style="${empty_notice_style}">등록된 품목이 없습니다.</div>
+                `;
+                $(".empty-container").html(infoCard);
+            }else{
+                list.forEach(function (info, index) {
+                    $(".empty-container").hide();
+                    $(".info-container").show();
+                    infoCard +=
                     "<div class='info-card'>" +
-                    "<div class='info'>" +
-                    "<input type='hidden' value='" + info.no + "' class='item_no'>" +
-                    "<h3>" + info.itemName + "</h3>" +
-                    "<p class='drawingNo'>" + info.drawingNo + "</p>" +
-                    "<span>" + "수량 : " + "</span>" +
-                    "<span class='quantity'>" + info.calculatedQuantity + "</span>" +
-                    "</div>" +
+                        "<div class='info'>" +
+                            "<input type='hidden' value='" + info.no + "' class='item_no'>" +
+                            "<h3>" + info.itemName + "</h3>" +
+                            "<p class='drawingNo'>" + info.drawingNo + "</p>" +
+                            "<span>" + "수량 : " + "</span>" +
+                            "<span class='quantity'>" + info.calculatedQuantity + "</span>" +
+                        "</div>" +
                     "</div>"
                     ;
-            });
-            $(".info-container").html(infoCard);
+                });
+                $(".info-container").html(infoCard);
+            }
 
         },
         error: function (xhr) {
