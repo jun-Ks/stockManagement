@@ -74,7 +74,6 @@
             
             <div class="modal-confirmBtns">
                 <button class="modal-requestBtn">확인</button>
-                <button class="modal-cancelBtn">취소</button>
             </div>
         </div>
 

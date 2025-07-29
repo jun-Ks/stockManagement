@@ -40,7 +40,7 @@
     <div id="reqeustModal" class="modal">
         <div class="modal-content">
             <span class="modal-close">&times;</span>
-            <h2>출고정보 상세보기</h2>
+            <h2>구매 요청 상세보기</h2>
             <table class="modal-reqeustInfoTable">
                 <thead></thead>
                 <tbody></tbody>

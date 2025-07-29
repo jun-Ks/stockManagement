@@ -36,7 +36,7 @@
             autocomplete="off"
             autocorrect="off"
             autocapitalize="off"
-            spellcheck="false" />
+            spellcheck="false" value="A-06-1F" />
         <div class="input_location">PDA 오른쪽 주황색 버튼을 눌러 <br> QR코드를 스캔해주세요.</div>
     </div>
 
@@ -73,9 +73,9 @@
 
     </div>
 
-    <!-- 출고 리스트 바로가기 버튼 -->
-    <a href="/m/purchase/requested-list" class="floating-button" title="출고리스트">
-        <i class="fas fa-clipboard-list"></i>
+    <!--스캔 불가시 검색 초기화-->
+    <a href="/m/purchase" class="floating-button" title="검색 초기화">
+        <i class="fa fa-refresh"></i>
     </a>
         <script src="/mobile/js/searchFunc.js"></script>
     <script src="/mobile/js/Purchase.js"></script>
